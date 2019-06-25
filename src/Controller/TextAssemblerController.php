@@ -3,14 +3,14 @@
 namespace App\Controller;
 
 use App\Form\LiturgyTextRequestType;
-use Dompdf\Dompdf;
+use App\Util\CNBBAssembler;
+use App\Util\IgrejaSantaInesAssembler;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
-
-
-
 
 /**
  * \brief      TextAssembler Controller.
@@ -27,13 +27,13 @@ class TextAssemblerController extends AbstractController
      */
     public function index(Request $request)
     {
+     
         $form = $this->createForm(LiturgyTextRequestType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // data is an array 
+            // data is an array
             $data = $form->getData();
-            var_dump($data);
             return $this->redirectToRoute(
                 'assembler_text',
                 [
@@ -56,53 +56,25 @@ class TextAssemblerController extends AbstractController
      * @Route("/assembler/text/{text_format}/{source}/{liturgy_date}/",
      * name="assembler_text")
      */
-    public function getText($text_format, $source, $liturgy_date)
-    {
-        $sourceRoute = $this->genSourceRoute($source, $liturgy_date);
-        var_dump($sourceRoute);
-        $rawContent = $this->getRawContent($sourceRoute);
-        $crawler = new Crawler($rawContent);
-        $crawler = $crawler->filter('div.hoje')->first();
-        $crawlerTemporal = $crawler->filter('div.panel')->first();
-        $crawlerSantoral = $crawler->filter('div.santoral')->first();
-        echo $crawlerTemporal->html();
-        $wholeText = $crawlerTemporal->html().$crawlerSantoral->html();
-        // instantiate and use the dompdf class
-
-        $dompdf = new Dompdf();
-        $f;
-        $l;
-        if(headers_sent($f,$l))
-        {
-            echo $f,'<br/>',$l,'<br/>';
-            die('now detect line');
+    public function getText(
+        $text_format,
+        $source,
+        $liturgy_date,
+        IgrejaSantaInesAssembler $santaInesAssembler,
+        CNBBAssembler $cnbbAssembler
+    ){
+        $textAssembler = $santaInesAssembler;
+        if ($source === "CNBB") {
+            $textAssembler = $cnbbAssembler;
         }
-        $dompdf->loadHtml($crawlerTemporal->html());
-        // (Optional) Setup the paper size and orientation
-        $dompdf->setPaper('A4', 'landscape');
-        // Render the HTML as PDF
-        $dompdf->render();
-        // Output the generated PDF to Browser
-        $dompdf->stream();
+        $docFile = $textAssembler->getDocument($liturgy_date, $text_format);
 
+        // Send the temporal file as response (as an attachment)
+        $response = new BinaryFileResponse($docFile);
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            "document.".$text_format
+        );
+        return $response;
     }
-
-    private function genSourceRoute($source, $liturgy_date)
-    {
-        $miniDate= str_replace("-", "", $liturgy_date);
-        $liturgyRoute = "http://www.igrejasantaines.com/liturgia/?h=".$miniDate;
-        
-        return $liturgyRoute;
-    }
-
-    private function getRawContent($url)
-    {
-        $link = curl_init();
-        curl_setopt($link, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($link, CURLOPT_URL, $url);
-        $data = curl_exec($link);
-        curl_close($link);
-        return $data;
-    }
-
 }

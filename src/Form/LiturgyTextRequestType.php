@@ -27,19 +27,23 @@ class LiturgyTextRequestType extends AbstractType
                       'expanded' => false,
                       'multiple' => false,
                       'choices' => [
-                          'PDF'=>'PDF',
-                          'RTF'=> 'RTF'
+                          'pdf'=>'pdf',
+                          'rtf'=> 'rtf'
                       ]
                   ]
               )
-              ->add('liturgy_date', DateType::class, ['label' => 'Liturgy Date : '])
+              ->add(
+                  'liturgy_date',
+                  DateType::class,
+                  ['label' => 'Liturgy Date : ', 'format' => 'yyy-MM-dd', 'data' => new \DateTime()]
+              )
               ->add('source', ChoiceType::class, [
                   'expanded' => false,
                   'multiple' => false,
                   'label' => 'Source :',
                   'choices' => [
                       'CNBB'=>'CNBB',
-                      'Igreja_Santa_Ines'=> 'Igreja Santa Ines'
+                      'Igreja Santa Ines'=> 'Igreja_Santa_Ines'
                   ]
               ])
               ->add('submit', SubmitType::class, ['label' => 'Get Text'])
