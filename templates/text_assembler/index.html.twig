@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liturgy Text Assembler{% endblock %}
+
+{% block body %}
+    <h1>Liturgy Text Assembler</h1>
+
+
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.source) }}
+        </br>
+        {{ form_row(form.liturgy_date) }}
+        </br>
+        {{ form_row(form.text_format) }}
+        <div>
+            <hr>
+            {{ form_row(form.submit) }}
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
