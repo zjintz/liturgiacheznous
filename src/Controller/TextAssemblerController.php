@@ -73,7 +73,7 @@ class TextAssemblerController extends AbstractController
         $response = new BinaryFileResponse($docFile);
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            "document.".$text_format
+            "doc-".$source."_".$liturgy_date.".".$text_format
         );
         return $response;
     }

@@ -35,7 +35,7 @@ class IgrejaSantaInesAssembler extends AbstractAssembler
     protected function assemble($data)
     {
         $textFilter = new IgrejaSantaInesFilter();
-        $filteredText = $textFilter->filter($data);
+        $litText = $textFilter->filter($data);
 
 
         // Create a new Word document
@@ -44,13 +44,21 @@ class IgrejaSantaInesAssembler extends AbstractAssembler
         /* Note: any element you append to a document must reside inside of a Section. */
 
         // Adding an empty Section to the document...
-        $section = $phpWord->addSection();
+        $dayTitle = $phpWord->addSection();
+        $l1Text = $phpWord->addSection();
+        $salmoText = $phpWord->addSection();
+        $gospelText = $phpWord->addSection();
+
+        
         // Adding Text element to the Section having font styled by default...
-        $section->addText(
-            '"Learn from yesterday, live for today, hope for tomorrow. '
-            . 'The important thing is not to stop questioning." '
-            . '(Albert Einstein)'
-        );
+        $dayTitle->addText($litText["dayTitle"]);
+        $l1Text->addText($litText["l1Title"]);
+        $l1Text->addText($litText["l1Text"]);
+        $salmoText->addText($litText["salmoTitle"]);
+        $salmoText->addText($litText["salmoText"]);
+        $gospelText->addText($litText["gospelTitle"]);
+        $gospelText->addText($litText["gospelText"]);
+
 
         // Saving the document as OOXML file...
         $objWriter = IOFactory::createWriter($phpWord, 'RTF');
