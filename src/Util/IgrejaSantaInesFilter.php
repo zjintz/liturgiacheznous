@@ -5,7 +5,7 @@ namespace App\Util;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * \brief      Assembles documents from the CNBBA source.
+ * \brief      Filters raw Data from the Igreja Santa Ines source.
  *
  *
  */

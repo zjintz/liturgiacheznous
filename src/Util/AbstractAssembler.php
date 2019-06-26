@@ -11,9 +11,10 @@ namespace App\Util;
  */
 abstract class AbstractAssembler
 {
+
     // Force Extending class to define this method
     abstract protected function genSourceRoute($liturgyDate);
-    abstract protected function assemble($data);
+    abstract protected function assemble($data, $format = "rtf");
 
 
     
