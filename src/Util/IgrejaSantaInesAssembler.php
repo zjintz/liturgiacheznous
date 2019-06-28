@@ -36,7 +36,10 @@ class IgrejaSantaInesAssembler extends AbstractAssembler
     {
         $textFilter = new IgrejaSantaInesFilter();
         $litText = $textFilter->filter($data);
-
+        if( $litText["status"] === "Not_Found" )
+        {
+            return $litText["status"];
+        }
         // Create a new Word document
         $phpWord = new PhpWord();
 

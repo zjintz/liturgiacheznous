@@ -16,6 +16,20 @@ class CNBBFilter
     {
         $litText = [];
         $crawler = new Crawler($data);
+        $checkFoundCrawler = $crawler->filter(
+            'div.blog-post div#corpo_leituras'
+        );
+        if ($checkFoundCrawler->count())
+        {
+            if (trim($checkFoundCrawler->first()->text())
+                === "Leitura não disponível.")
+            {
+                $litText["status"] = "Not_Found";
+                return $litText;
+            }
+        }
+        $litText["status"] = "Success";
+
         $litText["dayTitle"] = $crawler->filter('div.bs-callout h2 ')->first()->text();
         $litText["l1Title"] = $crawler->filter('h3.title-leitura')->first()->html();
         

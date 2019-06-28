@@ -27,13 +27,21 @@ class CNBBAssembler extends AbstractAssembler
     // Force Extending class to define this method
     protected function genSourceRoute($liturgyDate)
     {
-        return "http://liturgiadiaria.cnbb.org.br/app/user/user/UserView.php";
+        $cnbb = "http://liturgiadiaria.cnbb.org.br/app/user/user/UserView.php";
+        $pieces = explode("-", $liturgyDate);
+        $addThis = "?ano=".$pieces[0]."&mes=".$pieces[1]."&dia=".$pieces[2];
+        $url = $cnbb.$addThis;
+        return $url;
     }
 
     protected function assemble($data, $format = 'rtf')
     {
         $textFilter = new CNBBFilter();
         $litText = $textFilter->filter($data);
+        if( $litText["status"] === "Not_Found" )
+        {
+            return $litText["status"];
+        }
 
         // Create a new Word document
         $phpWord = new PhpWord();

@@ -23,9 +23,13 @@ class TextAssemblerController extends AbstractController
 {
 
     /**
-     * @Route("/assembler", name="assembler_index")
+     * @Route("/{_locale}/assembler/", name="assembler_index",
+     *     requirements={
+     *         "_locale"="%app.locales%"
+     *     }
+     * )
      */
-    public function index(Request $request)
+    public function index($_locale, Request $request)
     {
      
         $form = $this->createForm(LiturgyTextRequestType::class);
@@ -37,6 +41,7 @@ class TextAssemblerController extends AbstractController
             return $this->redirectToRoute(
                 'assembler_text',
                 [
+                    '_locale' => $_locale,
                     'text_format' => $data['text_format'],
                     'source' => $data['source'],
                     'liturgy_date' => $data['liturgy_date']->format('Y-m-d')
@@ -53,22 +58,41 @@ class TextAssemblerController extends AbstractController
     }
 
     /**
-     * @Route("/assembler/text/{text_format}/{source}/{liturgy_date}/",
-     * name="assembler_text")
+     * @Route("/{_locale}/assembler/text/{text_format}/{source}/{liturgy_date}/",
+     * name="assembler_text",
+     * defaults={
+     *         "text_format": "pdf",
+     *         "source": "CNBB"
+     *     },
+     * requirements={
+     *         "_locale" : "%app.locales%",
+     *         "text_format": "pdf|rtf",
+     *         "source": "CNBB|Igreja_Santa_Ines"
+     *     }
+     *)
      */
     public function getText(
+        $_locale,
         $text_format,
         $source,
         $liturgy_date,
         IgrejaSantaInesAssembler $santaInesAssembler,
         CNBBAssembler $cnbbAssembler
-    ){
+    ) {
         $textAssembler = $santaInesAssembler;
         if ($source === "CNBB") {
             $textAssembler = $cnbbAssembler;
         }
         $docFile = $textAssembler->getDocument($liturgy_date, $text_format);
-
+        if ($docFile === "Not_Found") {
+            return $this->render(
+                'text_assembler/not_found.html.twig',
+                [
+                    'source' => $source,
+                    'liturgy_date' => $liturgy_date
+                ]
+            );
+        }
         // Send the temporal file as response (as an attachment)
         $response = new BinaryFileResponse($docFile);
         $response->setContentDisposition(

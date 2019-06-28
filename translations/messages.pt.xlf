@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="assembler_title">
+                <source>assembler.title</source>
+                <target>Liturgia Diária</target>
+            </trans-unit>
+            <trans-unit id="form_label_text_format">
+                <source>form.label.text_format</source>
+                <target>Formato :</target>
+            </trans-unit>
+            <trans-unit id="form_label_liturgy_date">
+                <source>form.label.liturgy_date</source>
+                <target>Data da Liturgia :</target>
+            </trans-unit>
+            <trans-unit id="form_label_source">
+                <source>form.label.source</source>
+                <target>Fonte :</target>
+            </trans-unit>
+            <trans-unit id="form_button_get_text">
+                <source>form.button.get_text</source>
+                <target>Obter Texto</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

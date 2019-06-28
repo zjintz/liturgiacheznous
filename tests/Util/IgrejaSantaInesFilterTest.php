@@ -6,13 +6,26 @@ use PHPUnit\Framework\TestCase;
 
 class IgrejaSantaInesFilterTest extends TestCase
 {
+    protected function readExample($path)
+    {
+        $example = fopen($path, "r") or die("Unable to open file!");
+        $data =  fread($example, filesize($path));
+        fclose($example);
+        return $data;
+    }
+    public function testFilterNotFound()
+    {
+        $iFilter = new IgrejaSantaInesFilter();
+        $data = $this->readExample("./tests/Util/ExampleSantaInes_NOT_FOUND.html");
+        $liturgyText = $iFilter->filter($data);
+        $this->assertEquals("Not_Found", $liturgyText["status"]);
+    }
     public function testFilter()
     {
         $iFilter = new IgrejaSantaInesFilter();
-        $example = fopen("./tests/Util/ExampleSantaInes.html", "r") or die("Unable to open file!");
-        $data =  fread($example,filesize("./tests/Util/ExampleSantaInes.html"));
-        fclose($example);
+        $data = $this->readExample("./tests/Util/ExampleSantaInes.html");
         $liturgyText = $iFilter->filter($data);
+        $this->assertEquals("Success", $liturgyText["status"]);
         $this->assertEquals( "25/06/2019 (3ª-FEIRA)", $liturgyText["dayTitle"]);
         $this->assertEquals(
             "1a Leitura - ANO IMPAR Gn 13,2.5-18",

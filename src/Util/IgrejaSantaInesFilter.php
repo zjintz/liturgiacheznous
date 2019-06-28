@@ -16,6 +16,18 @@ class IgrejaSantaInesFilter
     {
         $litText = [];
         $crawler = new Crawler($data);
+        $checkFoundCrawler = $crawler->filter(
+            'section.post-content div.czr-wp-the-content'
+        );
+        if( $checkFoundCrawler->count() )
+        {
+            if( trim($checkFoundCrawler->first()->text()) === "DIA INDEFINIDO" )
+            {
+                $litText["status"] = "Not_Found";
+                return $litText;
+            }
+        }
+        $litText["status"] = "Success";
         $litText["dayTitle"] = $crawler->filter('div.nav-dia center ')->first()->text();
         $litText["dayTitle"] = trim(str_replace(">>", "", $litText["dayTitle"]));
         $litText["l1Title"] = $crawler->filter('div.temporal button.accordion')->first()->html();
