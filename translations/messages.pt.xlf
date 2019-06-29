@@ -6,6 +6,10 @@
                 <source>assembler.title</source>
                 <target>Liturgia Diária</target>
             </trans-unit>
+            <trans-unit id="assembler_warning_no_text_found">
+                <source>assembler.warning.no_text_found</source>
+                <target>Texto não encontrado.</target>
+            </trans-unit>
             <trans-unit id="form_label_text_format">
                 <source>form.label.text_format</source>
                 <target>Formato :</target>
@@ -21,6 +25,10 @@
             <trans-unit id="form_button_get_text">
                 <source>form.button.get_text</source>
                 <target>Obter Texto</target>
+            </trans-unit>
+            <trans-unit id="link_return">
+                <source>link.return</source>
+                <target>voltar</target>
             </trans-unit>
         </body>
     </file>

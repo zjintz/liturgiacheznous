@@ -64,9 +64,9 @@ class TextAssemblerControllerTest extends WebTestCase
         
         $this->assertEquals(
             1,
-            $crawler->filter('html a:contains("Return")')->count()
+            $crawler->filter('html a:contains("return")')->count()
         );
-        $client->clickLink('Return');
+        $client->clickLink('return');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $crawler = $client->request('GET', '/en/assembler/text/rtf/CNBB/1900-01-01/');
@@ -82,9 +82,9 @@ class TextAssemblerControllerTest extends WebTestCase
         
         $this->assertEquals(
             1,
-            $crawler->filter('html a:contains("Return")')->count()
+            $crawler->filter('html a:contains("return")')->count()
         );
-        $client->clickLink('Return');
+        $client->clickLink('return');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
     }
