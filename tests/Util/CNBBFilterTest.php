@@ -16,14 +16,14 @@ class CNBBFilterTest extends TestCase
     public function testFilterNotFound()
     {
         $iFilter = new CNBBFilter();
-        $data = $this->readExample("./tests/Util/ExampleCNBB_NOT_FOUND.html");
+        $data = $this->readExample("./tests/Util/examples/ExampleCNBB_NOT_FOUND.html");
         $liturgyText = $iFilter->filter($data);
         $this->assertEquals("Not_Found", $liturgyText["status"]);
     }
     public function testFilter()
     {
         $iFilter = new CNBBFilter();
-        $data = $this->readExample("./tests/Util/ExampleCNBB.html");
+        $data = $this->readExample("./tests/Util/examples/ExampleCNBB.html");
         $liturgyText = $iFilter->filter($data);
         $temporalText = $liturgyText["temporal"];
         $santoralText = $liturgyText["santoral"];

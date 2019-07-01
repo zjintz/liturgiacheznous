@@ -17,7 +17,7 @@ class IgrejaSantaInesFilterDomingoTest extends TestCase
     public function testFilter()
     {
         $iFilter = new IgrejaSantaInesFilter();
-        $data = $this->readExample("./tests/Util/ExampleSantaInesDomingo.html");
+        $data = $this->readExample("./tests/Util/examples/ExampleSantaInesDomingo.html");
         $liturgyText = $iFilter->filter($data);
         $temporalText = $liturgyText["temporal"];
         $santoralText = $liturgyText["santoral"];

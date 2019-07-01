@@ -16,14 +16,14 @@ class IgrejaSantaInesFilterTest extends TestCase
     public function testFilterNotFound()
     {
         $iFilter = new IgrejaSantaInesFilter();
-        $data = $this->readExample("./tests/Util/ExampleSantaInes_NOT_FOUND.html");
+        $data = $this->readExample("./tests/Util/examples/ExampleSantaInes_NOT_FOUND.html");
         $liturgyText = $iFilter->filter($data);
         $this->assertEquals("Not_Found", $liturgyText["status"]);
     }
     public function testFilter()
     {
         $iFilter = new IgrejaSantaInesFilter();
-        $data = $this->readExample("./tests/Util/ExampleSantaInes.html");
+        $data = $this->readExample("./tests/Util/examples/ExampleSantaInes.html");
         $liturgyText = $iFilter->filter($data);
         $temporalText = $liturgyText["temporal"];
         $santoralText = $liturgyText["santoral"];
