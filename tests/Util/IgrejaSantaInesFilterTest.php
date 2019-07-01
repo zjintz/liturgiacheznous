@@ -1,29 +1,26 @@
 <?php
 namespace App\Tests\Util;
 
+use App\Tests\Util\BaseFilterTest;
 use App\Util\IgrejaSantaInesFilter;
-use PHPUnit\Framework\TestCase;
 
-class IgrejaSantaInesFilterTest extends TestCase
+class IgrejaSantaInesFilterTest extends BaseFilterTest
 {
-    protected function readExample($path)
-    {
-        $example = fopen($path, "r") or die("Unable to open file!");
-        $data =  fread($example, filesize($path));
-        fclose($example);
-        return $data;
-    }
     public function testFilterNotFound()
     {
         $iFilter = new IgrejaSantaInesFilter();
-        $data = $this->readExample("./tests/Util/examples/ExampleSantaInes_NOT_FOUND.html");
+        $data = $this->readExample(
+            "./tests/Util/examples/ExampleSantaInes_NOT_FOUND.html"
+        );
         $liturgyText = $iFilter->filter($data);
         $this->assertEquals("Not_Found", $liturgyText["status"]);
     }
     public function testFilter()
     {
         $iFilter = new IgrejaSantaInesFilter();
-        $data = $this->readExample("./tests/Util/examples/ExampleSantaInes.html");
+        $data = $this->readExample(
+            "./tests/Util/examples/ExampleSantaInes.html"
+        );
         $liturgyText = $iFilter->filter($data);
         $temporalText = $liturgyText["temporal"];
         $santoralText = $liturgyText["santoral"];

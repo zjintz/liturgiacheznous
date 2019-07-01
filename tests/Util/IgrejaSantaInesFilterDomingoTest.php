@@ -2,18 +2,11 @@
 namespace App\Tests\Util;
 
 use App\Util\IgrejaSantaInesFilter;
-use PHPUnit\Framework\TestCase;
+use App\Tests\Util\BaseFilterTest;
 
-class IgrejaSantaInesFilterDomingoTest extends TestCase
-{
-    protected function readExample($path)
-    {
-        $example = fopen($path, "r") or die("Unable to open file!");
-        $data =  fread($example, filesize($path));
-        fclose($example);
-        return $data;
-    }
 
+class IgrejaSantaInesFilterDomingoTest extends BaseFilterTest
+{    
     public function testFilter()
     {
         $iFilter = new IgrejaSantaInesFilter();

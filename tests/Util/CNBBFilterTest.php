@@ -1,18 +1,12 @@
 <?php
 namespace App\Tests\Util;
 
+use App\Tests\Util\BaseFilterTest;
 use App\Util\CNBBFilter;
-use PHPUnit\Framework\TestCase;
 
-class CNBBFilterTest extends TestCase
+class CNBBFilterTest extends BaseFilterTest
 {
-    protected function readExample($path)
-    {
-        $example = fopen($path, "r") or die("Unable to open file!");
-        $data =  fread($example, filesize($path));
-        fclose($example);
-        return $data;
-    }
+    
     public function testFilterNotFound()
     {
         $iFilter = new CNBBFilter();
