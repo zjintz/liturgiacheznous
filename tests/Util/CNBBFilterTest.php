@@ -3,6 +3,7 @@ namespace App\Tests\Util;
 
 use App\Tests\Util\BaseFilterTest;
 use App\Util\CNBBFilter;
+use App\Entity\LiturgyText;
 
 class CNBBFilterTest extends BaseFilterTest
 {
@@ -12,23 +13,19 @@ class CNBBFilterTest extends BaseFilterTest
         $iFilter = new CNBBFilter();
         $data = $this->readExample("./tests/Util/examples/ExampleCNBB_NOT_FOUND.html");
         $liturgyText = $iFilter->filter($data);
-        $this->assertEquals("Not_Found", $liturgyText["status"]);
+        $this->assertEquals("Not_Found", $liturgyText->getLoadStatus());
     }
+    
     public function testFilter()
     {
         $iFilter = new CNBBFilter();
         $data = $this->readExample("./tests/Util/examples/ExampleCNBB.html");
         $liturgyText = $iFilter->filter($data);
-        $temporalText = $liturgyText["temporal"];
-        $santoralText = $liturgyText["santoral"];
-        $this->assertEquals("Success", $temporalText["status"]);
-        $this->assertEquals("Not_Found", $santoralText["status"]);
-        $this->assertEquals(false, $temporalText["hasL2"]);
-        $this->assertEquals("3ª-feira da 12ª Semana Do Tempo Comum", $liturgyText["dayTitle"]);
-        $this->assertEquals(
-            "1ª Leitura - Gn 13,2.5-18",
-            $temporalText["l1Title"]
-        );
+        $temporalSection = $liturgyText->getTemporalSection();
+        $santoralSection = $liturgyText->getSantoralSection();
+        $this->assertEquals("Not_Found", $santoralSection->getLoadStatus());
+        $this->assertEquals("Success", $temporalSection->getLoadStatus());
+        $this->assertEquals(false, $temporalSection->getSecondReading());
         $l1Intro = "Não deve haver discórdia entre nós pois somos irmãos.";
         $l1Subtitle= "Leitura do Livro do Gênesis 13,2.5-18";
         $l1Text = <<<EOD
@@ -82,10 +79,7 @@ Abrão foi morar junto ao Carvalho de Mambré, que está em Hebron,
 e ali construiu um altar ao Senhor.
 Palavra do Senhor.
 EOD;
-        $this->assertEquals(
-            "Salmo - Sl 14, 2-3ab. 3cd-4ab. 5 (R. 1b)",
-            $temporalText["salmoTitle"]
-        );
+        
         $salmoChorus = "R. Senhor, quem morará em vosso Monte Santo?";
         $salmoText = <<<EOD
 É aquele que caminha sem pecado*
@@ -102,10 +96,6 @@ não empresta o seu dinheiro com usura,
 nem se deixa subornar contra o inocente.*
 Jamais vacilará quem vive assim!R.
 EOD;
-        $this->assertEquals(
-            "Evangelho - Mt 7,6.12-14",
-            $temporalText["gospelTitle"]
-        );
 
         $gospelIntro = "Tudo quanto quereis que os outros vos façam, fazei também a eles.";
         $gospelSubtitle = "+ Proclamação do Evangelho de Jesus Cristo Segundo São Mateus 7,6.12-14";
@@ -127,14 +117,26 @@ e apertado o caminho que leva à vida!
 E são poucos os que o encontram!
 Palavra da Salvação.
 EOD;
-    
-        $this->assertEquals($l1Subtitle, $temporalText["l1Subtitle"]);
-        $this->assertEquals($l1Intro, $temporalText["l1Intro"]);
-        $this->assertEquals($l1Text, $temporalText["l1Text"]);
-        $this->assertEquals($salmoChorus, $temporalText["salmoChorus"]);
-        $this->assertEquals($salmoText, $temporalText["salmoText"]);
-        $this->assertEquals($gospelSubtitle, $temporalText["gospelSubtitle"]);
-        $this->assertEquals($gospelIntro, $temporalText["gospelIntro"]);
-        $this->assertEquals($gospelText, $temporalText["gospelText"]);
+
+        $this->assertEquals(
+            "3ª-feira da 12ª Semana Do Tempo Comum",
+            $liturgyText->getDayTitle()
+        );
+        $l1Title =  "1ª Leitura - Gn 13,2.5-18";
+        $firstReading = $temporalSection->getFirstReading();
+        $this->assertReading($l1Title, $l1Subtitle, $l1Intro, $l1Text, $firstReading);
+  
+        $salmoTitle = "Salmo - Sl 14, 2-3ab. 3cd-4ab. 5 (R. 1b)";
+        $salmoReading = $temporalSection->getPsalmReading();
+        $this->assertPsalm($salmoTitle, $salmoChorus, $salmoText, $salmoReading);
+        $gospelTitle = "Evangelho - Mt 7,6.12-14";
+        $gospelReading = $temporalSection->getGospelReading();
+        $this->assertReading(
+            $gospelTitle, 
+            $gospelSubtitle,
+            $gospelIntro, 
+            $gospelText,
+            $gospelReading
+        );
     }
 }

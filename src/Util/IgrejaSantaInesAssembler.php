@@ -33,9 +33,9 @@ class IgrejaSantaInesAssembler extends AbstractAssembler
     {
         $textFilter = new IgrejaSantaInesFilter();
         $litText = $textFilter->filter($data);
-        if( $litText["status"] === "Not_Found" )
+        if( $litText->getLoadStatus() === "Not_Found" )
         {
-            return $litText["status"];
+            return $litText->getLoadStatus();
         }
         return $this->createDocument($format, $litText, $this->projectDir);
     }

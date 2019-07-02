@@ -2,6 +2,10 @@
 
 namespace App\Util;
 
+use App\Entity\LiturgyText;
+use App\Entity\LiturgySection;
+use App\Entity\LiturgyReading;
+use App\Entity\PsalmReading;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -30,69 +34,80 @@ class CNBBFilter
     }
     protected function getTemporalText($crawler)
     {
-        $litText["status"] = "Success";
-        $litText["hasL2"] = false;
+        $litSection = new LiturgySection();
+        $litSection->setLoadStatus("Success");
         $titlesCrawler = $crawler->filter('div#corpo_leituras div h3.title-leitura');
         $introCrawler = $crawler->filter('div#corpo_leituras div div div.cit_direita_italico');
         $subTitlesCrawler = $crawler->filter('div#corpo_leituras div div div.cit_direita');
-        $litText["l1Title"] = trim($titlesCrawler->first()->text());
-        $litText["salmoTitle"] = trim($titlesCrawler->eq(1)->text());
-        $litText["gospelTitle"] = trim($titlesCrawler->last()->text());
-        $litText["l1Subtitle"] = trim($subTitlesCrawler->first()->text());
-        $litText["gospelSubtitle"] = trim($subTitlesCrawler->last()->text());
-        $litText["l1Intro"] = trim($introCrawler->first()->text());
-        $litText["gospelIntro"] = trim($introCrawler->last()->text());
-        $litText["gospelIntro"] = preg_replace('/\s+/', ' ', $litText["gospelIntro"]);
-        
-
-
-        $subCrawler = $crawler->filter('div#corpo_leituras div')->first();
-        $litText["l1Text"] = $subCrawler->filter('div span')->each( function (Crawler $node, $i) {
+        $firstReading = new LiturgyReading();
+        $firstReading->setTitle(trim($titlesCrawler->first()->text()));
+        $firstReading->setSubtitle(trim($subTitlesCrawler->first()->text()));
+        $firstReading->setIntroduction(trim($introCrawler->first()->text()));
+        $subCrawler = $crawler->filter('div#corpo_leituras div')->first();        
+        $l1Text = $subCrawler->filter('div span')->each( function (Crawler $node, $i) {
                                return $node->text();
                            }
         );
-        $litText["l1Text"] = implode("\n", $litText["l1Text"]);
-        $litText["salmoChorus"] = $crawler->filter('div div.refrao_salmo')->first()->text();
-        
+        $l1Text = implode("\n", $l1Text);
+        $firstReading->setText($l1Text);
+        $litSection->setFirstReading($firstReading);
+        $psalmReading = new PsalmReading();
+        $psalmReading->setTitle(trim($titlesCrawler->eq(1)->text()));
+        $psalmReading->setChorus($crawler->filter('div div.refrao_salmo')->first()->text());
         $salmoCrawler = $crawler->filter('div div.refrao_salmo')->siblings();
-        $litText["salmoText"] = $salmoCrawler->filter('span')->each( function (Crawler $node, $i) {
+        $salmoText = $salmoCrawler->filter('span')->each( function (Crawler $node, $i) {
                                return $node->text();
                            }
         );
-        $litText["salmoText"] = implode("\n", $litText["salmoText"]);
-        $litText["salmoText"] = str_replace("\nR.\n", "\n\n", $litText["salmoText"]);
-        $litText["salmoText"] = str_replace("R. \nR.", "R.", $litText["salmoText"]);
+        $salmoText = implode("\n", $salmoText);
+        $salmoText = str_replace("\nR.\n", "\n\n", $salmoText);
+        $salmoText = str_replace("R. \nR.", "R.", $salmoText);
+        $psalmReading->setText($salmoText);
+        $litSection->setPsalmReading($psalmReading);
+        $gospelTitle = trim($titlesCrawler->last()->text());
+
+        $gospelSubtitle = trim($subTitlesCrawler->last()->text());
+
+        $gospelIntro = trim($introCrawler->last()->text());
+        $gospelIntro = preg_replace('/\s+/', ' ', $gospelIntro);
+        
         $subCrawler = $crawler->filter('div#corpo_leituras div')->eq(2);
         $gospelCrawler = $subTitlesCrawler->last()->siblings();
-        $litText["gospelText"] = $gospelCrawler->filter('span')->each( function (Crawler $node, $i) {
+        $gospelText = $gospelCrawler->filter('span')->each( function (Crawler $node, $i) {
                                return $node->text();
                            }
         );
-        $litText["gospelText"] = implode("\n", $litText["gospelText"]);
-        return $litText;
-
+        $gospelText = implode("\n", $gospelText);
+        $gospelReading = new LiturgyReading();
+        $gospelReading->setTitle($gospelTitle);
+        $gospelReading->setSubtitle($gospelSubtitle);
+        $gospelReading->setIntroduction($gospelIntro);
+        $gospelReading->setText($gospelText);
+        $litSection->setGospelReading($gospelReading);
+        return $litSection;
     }
 
     protected function getSantoralText($crawler)
     {
-        return ["status" => "Not_Found"];
+        $litSection = new LiturgySection();
+        $litSection->setLoadStatus("Not_Found");
+        return $litSection;
     }
     
     public function filter($data)
     {
-        $litText = [];
+        $litText = new LiturgyText();
         $crawler = new Crawler($data);
         if (!$this->isValidDate($crawler)){
-            $litText["status"] = "Not_Found";
+            $litText->setLoadStatus("Not_Found");
             return $litText;
         }
-        $litText["status"] = "Success";
-        $litText["dayTitle"] = trim($crawler->filter('div.bs-callout h2 ')->first()->text());
-        $litText["dayTitle"] = preg_replace('/\s+/', ' ', $litText["dayTitle"]);
-
-        $litText["temporal"] = $this->getTemporalText($crawler);
-        $litText["santoral"] = $this->getSantoralText($crawler);
-      
+        $litText->setLoadStatus("Success");
+        $dayTitle = trim($crawler->filter('div.bs-callout h2 ')->first()->text());
+        $dayTitle = preg_replace('/\s+/', ' ', $dayTitle);
+        $litText->setDayTitle($dayTitle);
+        $litText->setTemporalSection($this->getTemporalText($crawler));
+        $litText->setSantoralSection($this->getSantoralText($crawler));
         return $litText;
     }
 }

@@ -8,10 +8,35 @@ namespace App\Entity;
  */
 class LiturgyText
 {
+    private $dayTitle;
     private $temporalSection;
-
     private $santoralSection;
+    private $loadStatus;
 
+
+    public function getDayTitle(): ?string
+    {
+        return $this->dayTitle;
+    }
+
+    public function setDayTitle(string $dayTitle): self
+    {
+        $this->dayTitle = $dayTitle;
+
+        return $this;
+    }
+    
+    public function getLoadStatus(): ?string
+    {
+        return $this->loadStatus;
+    }
+
+    public function setLoadStatus(string $loadStatus): self
+    {
+        $this->loadStatus = $loadStatus;
+
+        return $this;
+    }
     public function getTemporalSection(): ?LiturgySection
     {
         return $this->temporalSection;
@@ -23,6 +48,8 @@ class LiturgyText
 
         return $this;
     }
+
+
 
     public function getSantoralSection(): ?LiturgySection
     {

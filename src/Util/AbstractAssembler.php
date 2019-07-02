@@ -72,71 +72,71 @@ abstract class AbstractAssembler
         $textStyle = 'textStyle';
         $phpWord->addParagraphStyle($textStyle, array( 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => 230));
 
-        $temporalInfo = $litText["temporal"];
+        $temporalSection = $litText->getTemporalSection();
         
         $dayTitle = $phpWord->addSection();
         $temporal = $phpWord->addSection();
-        $dayTitle->addTitle($litText["dayTitle"], $titleStyle);
-        $dayTitle->addTextBreak(2);
+        /*$dayTitle->addTitle($litText->getDayTitle(), $titleStyle);
+                $dayTitle->addTextBreak(2);
         $temporal->addTitle('Temporal', $titleStyle);
         $temporal->addTextBreak();
-        $temporal->addTitle($temporalInfo["l1Title"], $titleStyle2);
+        $temporal->addTitle($temporalSection["l1Title"], $titleStyle2);
         $temporal->addTextBreak(1);
-        $temporal->addText($temporalInfo["l1Intro"], $introStyle, $paragraphIntroStyle);
-        $temporal->addTitle($temporalInfo["l1Subtitle"], $subTitle);
+        $temporal->addText($temporalSection["l1Intro"], $introStyle, $paragraphIntroStyle);
+        $temporal->addTitle($temporalSection["l1Subtitle"], $subTitle);
         $temporal->addTextBreak(1);
-        $temporal->addText($temporalInfo["l1Text"], $textFontStyle, $textStyle );
-        $temporal->addTitle($temporalInfo["salmoTitle"], $titleStyle2);
+        $temporal->addText($temporalSection["l1Text"], $textFontStyle, $textStyle );
+        $temporal->addTitle($temporalSection["salmoTitle"], $titleStyle2);
         $temporal->addTextBreak(1);
-        $temporal->addText($temporalInfo["salmoChorus"], $salmoFontStyle);
-        $temporal->addText($temporalInfo["salmoText"], $textFontStyle, $textStyle);
-        if ($temporalInfo["hasL2"]) {
-            $temporal->addTitle($temporalInfo["l2Title"],  $titleStyle2);
+        $temporal->addText($temporalSection["salmoChorus"], $salmoFontStyle);
+        $temporal->addText($temporalSection["salmoText"], $textFontStyle, $textStyle);
+        if ($temporalSection["hasL2"]) {
+            $temporal->addTitle($temporalSection["l2Title"],  $titleStyle2);
             $temporal->addTextBreak(1);
-            $temporal->addText($temporalInfo["l2Intro"], $introStyle, $paragraphIntroStyle);
-            $temporal->addTitle($temporalInfo["l2Subtitle"], $subTitle);
+            $temporal->addText($temporalSection["l2Intro"], $introStyle, $paragraphIntroStyle);
+            $temporal->addTitle($temporalSection["l2Subtitle"], $subTitle);
             $temporal->addTextBreak(1);
-            $temporal->addText($temporalInfo["l2Text"], $textFontStyle, $textStyle);
+            $temporal->addText($temporalSection["l2Text"], $textFontStyle, $textStyle);
         }
-        $temporal->addTitle($temporalInfo["gospelTitle"],  $titleStyle2);
+        $temporal->addTitle($temporalSection["gospelTitle"],  $titleStyle2);
         $temporal->addTextBreak(1);
-        $temporal->addText($temporalInfo["gospelIntro"], $introStyle, $paragraphIntroStyle);
-        $temporal->addTitle($temporalInfo["gospelSubtitle"], $subTitle);
+        $temporal->addText($temporalSection["gospelIntro"], $introStyle, $paragraphIntroStyle);
+        $temporal->addTitle($temporalSection["gospelSubtitle"], $subTitle);
         $temporal->addTextBreak(1);
-        $temporal->addText($temporalInfo["gospelText"], $textFontStyle, $textStyle);
+        $temporal->addText($temporalSection["gospelText"], $textFontStyle, $textStyle);
 
         $temporal->addTextBreak(2);
-        $santoralInfo = $litText["santoral"];
-        if($santoralInfo["status"] === "Success"){
+        $santoralSection = $litText["santoral"];
+        if($santoralSection["status"] === "Success"){
 
 
             $santoral = $phpWord->addSection();
             $santoral->addTitle('Santoral', $titleStyle);
             $santoral->addTextBreak();
-            $santoral->addTitle($santoralInfo["l1Title"],  $titleStyle2);
+            $santoral->addTitle($santoralSection["l1Title"],  $titleStyle2);
             $santoral->addTextBreak(1);
-            $santoral->addText($santoralInfo["l1Intro"], $introStyle, $paragraphIntroStyle);
-            $santoral->addTitle($santoralInfo["l1Subtitle"], $subTitle);
+            $santoral->addText($santoralSection["l1Intro"], $introStyle, $paragraphIntroStyle);
+            $santoral->addTitle($santoralSection["l1Subtitle"], $subTitle);
             $temporal->addTextBreak(1);
-            $santoral->addText($santoralInfo["l1Text"], $textFontStyle, $textStyle);
-            $santoral->addTitle($santoralInfo["salmoTitle"],  $titleStyle2);
+            $santoral->addText($santoralSection["l1Text"], $textFontStyle, $textStyle);
+            $santoral->addTitle($santoralSection["salmoTitle"],  $titleStyle2);
             $santoral->addTextBreak(1);
-            $santoral->addText($santoralInfo["salmoChorus"], $salmoFontStyle);
-            $santoral->addText($santoralInfo["salmoText"], $textFontStyle, $textStyle);
-            if ($santoralInfo["hasL2"]) {
-                $santoral->addTitle($santoralInfo["l2Title"],  $titleStyle2);
+            $santoral->addText($santoralSection["salmoChorus"], $salmoFontStyle);
+            $santoral->addText($santoralSection["salmoText"], $textFontStyle, $textStyle);
+            if ($santoralSection["hasL2"]) {
+                $santoral->addTitle($santoralSection["l2Title"],  $titleStyle2);
                 $temporal->addTextBreak(1);
-                $santoral->addText($santoralInfo["l2Intro"], $introStyle, $paragraphIntroStyle);
-                $santoral->addTitle($santoralInfo["l2Subtitle"], $subTitle);
+                $santoral->addText($santoralSection["l2Intro"], $introStyle, $paragraphIntroStyle);
+                $santoral->addTitle($santoralSection["l2Subtitle"], $subTitle);
                 $santoral->addTextBreak(1);
-                $santoral->addText($santoralInfo["l2Text"], $textFontStyle, $textStyle);
+                $santoral->addText($santoralSection["l2Text"], $textFontStyle, $textStyle);
             }
-            $santoral->addTitle($santoralInfo["gospelTitle"],  $titleStyle2);
+            $santoral->addTitle($santoralSection["gospelTitle"],  $titleStyle2);
             $santoral->addTextBreak(1);
-            $santoral->addText($santoralInfo["gospelIntro"], $introStyle, $paragraphIntroStyle);
-            $santoral->addTitle($santoralInfo["gospelSubtitle"], $subTitle);
+            $santoral->addText($santoralSection["gospelIntro"], $introStyle, $paragraphIntroStyle);
+            $santoral->addTitle($santoralSection["gospelSubtitle"], $subTitle);
             $santoral->addTextBreak(1);
-            $santoral->addText($santoralInfo["gospelText"], $textFontStyle, $textStyle);
+            $santoral->addText($santoralSection["gospelText"], $textFontStyle, $textStyle);
         }
 
         // Adding Text element to the Section having font styled by default...
@@ -160,9 +160,7 @@ abstract class AbstractAssembler
                 $filePath = $projDir.'/var/cache/generatedDoc.'.$format;
         // Write file into path
         $objWriter->save($filePath);
-        return $filePath;
-
-
+        return $filePath;*/
     }
 
     /**

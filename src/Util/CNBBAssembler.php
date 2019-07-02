@@ -37,12 +37,12 @@ class CNBBAssembler extends AbstractAssembler
     protected function assemble($data, $format = 'rtf')
     {
         $textFilter = new CNBBFilter();
-        $litText = $textFilter->filter($data);
-        if ($litText["status"] === "Not_Found")
+        $liturgyText = $textFilter->filter($data);
+        if ($liturgyText->getLoadStatus() === "Not_Found")
         {
-            return $litText["status"];
+            return $liturgyText->getLoadStatus();
         }
-        return $this->createDocument($format, $litText, $this->projectDir);
+        return $this->createDocument($format, $liturgyText, $this->projectDir);
     }
 
 }

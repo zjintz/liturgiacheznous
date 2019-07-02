@@ -8,12 +8,23 @@ namespace App\Entity;
  */
 class LiturgySection
 {
-    
+    private $loadStatus;
     private $firstReading;
     private $psalmReading;
     private $secondReading;
     private $gospelReading;
 
+    public function getLoadStatus(): ?string
+    {
+        return $this->loadStatus;
+    }
+
+    public function setLoadStatus(string $loadStatus): self
+    {
+        $this->loadStatus = $loadStatus;
+
+        return $this;
+    }
     public function getFirstReading(): ?LiturgyReading
     {
         return $this->firstReading;
@@ -31,7 +42,7 @@ class LiturgySection
         return $this->psalmReading;
     }
 
-    public function setPsalmReading(Psalm $psalmReading): self
+    public function setPsalmReading(PsalmReading $psalmReading): self
     {
         $this->psalmReading = $psalmReading;
 

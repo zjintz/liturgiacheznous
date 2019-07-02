@@ -13,4 +13,19 @@ abstract class BaseFilterTest extends TestCase
         fclose($example);
         return $data;
     }
+    
+    protected function assertReading($title, $subtitle, $intro, $text, $reading)
+    {
+        $this->assertEquals($title, $reading->getTitle());
+        $this->assertEquals($subtitle, $reading->getSubtitle());
+        $this->assertEquals($intro, $reading->getIntroduction());
+        $this->assertEquals($text, $reading->getText());
+    }
+
+    protected function assertPsalm($title, $chorus, $text, $reading)
+    {
+        $this->assertEquals($title, $reading->getTitle());
+        $this->assertEquals($chorus, $reading->getChorus());
+        $this->assertEquals($text, $reading->getText());
+    }
 }
