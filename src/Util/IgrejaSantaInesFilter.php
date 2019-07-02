@@ -45,22 +45,8 @@ class IgrejaSantaInesFilter
                            );
         
         $l1Text = implode("", $l1Text);
-
-        $salmoTitle = $crawler->filter('div.'.$name.' button.accordion')->eq(1)->html();
-        $salmoTitle = str_replace("<br>", " ", $salmoTitle);
         $gospelTitle = $crawler->filter('div.'.$name.' button.accordion')->last()->html();
         $gospelTitle = str_replace("<br>", " ", $gospelTitle);
-
-        $salmoChorus = trim($crawler->filter('div.'.$name.' div.refrao_salmo span')->first()->text());
-        $salmoCrawler = $crawler->filter('div.'.$name.' div.panel.salmo')->children('span, div.refrao_salmo2');
-
-        $salmoText = $salmoCrawler->each( function (Crawler $node, $i) {
-                               return $node->text();
-                           }
-                           );
-        $salmoText = implode("", $salmoText);
-        $salmoText = str_replace("R.", "\nR.\n", $salmoText);
-        $salmoText = trim(str_replace(" \nR.\n ", "\nR.\n", $salmoText));
 
         $gospelSubtitle = $crawler->filter('div.'.$name.' div.panel div.cit_direita')->last()->text();
         $gospelIntro = trim($crawler->filter('div.'.$name.' div.panel')->last()->filter('div.cit_direita_italico')->first()->text());
@@ -84,15 +70,33 @@ class IgrejaSantaInesFilter
             $gospelIntro,
             $gospelText
         );
-        $psalmReading = new PsalmReading();
-        $psalmReading->setTitle($salmoTitle);
-        $psalmReading->setChorus($salmoChorus);
-        $psalmReading->setText($salmoText);
+        
         $section->setFirstReading($firstReading);
-        $section->setPsalmReading($psalmReading);
+        $section->setPsalmReading($this->getPsalm($crawler, $name));
         $section->setGospelReading($gospelReading);
         $section = $this->addL2($crawler, $name, $section);
         return $section;
+    }
+
+    protected function getPsalm($crawler, $name): PsalmReading
+    {
+        $title = $crawler->filter('div.'.$name.' button.accordion')->eq(1)->html();
+        $title = str_replace("<br>", " ", $title);
+        $chorus = trim($crawler->filter('div.'.$name.' div.refrao_salmo span')->first()->text());
+        $salmoCrawler = $crawler->filter('div.'.$name.' div.panel.salmo')->children('span, div.refrao_salmo2');
+
+        $text = $salmoCrawler->each( function (Crawler $node, $i) {
+                               return $node->text();
+                           }
+                           );
+        $text = implode("", $text);
+        $text = str_replace("R.", "\nR.\n", $text);
+        $text = trim(str_replace(" \nR.\n ", "\nR.\n", $text));
+        $psalmReading = new PsalmReading();
+        $psalmReading->setTitle($title);
+        $psalmReading->setChorus($chorus);
+        $psalmReading->setText($text);
+        return $psalmReading;
     }
 
     protected function addL2($crawler, $name, $section)
