@@ -67,20 +67,20 @@ EOD;
     protected function assertSantoral($santoralSection)
     {
         $l1Title = "1a Leitura - SANTORAL 2Tm 4,1-5";
-        $salmoTitle = "Salmo - SANTORAL Sl 88(89),2-3.4-5.21-22.25 e 27 (R. cf. 2a)";
-        $gospelTitle = "Evangelho - SANTORAL Mt 5,13-19";
-
         $l1Intro = "Desempenha o teu serviço de pregador do evangelho, e cumpre com perfeição o teu ministério.";
         $l1Subtitle= "Leitura da Segunda Carta de São Paulo a Timóteo 4, 1-5";
-        $salmoChorus = "Ó Senhor, eu cantarei eternamente vosso amor.";
+        $l1Text = <<<EOD
+Caríssimo: Diante de Deus e de Cristo Jesus, que há de vir a julgar os vivos e os mortos, e em virtude da sua manifestação gloriosa e do seu Reino, eu te peço com insistência: proclama a palavra, insiste oportuna ou importunamente, argumenta, repreende, aconselha, com toda a paciência e doutrina. Pois vai chegar o tempo em que não suportarão a só doutrina, mas, com o prurido da curiosidade nos ouvidos, se rodearão de mestres ao sabor de seus próprios caprichos. E assim, deixando de ouvir a verdade, se desviarão para as fábulas. Tu, porém, mostra vigilância em tudo, suporta o sofrimento, desempenha o teu serviço de pregador do evangelho, cumpre com perfeição o teu ministério. Sê sóbrio. Palavra do Senhor. 
+EOD;
+
+        $gospelTitle = "Evangelho - SANTORAL Mt 5,13-19";
         $gospelIntro = "Vós sois a luz do mundo.";
         $gospelSubtitle = "+ Proclamação do Evangelho de Jesus Cristo segundo Mateus 5, 13-19";
         $gospelText = <<<EOD
 Naquele tempo, disse Jesus aos seus discípulos: 'Vós sois o sal da terra. Ora, se o sal se tornar insosso, com que salgaremos? Ele não servirá para mais nada, senão para ser jogado fora e ser pisado pelos homens. Vós sois a luz do mundo. Não pode ficar escondida uma cidade construída sobre um monte. Ninguém acende uma lâmpada e a coloca debaixo de uma vasilha, mas sim num candeeiro, onde ela brilha para todos os que estão em casa. Assim também brilhe a vossa luz diante dos homens, para que vejam as vossas boas obras e louvem o vosso Pai que está nos céus. Não penseis que vim abolir a Lei e os Profetas. Não vim para abolir, mas para dar-lhes pleno cumprimento. Em verdade, eu vos digo: antes que o céu e a terra deixem de existir, nem uma só letra ou vírgula serão tiradas da Lei, sem que tudo se cumpra. Portanto, quem desobedecer a um só destes mandamentos, por menor que seja, e ensinar os outros a fazerem o mesmo, será considerado o menor no Reino dos Céus. Porém, quem os praticar e ensinar será considerado grande no Reino dos Céus'. Palavra da Salvação. 
 EOD;
-        $l1Text = <<<EOD
-Caríssimo: Diante de Deus e de Cristo Jesus, que há de vir a julgar os vivos e os mortos, e em virtude da sua manifestação gloriosa e do seu Reino, eu te peço com insistência: proclama a palavra, insiste oportuna ou importunamente, argumenta, repreende, aconselha, com toda a paciência e doutrina. Pois vai chegar o tempo em que não suportarão a só doutrina, mas, com o prurido da curiosidade nos ouvidos, se rodearão de mestres ao sabor de seus próprios caprichos. E assim, deixando de ouvir a verdade, se desviarão para as fábulas. Tu, porém, mostra vigilância em tudo, suporta o sofrimento, desempenha o teu serviço de pregador do evangelho, cumpre com perfeição o teu ministério. Sê sóbrio. Palavra do Senhor. 
-EOD;
+        $salmoTitle = "Salmo - SANTORAL Sl 88(89),2-3.4-5.21-22.25 e 27 (R. cf. 2a)";
+        $salmoChorus = "Ó Senhor, eu cantarei eternamente vosso amor.";
         $salmoText = <<<EOD
 Ó Senhor, eu cantarei eternamente o vosso amor, / de geração em geração eu cantarei vossa verdade!Porque dissestes: 'O amor é garantido para sempre!' / E a vossa lealdade é tão firme como os céus.
 R.
@@ -93,21 +93,23 @@ R.
 EOD;
         $firstReading = $santoralSection->getFirstReading();
         $this->assertReading(
-            $l1Title, $l1Subtitle, $l1Intro, $l1Text, $firstReading
+            $l1Title,
+            $l1Subtitle,
+            $l1Intro,
+            $l1Text,
+            $firstReading
         );
         $salmoReading = $santoralSection->getPsalmReading();
         $this->assertPsalm($salmoTitle, $salmoChorus, $salmoText, $salmoReading);
         $gospelReading = $santoralSection->getGospelReading();
         $this->assertReading(
-            $gospelTitle, 
+            $gospelTitle,
             $gospelSubtitle,
-            $gospelIntro, 
+            $gospelIntro,
             $gospelText,
             $gospelReading
-        );    
-    
+        );
     }
-        
 }
     
 

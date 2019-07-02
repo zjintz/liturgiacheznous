@@ -125,7 +125,6 @@ EOD;
         $l1Title =  "1ª Leitura - Gn 13,2.5-18";
         $firstReading = $temporalSection->getFirstReading();
         $this->assertReading($l1Title, $l1Subtitle, $l1Intro, $l1Text, $firstReading);
-  
         $salmoTitle = "Salmo - Sl 14, 2-3ab. 3cd-4ab. 5 (R. 1b)";
         $salmoReading = $temporalSection->getPsalmReading();
         $this->assertPsalm($salmoTitle, $salmoChorus, $salmoText, $salmoReading);

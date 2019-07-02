@@ -91,12 +91,15 @@ class IgrejaSantaInesFilter
         $section->setFirstReading($firstReading);
         $section->setPsalmReading($psalmReading);
         $section->setGospelReading($gospelReading);
-        
+        $section = $this->addL2($crawler, $name, $section);
         return $section;
     }
 
     protected function addL2($crawler, $name, $section)
     {
+        if ($crawler->filter('div.'.$name.' button.accordion')->count() != 4) {
+            return $section;
+        }
 
         $l2Title = $crawler->filter('div.'.$name.' button.accordion')->eq(2)->html();
         $l2Title = str_replace("<br>", " ", $l2Title);
@@ -122,11 +125,7 @@ class IgrejaSantaInesFilter
     protected function getTemporalText($crawler)
     {
         $litSection = new LiturgySection();
-        $litSection  = $this->getSection($crawler, "temporal");
-        if ($crawler->filter('div.temporal button.accordion')->count() == 4)
-        {
-            $litSection = $this->addL2($crawler, "temporal", $litSection);
-        }
+        $litSection = $this->getSection($crawler, "temporal");
         return $litSection;
 
     }
@@ -137,10 +136,6 @@ class IgrejaSantaInesFilter
         if($crawler->filter('div.santoral')->count())
         {
             $litText  = $this->getSection($crawler, "santoral");
-            if($crawler->filter('div.santoral button.accordion')->count() == 4)
-            {
-                $litText = $this->addL2($crawler, "santoral", $litText);
-            }
             return $litText;
         }
         $litSection->setLoadStatus("Not_Found");
