@@ -1,0 +1,504 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Liturgia Diária">
+        <meta name="author" content="Conferência Nacional dos Bispos do Brasil">
+
+
+        <meta name="keywords" content="liturgia,liturgia di&aacute;ria,liturgia diaria,cnbb,a palavra de deus na vida" />
+        <meta name="keywords" content="deus,leituras b&iacute;blicas,leitura biblica,leitura de hoje,leitura hoje" />
+        <meta name="keywords" content="b&iacute;blia, biblia,leitura,biblica,evangelho,evangelhos, cnbb, igreja" />
+        <meta name="keywords" content="miss&atilde;o da f&eacute;, missao da fe, Deus, f&eacute;, igreja cat&oacute;lica" />
+        <meta name="keywords" content="cat&oacute;lica, bispos, bispo, dioceses, diocese, arquidioceses" />
+
+        <link rel="stylesheet" type="text/css" media="all" href="/app/arquivos/bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="/app/arquivos/bootstrap/css/docs.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="/app/arquivos/css/liturgia.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="/app/arquivos/css/menu_style.css_" />
+        <link type="text/css" rel="stylesheet" href="/app/arquivos/css/cssUser.css_">
+        <link type="text/css" rel="stylesheet" href="/app/arquivos/tinymce/css/word.css">
+        <link rel="stylesheet" href="/app/arquivos/css/interface_calendario_user.css" type="text/css" media="screen">
+
+        <link href="http://servico.cnbb.org.br/themes/default/css/colorbox.css" rel="stylesheet">
+
+        <script type="text/javascript" src="http://servico.cnbb.org.br/themes/default/js/jquery-1.8.0.min.js"></script>
+        <script type="text/javascript" src="http://servico.cnbb.org.br/themes/default/js/jquery.colorbox-min.js"></script>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script type="text/javascript">
+         $(document).ready(function(e) {
+	         $(".colorbox").colorbox({iframe:true, width:"35%", height:"60%", slideshow: true});
+         });
+        </script>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Liturgia :: A Palavra de Deus na Vida :: CNBB</title>
+        <!-- TinyMCE -->
+
+        <script type="text/javascript" src="/app/arquivos/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+
+        <script type="text/javascript">
+
+         <!--
+
+                                       tinyMCE.init({
+
+                                           // General options
+
+                                           mode : "textareas",
+
+                                           theme : "advanced",
+
+                                           plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,inlinepopups",
+
+
+
+                                           // Theme options
+
+                                           theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+
+                                           theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+
+                                           theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+
+                                           theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
+
+                                           theme_advanced_toolbar_location : "top",
+
+                                           theme_advanced_toolbar_align : "left",
+
+                                           theme_advanced_statusbar_location : "bottom",
+
+                                           theme_advanced_resizing : true,
+
+
+
+                                           // Example word content CSS (should be your site CSS) this one removes paragraph margins
+
+                                           content_css : "/app/arquivos/tinymce/css/word.css",
+
+
+
+                                           // Drop lists for link/image/media/template dialogs
+
+                                           template_external_list_url : "/app/arquivos/tinymce/lists/template_list.js",
+
+                                           external_link_list_url : "/app/arquivos/tinymce/lists/link_list.js",
+
+                                           external_image_list_url : "/app/arquivos/tinymce/lists/image_list.js",
+
+                                           media_external_list_url : "/app/arquivos/tinymce/lists/media_list.js",
+
+
+
+                                           // Replace values for the template plugin
+
+                                           template_replace_values : {
+
+                                               username : "Some User",
+
+                                               staffid : "991234"
+
+                                           }
+
+                                       });
+
+         -->
+
+        </script>
+
+        <!-- /TinyMCE -->
+        <script type="text/javascript">
+         function enviaEmail (){
+             $("email").value = trim($("email").value);
+             if(validaEmail($F("email"))) load(AJAX_BASE_EMAIL + "EmailAjax.php",'POST','email=' + $F('email')+
+                                                                                        '&parametroEmail=' + parametroEmail,
+                                               function (response){
+                                                   alert(response.responseText);
+                                                   $("email").value = "";
+                                                   labelEmailMessagemPadrao();
+                                               });
+             else alert("E-mail inconsistente!");
+         }
+         var referenciaLeituras = [];
+
+         function showLeitura(referencia){
+             for(var i =0; i < referenciaLeituras.length; i++){
+                 if(referenciaLeituras[i] != referencia){
+                     document.getElementById(referenciaLeituras[i]).style.display = "none";
+                 }else {
+                     document.getElementById(referenciaLeituras[i]).style.display = "inline";
+                 }
+             }
+         }
+         function buscaLeitura(){
+             var link = '/app/user/user/UserView.php';
+             link += "?mes=" + document.getElementById("mes").value;
+             link += "&ano=" + document.getElementById("ano").value;
+             document.location.href = link;
+         }
+         function pdf(){
+             for(var i =0; i < referenciaLeituras.length; i++){
+                 if(document.getElementById(referenciaLeituras[i]).style.display == "inline"){
+                     window.open("/app/classes/controller/PDFController.php?codigoLeitura=" + referenciaLeituras[i]);
+                 }
+             }
+         }
+         /*VARIAVEL QUE INDICA PARAMETRO PARA DIFERENCIAR A INDICAÇÃO DE UM AMIGO DE UM CADASTRO PRÓPRIO*/
+         /* 1 para cadastro próprio e 2 para indicação de amigo */
+         var parametroEmail = 1;
+         function indiqueUmAmigoEmail(){
+             $("labelEmail").innerHTML = "Indique o email de um amigo: ";
+             $("email").focus();
+             parametroEmail = 2;
+         }
+         function labelEmailMessagemPadrao(){
+             parametroEmail = 1;
+             $("labelEmail").innerHTML = "Receba as leituras por e-mail:";
+         }
+        </script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-12590111-1"></script>
+        <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
+
+         gtag('config', 'UA-12590111-1');
+        </script>
+
+        <!--Google Analictys -->
+    </head>
+
+
+
+    <body>
+	    <div class="blog-masthead">
+		    <div class="container">
+			    <nav class="blog-nav">
+			        <a href="/" class="blog-nav-item active">Home</a>
+			        <a href="http://www.vatican.va/phome_po.htm" class="blog-nav-item" target="_blank">Santa Sé</a>
+			        <a href="http://www.celam.org/" class="blog-nav-item" target="_blank">CELAM</a>
+			        <a href="http://www.cnbb.org.br" class="blog-nav-item" target="_blank">CNBB</a>
+			        <a href="http://www.cnbb.org.br/site/regionais" class="blog-nav-item" target="_blank">Regionais</a>
+			        <a href="http://www.cnbb.org.br/category/comissoes-episcopais-pastorais" class="blog-nav-item" target="_blank">Comissões Episcopais</a> </nav>
+		    </div>
+	    </div>
+
+	    <div class="blog-header">
+		    <div class="container">
+			    <h1 class="blog-title blog-title-topo">Liturgia Diária</h1>
+			    <p class="text-right">
+				    <img src="/app/arquivos/img/cnbb.png" />
+			    </p>
+		    </div>
+	    </div>
+
+	    <div class="container">
+		    <div class="bs-callout bs-callout-info">
+			    <h2>São Pedro e São Paulo, Apóstolos . Solenidade</h2><p><strong>30 de Junho de 2019</strong></p><p class="text-right"><em>Cor: Vermelho</em></p>
+            </div>
+        </div>
+
+	    <div class="container">
+
+		    <div id="topo">
+			</div>
+
+
+		    <div class="row">
+			    <div class="col-sm-7 blog-main">
+                    
+
+                    <div class="blog-post">
+                        <div id="corpo_leituras">
+							
+						    <div id="2360" style="display: none;">
+							    <h3 class="title-leitura">
+								    1ª Leitura - At 12,1-11							</h3>
+
+							    
+							    <div class="text-right addthis">
+							        <script type="text/javascript" src="/app/arquivos/bootstrap/js/addthis_widget.js#pubid=ra-4e1212f86ebe42f7"></script>
+							        <div class="addthis_sharing_toolbox"></div>
+							    </div>
+
+							    <div>
+								    <div class="cit_direita_italico">Agora sei que o Senhor enviou o seu anjo<br /> para me libertar do poder de Herodes.</div>
+                                    <div class="cit_direita">Leitura dos Atos dos Ap&oacute;stolos 12,1-11</div>
+                                    <p><span class="tabulacao">Naqueles dias,<br /></span> 1<span class="tab_num">o rei Herodes<br /></span> <span class="tabulacao">prendeu alguns membros da Igreja, para tortur&aacute;-los.<br /></span> 2<span class="tab_num">Mandou matar &agrave; espada Tiago, irm&atilde;o de Jo&atilde;o.<br /></span> 3<span class="tab_num">E, vendo que isso agradava aos judeus,<br /></span> <span class="tabulacao">mandou tamb&eacute;m prender a Pedro.<br /></span> <span class="tabulacao">Eram os dias dos P&atilde;es &aacute;zimos.<br /></span> <span class="tabulacao">Depois de prender Pedro,<br /></span> <span class="tabulacao">Herodes colocou-o na pris&atilde;o,<br /></span> <span class="tabulacao">guardado por quatro grupos de soldados,<br /></span> <span class="tabulacao">com quatro soldados cada um.<br /></span> <span class="tabulacao">Herodes tinha a inten&ccedil;&atilde;o de apresent&aacute;-lo ao povo,<br /></span> <span class="tabulacao">depois da festa da P&aacute;scoa.<br /></span> 5<span class="tab_num">Enquanto Pedro era mantido na pris&atilde;o,<br /></span> <span class="tabulacao">a Igreja rezava continuamente a Deus por ele.<br /></span> 6<span class="tab_num">Herodes estava para apresent&aacute;-lo.<br /></span> <span class="tabulacao">Naquela mesma noite,<br /></span> <span class="tabulacao">Pedro dormia entre dois soldados,<br /></span> <span class="tabulacao">preso com duas correntes;<br /></span> <span class="tabulacao">e os guardas vigiavam a porta da pris&atilde;o.<br /></span> 7<span class="tab_num">Eis que apareceu o anjo do Senhor<br /></span> <span class="tabulacao">e uma luz iluminou a cela.<br /></span> <span class="tabulacao">O anjo tocou o ombro de Pedro, acordou-o e disse:<br /></span> <span class="tabulacao">"Levanta-te depressa!"<br /></span> <span class="tabulacao">As corrrentes ca&iacute;ram-lhe das m&atilde;os.<br /></span> 8<span class="tab_num">O anjo continuou:<br /></span> <span class="tabulacao">"Coloca o cinto e cal&ccedil;a tuas sand&aacute;lias!"<br /></span> <span class="tabulacao">Pedro obedeceu e o anjo lhe disse:<br /></span> <span class="tabulacao">"P&otilde;e tua capa e vem comigo!"<br /></span> 9<span class="tab_num">Pedro acompanhou-o, e n&atilde;o sabia que era realidade<br /></span> <span class="tabulacao">o que estava acontecendo por meio do anjo,<br /></span> <span class="tabulacao">pois pensava que aquilo era uma vis&atilde;o.<br /></span> 10<span class="tab_num2">Depois de passarem pela primeira e segunda guarda,<br /></span> <span class="tabulacao">chegaram ao port&atilde;o de ferro que dava para a cidade.<br /></span> <span class="tabulacao">O port&atilde;o abriu-se sozinho. Eles sa&iacute;ram, <br /></span> <span class="tabulacao">caminharam por uma rua e logo depois o anjo o deixou.<br /></span> 11<span class="tab_num2">Ent&atilde;o Pedro caiu em si e disse:<br /></span> <span class="tabulacao">"Agora sei, de fato, que o Senhor enviou o seu anjo<br /></span> <span class="tabulacao">para me libertar do poder de Herodes<br /></span> <span class="tabulacao">e de tudo o que o povo judeu esperava!"<br /></span> <span class="tabulacao negrito">Palavra do Senhor.<br /></span></p>							</div>
+						    </div>
+							
+						    <div id="2361" style="display: none;">
+							    <h3 class="title-leitura">
+								    Salmo - Sl 33(34),2-3.4-5.6-7.8-9 (R. 5)							</h3>
+
+							    
+							    <div class="text-right addthis">
+							        <script type="text/javascript" src="/app/arquivos/bootstrap/js/addthis_widget.js#pubid=ra-4e1212f86ebe42f7"></script>
+							        <div class="addthis_sharing_toolbox"></div>
+							    </div>
+
+							    <div>
+								    <p><span class="refrao_salmo">R.De todos os temores me livrou o Senhor Deus.<br /></span> 2<span class="tab_num">Bendirei o Senhor Deus em todo o tempo, *<br /></span> <span class="tabulacao">seu louvor estar&aacute; sempre em minha boca.<br /></span> 3<span class="tab_num">Minha alma se gloria no Senhor; *<br /></span> <span class="tabulacao">que ou&ccedil;am os humildes e se alegrem!<span class="tabulacao"> R.</span><br /></span><br /> 4<span class="tab_num">Comigo engrandecei ao Senhor Deus, *<br /></span> <span class="tabulacao">exaltemos todos juntos o seu nome!<br /></span> 5<span class="tab_num">Todas as vezes que o busquei, ele me ouviu, *<br /></span> <span class="tabulacao">e de todos os temores me livrou.<span class="tabulacao"> R.</span><br /></span><br /> 6<span class="tab_num">Contemplai a sua face e alegrai-vos, *<br /></span> <span class="tabulacao">e vosso rosto n&atilde;o se cubra de vergonha!<br /></span> 7<span class="tab_num">Este infeliz gritou a Deus, e foi ouvido, *<br /></span> <span class="tabulacao">e o Senhor o libertou de toda ang&uacute;stia.<span class="tabulacao"> R.</span><br /></span><br /> 8<span class="tab_num">O anjo do Senhor vem acampar *<br /></span> <span class="tabulacao">ao redor dos que o temem, e os salva.<br /></span> 9<span class="tab_num">Provai e vede qu&atilde;o suave &eacute; o Senhor! *<br /></span> <span class="tabulacao">Feliz o homem que tem nele o seu ref&uacute;gio!<span class="tabulacao"> R.</span><br /></span></p>							</div>
+						    </div>
+							
+						    <div id="2362" style="display: none;">
+							    <h3 class="title-leitura">
+								    2ª Leitura - 2Tm 4,6-8.17-18							</h3>
+
+							    
+							    <div class="text-right addthis">
+							        <script type="text/javascript" src="/app/arquivos/bootstrap/js/addthis_widget.js#pubid=ra-4e1212f86ebe42f7"></script>
+							        <div class="addthis_sharing_toolbox"></div>
+							    </div>
+
+							    <div>
+								    <div class="cit_direita_italico">Agora est&aacute; reservada para mim a coroa da justi&ccedil;a.</div>
+                                    <div class="cit_direita">Leitura da Segunda Carta de S&atilde;o Paulo a Tim&oacute;teo 4,6-8.17-18</div>
+                                    <p><span class="tabulacao">Car&iacute;ssimo:<br /></span> 6<span class="tab_num">Quanto a mim,<br /></span> <span class="tabulacao">eu j&aacute; estou para ser derramado em sacrif&iacute;cio;<br /></span> <span class="tabulacao">aproxima-se o momento de minha partida.<br /></span> 7<span class="tab_num">Combati o bom combate,<br /></span> <span class="tabulacao">completei a corrida, guardei a f&eacute;.<br /></span> 8<span class="tab_num">Agora est&aacute; reservada para mim a coroa da justi&ccedil;a,<br /></span> <span class="tabulacao">que o Senhor, justo juiz, me dar&aacute; naquele dia;<br /></span> <span class="tabulacao">e n&atilde;o somente a mim,<br /></span> <span class="tabulacao">mas tamb&eacute;m a todos que esperam com amor<br /></span> <span class="tabulacao">a sua manifesta&ccedil;&atilde;o gloriosa.<br /></span> 17<span class="tab_num2">Mas o Senhor esteve a meu lado e me deu for&ccedil;as;<br /></span> <span class="tabulacao">ele fez com que a mensagem<br /></span> <span class="tabulacao">fosse anunciada por mim integralmente,<br /></span> <span class="tabulacao">e ouvida por todas as na&ccedil;&otilde;es;<br /></span> <span class="tabulacao">e eu fui libertado da boca do le&atilde;o.<br /></span> 18<span class="tab_num2">O Senhor me libertar&aacute; de todo mal<br /></span> <span class="tabulacao">e me salvar&aacute; para o seu Reino celeste.<br /></span> <span class="tabulacao">A ele a gl&oacute;ria, pelos s&eacute;culos dos s&eacute;culos! Am&eacute;m.<br /></span> <span class="tabulacao negrito">Palavra do Senhor.<br /></span></p>							</div>
+						    </div>
+							
+						    <div id="2363" style="display: none;">
+							    <h3 class="title-leitura">
+								    Evangelho - Mt 16,13-19							</h3>
+
+							    
+							    <div class="text-right addthis">
+							        <script type="text/javascript" src="/app/arquivos/bootstrap/js/addthis_widget.js#pubid=ra-4e1212f86ebe42f7"></script>
+							        <div class="addthis_sharing_toolbox"></div>
+							    </div>
+
+							    <div>
+								    <div class="cit_direita_italico">Tu &eacute;s Pedro e eu te darei as<br /> chaves do Reino dos C&eacute;us.</div>
+                                    <div class="cit_direita">+ Proclama&ccedil;&atilde;o do Evangelho de Jesus Cristo segundo Mateus 16,13-19</div>
+                                    <p><span class="tabulacao">Naquele tempo:<br /></span> 13<span class="tab_num2">Jesus foi &agrave; regi&atilde;o de Cesar&eacute;ia de Filipe<br /></span> <span class="tabulacao">e ali perguntou aos seus disc&iacute;pulos:<br /></span> <span class="tabulacao">"Quem dizem os homens ser o Filho do Homem?"<br /></span> 14<span class="tab_num2">Eles responderam:<br /></span> <span class="tabulacao">"Alguns dizem que &eacute; Jo&atilde;o Batista; outros que &eacute; Elias;<br /></span> <span class="tabulacao">Outros ainda, que &eacute; Jeremias ou algum dos profetas".<br /></span> 15<span class="tab_num2">Ent&atilde;o Jesus lhes perguntou:<br /></span> <span class="tabulacao">"E v&oacute;s, quem dizeis que eu sou?"<br /></span> 16<span class="tab_num2">Sim&atilde;o Pedro respondeu:<br /></span> <span class="tabulacao">"Tu &eacute;s o Messias, o Filho do Deus vivo".<br /></span> 17<span class="tab_num2">Respondendo, Jesus lhe disse:<br /></span> <span class="tabulacao">"Feliz es tu, Sim&atilde;o, filho de Jonas,<br /></span> <span class="tabulacao">porque n&atilde;o foi um ser humano que te revelou isso,<br /></span> <span class="tabulacao">mas o meu Pai que est&aacute; no c&eacute;u.<br /></span> 18<span class="tab_num2">Por isso eu te digo que tu &eacute;s Pedro,<br /></span> <span class="tabulacao">e sobre esta pedra construirei a minha Igreja,<br /></span> <span class="tabulacao">e o poder do inferno nunca poder&aacute; venc&ecirc;-la.<br /></span> 19<span class="tab_num2">Eu te darei as chaves do Reino dos C&eacute;us:<br /></span> <span class="tabulacao">tudo o que tu ligares na terra ser&aacute; ligado nos c&eacute;us;<br /></span> <span class="tabulacao">tudo o que tu desligares na terra <br /></span> <span class="tabulacao">ser&aacute; desligado nos c&eacute;us".<br /></span> <span class="tabulacao negrito">Palavra da Salva&ccedil;&atilde;o.<br /></span></p>							</div>
+						    </div>
+						</div>
+
+				    </div>
+				    <!-- /.blog-post -->
+
+
+			    </div>
+			    <!-- /.blog-main -->
+
+			    <div class="col-sm-4 col-sm-offset-1 blog-sidebar">
+				    <div class="sidebar-module">
+				        
+				        <div>
+                            <a href="https://www.edicoescnbb.com.br/igreja-em-orac-o" target="_blank">
+				                <img src="/app/arquivos/img/igreja-oracao.jpg" />
+				            </a>
+                        </div>
+                        <br /><br />
+					    <h4><span>Leituras do Dia</span></h4>
+					    <div class="list-group">
+						    
+						    <script type="text/javascript">
+                             <!--
+                                                           referenciaLeituras[0] = '2360';
+                             -->
+                            </script>
+						    <p>
+							    <a style="cursor: pointer;" class="list-group-item"
+								          href="javascript:showLeitura('2360');">
+								    <strong>1ª Leitura - At 12,1-11							</strong>
+							    </a>
+						    </p>
+
+							
+						    <script type="text/javascript">
+                             <!--
+                                                           referenciaLeituras[1] = '2361';
+                             -->
+                            </script>
+						    <p>
+							    <a style="cursor: pointer;" class="list-group-item"
+								          href="javascript:showLeitura('2361');">
+								    <strong>Salmo - Sl 33(34),2-3.4-5.6-7.8-9 (R. 5)							</strong>
+							    </a>
+						    </p>
+
+							
+						    <script type="text/javascript">
+                             <!--
+                                                           referenciaLeituras[2] = '2362';
+                             -->
+                            </script>
+						    <p>
+							    <a style="cursor: pointer;" class="list-group-item"
+								          href="javascript:showLeitura('2362');">
+								    <strong>2ª Leitura - 2Tm 4,6-8.17-18							</strong>
+							    </a>
+						    </p>
+
+							
+						    <script type="text/javascript">
+                             <!--
+                                                           referenciaLeituras[3] = '2363';
+                             -->
+                            </script>
+						    <p>
+							    <a style="cursor: pointer;" class="list-group-item"
+								          href="javascript:showLeitura('2363');">
+								    <strong>Evangelho - Mt 16,13-19							</strong>
+							    </a>
+						    </p>
+
+						</div>
+						
+					    
+						<script type="text/javascript">
+                         <!--
+                                                       document.getElementById(referenciaLeituras[0]).style.display = "inline"
+                         -->
+                        </script>
+
+				    </div>
+
+
+				    
+				    <div class="sidebar-module calendario">
+					    <h4><span>Liturgia Diária</span></h4>
+					    <div class="row show-grid">
+						    <div class="list-group">
+							    <div class="text-center"><strong>30 de Junho de 2019</strong></div>
+							    <div class="text-center">
+							        mês: <select id="mes">
+									<option value="1"
+								    >
+									    Janeiro								</option>
+									<option value="2"
+								    >
+									    Fevereiro								</option>
+									<option value="3"
+								    >
+									    Março								</option>
+									<option value="4"
+								    >
+									    Abril								</option>
+									<option value="5"
+								    >
+									    Maio								</option>
+									<option value="6"
+								                   selected>
+									    Junho								</option>
+									<option value="7"
+								    >
+									    Julho								</option>
+									<option value="8"
+								    >
+									    Agosto								</option>
+									<option value="9"
+								    >
+									    Setembro								</option>
+									<option value="10"
+								    >
+									    Outubro								</option>
+									<option value="11"
+								    >
+									    Novembro								</option>
+									<option value="12"
+								    >
+									    Dezembro								</option>
+									</select> ano: <select id="ano">
+										<option value="2009"
+								        >
+									        2009								</option>
+										<option value="2010"
+								        >
+									        2010								</option>
+										<option value="2011"
+								        >
+									        2011								</option>
+										<option value="2012"
+								        >
+									        2012								</option>
+										<option value="2013"
+								        >
+									        2013								</option>
+										<option value="2014"
+								        >
+									        2014								</option>
+										<option value="2015"
+								        >
+									        2015								</option>
+										<option value="2016"
+								        >
+									        2016								</option>
+										<option value="2017"
+								        >
+									        2017								</option>
+										<option value="2018"
+								        >
+									        2018								</option>
+										<option value="2019"
+								                       selected>
+									        2019								</option>
+										<option value="2020"
+								        >
+									        2020								</option>
+										<option value="2021"
+								        >
+									        2021								</option>
+										<option value="2022"
+								        >
+									        2022								</option>
+										<option value="2023"
+								        >
+									        2023								</option>
+									</select> <img
+								                  src="/app/arquivos/img/1477_32x32.png"
+								                       title="selecione o mês e o ano para buscar um leitura"
+								                       onclick="buscaLeitura()" />
+							    </div>
+							    <div class="table-responsive"><table class="calendario table table-bordered table-condensed"><tr><td><a href='?mes=5&ano=2019'>&lt;&lt;</a></td><td colspan='5' align='center'>Junho de 2019</td><td align='center'><a href='?mes=7&ano=2019'>&gt;&gt;</a></td></tr><tr class='text-center'><th>DOM</th><th>SEG</th><th>TER</th><th>QUA</th><th>QUI</th><th>SEX</th><th>SAB</th></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td ><a href='?ano=2019&mes=6&dia=1'>01</a></td><tr><td ><a href='?ano=2019&mes=6&dia=2'>02</a></td><td ><a href='?ano=2019&mes=6&dia=3'>03</a></td><td ><a href='?ano=2019&mes=6&dia=4'>04</a></td><td ><a href='?ano=2019&mes=6&dia=5'>05</a></td><td ><a href='?ano=2019&mes=6&dia=6'>06</a></td><td ><a href='?ano=2019&mes=6&dia=7'>07</a></td><td ><a href='?ano=2019&mes=6&dia=8'>08</a></td><tr><td ><a href='?ano=2019&mes=6&dia=9'>09</a></td><td ><a href='?ano=2019&mes=6&dia=10'>10</a></td><td ><a href='?ano=2019&mes=6&dia=11'>11</a></td><td ><a href='?ano=2019&mes=6&dia=12'>12</a></td><td ><a href='?ano=2019&mes=6&dia=13'>13</a></td><td ><a href='?ano=2019&mes=6&dia=14'>14</a></td><td ><a href='?ano=2019&mes=6&dia=15'>15</a></td><tr><td ><a href='?ano=2019&mes=6&dia=16'>16</a></td><td ><a href='?ano=2019&mes=6&dia=17'>17</a></td><td ><a href='?ano=2019&mes=6&dia=18'>18</a></td><td ><a href='?ano=2019&mes=6&dia=19'>19</a></td><td ><a href='?ano=2019&mes=6&dia=20'>20</a></td><td ><a href='?ano=2019&mes=6&dia=21'>21</a></td><td ><a href='?ano=2019&mes=6&dia=22'>22</a></td><tr><td ><a href='?ano=2019&mes=6&dia=23'>23</a></td><td ><a href='?ano=2019&mes=6&dia=24'>24</a></td><td ><a href='?ano=2019&mes=6&dia=25'>25</a></td><td ><a href='?ano=2019&mes=6&dia=26'>26</a></td><td ><a href='?ano=2019&mes=6&dia=27'>27</a></td><td ><a href='?ano=2019&mes=6&dia=28'>28</a></td><td ><a href='?ano=2019&mes=6&dia=29'>29</a></td><tr><td  class="link-calendario"><a href='?ano=2019&mes=6&dia=30'>30</a></td></table></div>						</div>
+						</div>
+				    </div>
+				    
+				</div>
+			    <!-- /.blog-sidebar -->
+
+		    </div>
+		    <!-- /.row -->
+
+	    </div>
+	    <!-- /.container -->
+
+	    <div class="blog-footer">
+		    <p>
+			    <a href="http://www.cnbb.org.br" target="_blank">Conferência Nacional dos Bispos do
+				    Brasil</a>
+		    </p>
+	    </div>
+
+    </body>
+</html>

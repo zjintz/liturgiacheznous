@@ -15,6 +15,26 @@ class IgrejaSantaInesFilterTest extends BaseFilterTest
         $liturgyText = $iFilter->filter($data);
         $this->assertEquals("Not_Found", $liturgyText->getLoadStatus());
     }
+
+    public function testFilter2Chorus()
+    {
+        $iFilter = new IgrejaSantaInesFilter();
+        $data = $this->readExample(
+            "./tests/Util/examples/ExampleSantaInes_2CHORUS.html"
+        );
+        $liturgyText = $iFilter->filter($data);
+        $temporalSection = $liturgyText->getTemporalSection();
+
+        $salmoTitle = "Salmo - ANO FIXO Sl 46,2-3.6-7.8-9 (R.6)";
+        $salmoChorus = <<<EOD
+Por entre aclamações Deus se elevou, o Senhor subiu ao toque da trombeta. 
+Ou: Aleluia, Aleluia, Aleluia. 
+EOD;
+        $reading = $temporalSection->getPsalmReading();
+        $this->assertEquals($salmoTitle, $reading->getTitle());
+        $this->assertEquals($salmoChorus, $reading->getChorus());
+    }
+    
     public function testFilter()
     {
         $iFilter = new IgrejaSantaInesFilter();

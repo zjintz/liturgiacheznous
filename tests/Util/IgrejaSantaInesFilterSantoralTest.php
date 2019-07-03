@@ -28,7 +28,10 @@ class IgrejaSantaInesFilterSantoralTest extends BaseFilterTest
     {   
         $l1Intro = "Agar deu à luz o filho de Abrão, a quem ele pôs o nome de Ismael.";
         $l1Subtitle= "Leitura do Livro do Gênesis 16, 1-12. 15-16";
-        $salmoChorus = "Dai graças ao Senhor, porque ele é bom.";
+        $salmoChorus = <<<EOD
+Dai graças ao Senhor, porque ele é bom. 
+Ou: Aleluia, Aleluia, Aleluia. 
+EOD;
         $gospelIntro = "A casa construída sobre a rocha ea casa construída sobre a areia.";
         $gospelSubtitle = "+ Proclamação do Evangelho de Jesus Cristo segundo São Mateus 7, 21-29";
         $gospelText = <<<EOD
@@ -80,7 +83,7 @@ EOD;
 Naquele tempo, disse Jesus aos seus discípulos: 'Vós sois o sal da terra. Ora, se o sal se tornar insosso, com que salgaremos? Ele não servirá para mais nada, senão para ser jogado fora e ser pisado pelos homens. Vós sois a luz do mundo. Não pode ficar escondida uma cidade construída sobre um monte. Ninguém acende uma lâmpada e a coloca debaixo de uma vasilha, mas sim num candeeiro, onde ela brilha para todos os que estão em casa. Assim também brilhe a vossa luz diante dos homens, para que vejam as vossas boas obras e louvem o vosso Pai que está nos céus. Não penseis que vim abolir a Lei e os Profetas. Não vim para abolir, mas para dar-lhes pleno cumprimento. Em verdade, eu vos digo: antes que o céu e a terra deixem de existir, nem uma só letra ou vírgula serão tiradas da Lei, sem que tudo se cumpra. Portanto, quem desobedecer a um só destes mandamentos, por menor que seja, e ensinar os outros a fazerem o mesmo, será considerado o menor no Reino dos Céus. Porém, quem os praticar e ensinar será considerado grande no Reino dos Céus'. Palavra da Salvação. 
 EOD;
         $salmoTitle = "Salmo - SANTORAL Sl 88(89),2-3.4-5.21-22.25 e 27 (R. cf. 2a)";
-        $salmoChorus = "Ó Senhor, eu cantarei eternamente vosso amor.";
+        $salmoChorus = "Ó Senhor, eu cantarei eternamente vosso amor. ";
         $salmoText = <<<EOD
 Ó Senhor, eu cantarei eternamente o vosso amor, / de geração em geração eu cantarei vossa verdade!Porque dissestes: 'O amor é garantido para sempre!' / E a vossa lealdade é tão firme como os céus.
 R.

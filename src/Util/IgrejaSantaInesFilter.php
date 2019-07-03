@@ -82,7 +82,12 @@ class IgrejaSantaInesFilter
     {
         $title = $crawler->filter('div.'.$name.' button.accordion')->eq(1)->html();
         $title = str_replace("<br>", " ", $title);
-        $chorus = trim($crawler->filter('div.'.$name.' div.refrao_salmo span')->first()->text());
+        $chorusCrawler = $crawler->filter('div.'.$name.' div.refrao_salmo span');
+        $chorus = $chorusCrawler->each( function (Crawler $node, $i) {
+                               return $node->text();
+                           }
+                           );
+        $chorus = implode("\n", $chorus);
         $salmoCrawler = $crawler->filter('div.'.$name.' div.panel.salmo')->children('span, div.refrao_salmo2');
 
         $text = $salmoCrawler->each( function (Crawler $node, $i) {

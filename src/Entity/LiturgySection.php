@@ -54,7 +54,7 @@ class LiturgySection
         return $this->secondReading;
     }
 
-    public function setSecondReading(LiturgyReading $secondReading): self
+    public function setSecondReading(?LiturgyReading $secondReading): self
     {
         $this->secondReading = $secondReading;
 

@@ -15,6 +15,25 @@ class CNBBFilterTest extends BaseFilterTest
         $liturgyText = $iFilter->filter($data);
         $this->assertEquals("Not_Found", $liturgyText->getLoadStatus());
     }
+
+    public function testFilter2Chorus()
+    {
+        $iFilter = new CNBBFilter();
+        $data = $this->readExample(
+            "./tests/Util/examples/ExampleCNBB_2CHORUS.html"
+        );
+        $liturgyText = $iFilter->filter($data);
+        $temporalSection = $liturgyText->getTemporalSection();
+
+        $salmoTitle = "Salmo - Sl 67, 2-3. 4-5ac. 6-7ab (R. 33a)";
+        $salmoChorus = <<<EOD
+R. Reinos da terra, cantai ao Senhor.
+Ou: Aleluia, Aleluia, Aleluia
+EOD;
+        $reading = $temporalSection->getPsalmReading();
+        $this->assertEquals($salmoTitle, $reading->getTitle());
+        $this->assertEquals($salmoChorus, $reading->getChorus());
+    }
     
     public function testFilter()
     {
