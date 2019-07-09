@@ -5,8 +5,6 @@ namespace App\Util;
 use App\Util\AbstractAssembler;
 use App\Util\IgrejaSantaInesFilter;
 
-
-
 /**
  * \brief      Assembles documents from the CNBBA source.
  *
@@ -29,10 +27,10 @@ class IgrejaSantaInesAssembler extends AbstractAssembler
         return $liturgyRoute;
     }
 
-    protected function assemble($data, $format = "rtf")
+    protected function assemble($data, $format = "rtf", $liturgyDate = "")
     {
         $textFilter = new IgrejaSantaInesFilter();
-        $litText = $textFilter->filter($data);
+        $litText = $textFilter->filter($data, $liturgyDate);
         if( $litText->getLoadStatus() === "Not_Found" )
         {
             return $litText->getLoadStatus();

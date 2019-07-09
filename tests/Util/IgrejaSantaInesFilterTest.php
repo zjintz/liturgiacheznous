@@ -12,7 +12,7 @@ class IgrejaSantaInesFilterTest extends BaseFilterTest
         $data = $this->readExample(
             "./tests/Util/examples/ExampleSantaInes_NOT_FOUND.html"
         );
-        $liturgyText = $iFilter->filter($data);
+        $liturgyText = $iFilter->filter($data, "");
         $this->assertEquals("Not_Found", $liturgyText->getLoadStatus());
     }
 
@@ -22,7 +22,7 @@ class IgrejaSantaInesFilterTest extends BaseFilterTest
         $data = $this->readExample(
             "./tests/Util/examples/ExampleSantaInes_2CHORUS.html"
         );
-        $liturgyText = $iFilter->filter($data);
+        $liturgyText = $iFilter->filter($data, "");
         $temporalSection = $liturgyText->getTemporalSection();
 
         $salmoTitle = "Salmo - ANO FIXO Sl 46,2-3.6-7.8-9 (R.6)";
@@ -41,10 +41,11 @@ EOD;
         $data = $this->readExample(
             "./tests/Util/examples/ExampleSantaInes.html"
         );
-        $liturgyText = $iFilter->filter($data);
+        $liturgyText = $iFilter->filter($data, "2019-06-25");
         $temporalSection = $liturgyText->getTemporalSection();
         $santoralSection = $liturgyText->getSantoralSection();
-        $l1Title = "1a Leitura - ANO IMPAR Gn 13,2.5-18";        
+        $l1Title = "1a Leitura - ANO IMPAR Gn 13,2.5-18";
+        $l1Reference = "Gn 13,2.5-18";        
         $l1Intro = "Não deve haver discórdia entre nós pois somos irmãos.";
         $l1Subtitle= "Leitura do Livro do Gênesis 13, 2. 5-18";
         $l1Text = <<<EOD
@@ -64,6 +65,7 @@ EOD;
         $gospelTitle = "Evangelho - ANO IMPAR Mt 7,6.12-14";
         $gospelIntro = "Tudo quanto quereis que os outros vos façam, fazei também a eles.";
         $gospelSubtitle = "+ Proclamação do Evangelho de Jesus Cristo Segundo São Mateus 7, 6. 12-14";
+        $gospelAuthor = "Mateus";
         $gospelText = <<<EOD
 Naquele tempo, disse Jesus aos seus discípulos: Não deis aos cães as coisas santas, nem atireis vossas pérolas aos porcos; para que eles não as pisem com os pés e, voltando-se contra vós, vos despedacem. Tudo quanto quereis que os outros vos façam, fazei também a eles. Nisto consiste a Lei e os Profetas. Entrai pela porta estreita, porque larga é a porta e espaçoso é o caminho que leva à perdição, e muitos são os que entram por ele!Como é estreita a porta e apertado o caminho que leva à vida! E são poucos os que o encontram!Palavra da Salvação. 
 EOD;
@@ -71,22 +73,25 @@ EOD;
         $this->assertEquals("Success", $temporalSection->getLoadStatus());
         $this->assertEquals(false, $temporalSection->getSecondReading());
         $this->assertEquals("25/06/2019 (3ª-FEIRA)", $liturgyText->getDayTitle());
+        $this->assertEquals(new \DateTime("2019-06-25"), $liturgyText->getDate());
         $firstReading = $temporalSection->getFirstReading();
         $this->assertReading(
             $l1Title,
             $l1Subtitle,
             $l1Intro,
             $l1Text,
+            $l1Reference,       
             $firstReading
         );
         $salmoReading = $temporalSection->getPsalmReading();
         $this->assertPsalm($salmoTitle, $salmoChorus, $salmoText, $salmoReading);
         $gospelReading = $temporalSection->getGospelReading();
-        $this->assertReading(
+        $this->assertGospelReading(
             $gospelTitle,
             $gospelSubtitle,
             $gospelIntro,
             $gospelText,
+            $gospelAuthor,
             $gospelReading
         );
     }

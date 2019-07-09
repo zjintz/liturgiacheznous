@@ -11,12 +11,13 @@ class CNBBFilterSundayTest extends BaseFilterTest
     {
         $iFilter = new CNBBFilter();
         $data = $this->readExample("./tests/Util/examples/ExampleCNBBSunday.html");
-        $liturgyText = $iFilter->filter($data);
+        $liturgyText = $iFilter->filter($data, "2019-06-30");
         $temporalSection = $liturgyText->getTemporalSection();
         $santoralSection = $liturgyText->getSantoralSection();
         $this->assertEquals("Not_Found", $santoralSection->getLoadStatus());
         $this->assertEquals("Success", $temporalSection->getLoadStatus());
         $this->assertEquals("São Pedro e São Paulo, Apóstolos . Solenidade", $liturgyText->getDayTitle());
+        $this->assertEquals(new \DateTime("2019-06-30"), $liturgyText->getDate());
         $this->assertTemporal($temporalSection);
   
     }
@@ -24,12 +25,14 @@ class CNBBFilterSundayTest extends BaseFilterTest
     protected function assertTemporal($temporalSection)
     {
         $l1Title = "1ª Leitura - At 12,1-11";
+        $l1Reference = "At 12,1-11";
         $l1Intro = "Agora sei que o Senhor enviou o seu anjo para me libertar do poder de Herodes.";
         $l1Subtitle= "Leitura dos Atos dos Apóstolos 12,1-11";
         $salmoTitle = "Salmo - Sl 33(34),2-3.4-5.6-7.8-9 (R. 5)";
-        $salmoChorus = "R.De todos os temores me livrou o Senhor Deus.";
+        $salmoChorus = "De todos os temores me livrou o Senhor Deus.";
         $gospelIntro = "Tu és Pedro e eu te darei as chaves do Reino dos Céus.";
         $gospelSubtitle = "+ Proclamação do Evangelho de Jesus Cristo segundo Mateus 16,13-19";
+        $gospelAuthor = "Mateus";
         $gospelText = <<<EOD
 Naquele tempo:
 Jesus foi à região de Cesaréia de Filipe
@@ -122,6 +125,7 @@ Feliz o homem que tem nele o seu refúgio! R.
 EOD;
 
         $l2Title = "2ª Leitura - 2Tm 4,6-8.17-18";
+        $l2Reference = "2Tm 4,6-8.17-18";
         $l2Intro = "Agora está reservada para mim a coroa da justiça.";
         $l2Subtitle = "Leitura da Segunda Carta de São Paulo a Timóteo 4,6-8.17-18";
         $l2Text = <<<EOD
@@ -149,20 +153,23 @@ EOD;
         $gospelTitle = "Evangelho - Mt 16,13-19";
         $firstReading = $temporalSection->getFirstReading();
         $this->assertReading(
-            $l1Title, $l1Subtitle, $l1Intro, $l1Text, $firstReading
+            $l1Title, $l1Subtitle, $l1Intro, $l1Text,
+            $l1Reference,
+            $firstReading
         );
         $secondReading = $temporalSection->getSecondReading();
         $this->assertReading(
-            $l2Title, $l2Subtitle, $l2Intro, $l2Text, $secondReading
+            $l2Title, $l2Subtitle, $l2Intro, $l2Text, $l2Reference, $secondReading
         );
         $salmoReading = $temporalSection->getPsalmReading();
         $this->assertPsalm($salmoTitle, $salmoChorus, $salmoText, $salmoReading);
         $gospelReading = $temporalSection->getGospelReading();
-        $this->assertReading(
+        $this->assertGospelReading(
             $gospelTitle, 
             $gospelSubtitle,
             $gospelIntro, 
             $gospelText,
+            $gospelAuthor,
             $gospelReading
         );    
     }

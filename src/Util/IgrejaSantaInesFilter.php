@@ -2,10 +2,11 @@
 
 namespace App\Util;
 
-use App\Entity\LiturgyText;
 use App\Entity\LiturgySection;
-use App\Entity\LiturgyReading;
 use App\Entity\PsalmReading;
+use App\Factory\GospelReadingFactory;
+use App\Factory\LiturgyReadingFactory;
+use App\Factory\PsalmReadingFactory;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -13,9 +14,8 @@ use Symfony\Component\DomCrawler\Crawler;
  *
  *
  */
-class IgrejaSantaInesFilter
+class IgrejaSantaInesFilter extends AbstractFilter
 {
-
     protected function isValidDate($crawler)
     {
         $checkFoundCrawler = $crawler->filter(
@@ -34,9 +34,11 @@ class IgrejaSantaInesFilter
         $section = new LiturgySection();
         $section->setLoadStatus("Success");
 
-        $l1Title = $crawler->filter('div.'.$name.' button.accordion')->first()->html();
+        $l1Title = $crawler->filter('div.'.$name.' button.accordion')
+                 ->first()->html();
         $l1Title = str_replace("<br>", " ", $l1Title);
-        $l1Subtitle = $crawler->filter('div.'.$name.' div.panel div.cit_direita')->first()->text();
+        $l1Subtitle = $crawler->filter('div.'.$name.' div.panel div.cit_direita')
+                    ->first()->text();
         $l1Intro = trim($crawler->filter('div.'.$name.' div.panel div.cit_direita_italico')->first()->text());
         $l1Crawler = $crawler->filter('div.'.$name.' div.panel')->first();
         $l1Text = $l1Crawler->filter('span')->each( function (Crawler $node, $i) {
@@ -57,18 +59,19 @@ class IgrejaSantaInesFilter
                            }
                            );
         $gospelText = implode("", $gospelText);
-        $firstReading = $this->makeReading(
+        $factory = new LiturgyReadingFactory();
+        $firstReading = $factory->createReading(
             $l1Title,
-            $l1Subtitle,
+            $l1Text,
             $l1Intro,
-            $l1Text
+            $l1Subtitle
         );
-
-        $gospelReading = $this->makeReading(
+        $factory = new GospelReadingFactory();
+        $gospelReading = $factory->createReading(
             $gospelTitle,
-            $gospelSubtitle,
+            $gospelText,
             $gospelIntro,
-            $gospelText
+            $gospelSubtitle
         );
         
         $section->setFirstReading($firstReading);
@@ -97,11 +100,8 @@ class IgrejaSantaInesFilter
         $text = implode("", $text);
         $text = str_replace("R.", "\nR.\n", $text);
         $text = trim(str_replace(" \nR.\n ", "\nR.\n", $text));
-        $psalmReading = new PsalmReading();
-        $psalmReading->setTitle($title);
-        $psalmReading->setChorus($chorus);
-        $psalmReading->setText($text);
-        return $psalmReading;
+        $factory = new psalmReadingFactory();
+        return $factory->createReading($title, $text, $chorus);
     }
 
     protected function addL2($crawler, $name, $section)
@@ -120,12 +120,13 @@ class IgrejaSantaInesFilter
                            }
                            );
         $l2Text = implode("", $l2Text);
+        $factory = new LiturgyReadingFactory();
 
-        $l2Reading = $this->makeReading(
+        $l2Reading = $factory->createReading(
             $l2Title,
-            $l2Subtitle,
+            $l2Text,
             $l2Intro,
-            $l2Text
+            $l2Subtitle
         );
         $section->setSecondReading($l2Reading);
         return $section;
@@ -136,7 +137,6 @@ class IgrejaSantaInesFilter
         $litSection = new LiturgySection();
         $litSection = $this->getSection($crawler, "temporal");
         return $litSection;
-
     }
 
     protected function getSantoralText($crawler)
@@ -151,34 +151,13 @@ class IgrejaSantaInesFilter
         return $litSection;
     }
     
-    public function filter($data)
+    protected function getDayTitle($crawler) : string
     {
-        $litText = new LiturgyText();
-        $crawler = new Crawler($data);
-        if (!$this->isValidDate($crawler)){
-            $litText->setLoadStatus("Not_Found");
-            return $litText;
-        }
-        $litText->setLoadStatus("Success");
         $dayTitle = $crawler->filter('div.nav-dia center ')->first()->text();
         $dayTitle = str_replace(">>", "", $dayTitle);
         $dayTitle = str_replace("<<", "", $dayTitle);
         $dayTitle = trim($dayTitle);
-        $dayTitle = preg_replace("/\s/"," ", $dayTitle);
-        
-        $litText->setDayTitle($dayTitle);
-        $litText->setTemporalSection($this->getTemporalText($crawler));
-        $litText->setSantoralSection($this->getSantoralText($crawler));
-        return $litText;    
-    }
-
-    protected function makeReading($title, $subtitle, $intro, $text) :LiturgyReading
-    {
-        $reading = new LiturgyReading();
-        $reading->setTitle($title);
-        $reading->setSubtitle($subtitle);
-        $reading->setIntroduction($intro);
-        $reading->setText($text);
-        return $reading;
+        $dayTitle = preg_replace("/\s/", " ", $dayTitle);
+        return $dayTitle;
     }
 }

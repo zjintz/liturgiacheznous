@@ -12,7 +12,7 @@ class CNBBFilterTest extends BaseFilterTest
     {
         $iFilter = new CNBBFilter();
         $data = $this->readExample("./tests/Util/examples/ExampleCNBB_NOT_FOUND.html");
-        $liturgyText = $iFilter->filter($data);
+        $liturgyText = $iFilter->filter($data, "");
         $this->assertEquals("Not_Found", $liturgyText->getLoadStatus());
     }
 
@@ -22,12 +22,12 @@ class CNBBFilterTest extends BaseFilterTest
         $data = $this->readExample(
             "./tests/Util/examples/ExampleCNBB_2CHORUS.html"
         );
-        $liturgyText = $iFilter->filter($data);
+        $liturgyText = $iFilter->filter($data, "");
         $temporalSection = $liturgyText->getTemporalSection();
 
         $salmoTitle = "Salmo - Sl 67, 2-3. 4-5ac. 6-7ab (R. 33a)";
         $salmoChorus = <<<EOD
-R. Reinos da terra, cantai ao Senhor.
+Reinos da terra, cantai ao Senhor.
 Ou: Aleluia, Aleluia, Aleluia
 EOD;
         $reading = $temporalSection->getPsalmReading();
@@ -39,13 +39,21 @@ EOD;
     {
         $iFilter = new CNBBFilter();
         $data = $this->readExample("./tests/Util/examples/ExampleCNBB.html");
-        $liturgyText = $iFilter->filter($data);
+
+        $liturgyText = $iFilter->filter($data, "2019-06-25");
         $temporalSection = $liturgyText->getTemporalSection();
         $santoralSection = $liturgyText->getSantoralSection();
         $this->assertEquals("Not_Found", $santoralSection->getLoadStatus());
         $this->assertEquals("Success", $temporalSection->getLoadStatus());
         $this->assertEquals(false, $temporalSection->getSecondReading());
+        $this->assertEquals(
+            "3ª-feira da 12ª Semana Do Tempo Comum",
+            $liturgyText->getDayTitle()
+        );
+        $this->assertEquals(new \DateTime("2019-06-25"), $liturgyText->getDate());
         $l1Intro = "Não deve haver discórdia entre nós pois somos irmãos.";
+        $l1Title =  "1ª Leitura - Gn 13,2.5-18";
+        $l1Reference = "Gn 13,2.5-18";
         $l1Subtitle= "Leitura do Livro do Gênesis 13,2.5-18";
         $l1Text = <<<EOD
 Abrão era muito rico em rebanhos, prata e ouro.
@@ -99,7 +107,7 @@ e ali construiu um altar ao Senhor.
 Palavra do Senhor.
 EOD;
         
-        $salmoChorus = "R. Senhor, quem morará em vosso Monte Santo?";
+        $salmoChorus = "Senhor, quem morará em vosso Monte Santo?";
         $salmoText = <<<EOD
 É aquele que caminha sem pecado*
 e pratica a justiça fielmente;
@@ -118,6 +126,7 @@ EOD;
 
         $gospelIntro = "Tudo quanto quereis que os outros vos façam, fazei também a eles.";
         $gospelSubtitle = "+ Proclamação do Evangelho de Jesus Cristo Segundo São Mateus 7,6.12-14";
+        $gospelAuthor = "Mateus";
         $gospelText = <<<EOD
 Naquele tempo, disse Jesus aos seus discípulos:
 Não deis aos cães as coisas santas,
@@ -141,19 +150,21 @@ EOD;
             "3ª-feira da 12ª Semana Do Tempo Comum",
             $liturgyText->getDayTitle()
         );
-        $l1Title =  "1ª Leitura - Gn 13,2.5-18";
         $firstReading = $temporalSection->getFirstReading();
-        $this->assertReading($l1Title, $l1Subtitle, $l1Intro, $l1Text, $firstReading);
+        $this->assertReading(
+            $l1Title, $l1Subtitle, $l1Intro, $l1Text, $l1Reference, $firstReading
+        );
         $salmoTitle = "Salmo - Sl 14, 2-3ab. 3cd-4ab. 5 (R. 1b)";
         $salmoReading = $temporalSection->getPsalmReading();
         $this->assertPsalm($salmoTitle, $salmoChorus, $salmoText, $salmoReading);
         $gospelTitle = "Evangelho - Mt 7,6.12-14";
         $gospelReading = $temporalSection->getGospelReading();
-        $this->assertReading(
+        $this->assertGospelReading(
             $gospelTitle, 
             $gospelSubtitle,
             $gospelIntro, 
             $gospelText,
+            $gospelAuthor,
             $gospelReading
         );
     }

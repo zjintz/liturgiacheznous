@@ -12,6 +12,7 @@ class LiturgyText
     private $temporalSection;
     private $santoralSection;
     private $loadStatus;
+    private $date;
 
 
     public function getDayTitle(): ?string
@@ -49,8 +50,6 @@ class LiturgyText
         return $this;
     }
 
-
-
     public function getSantoralSection(): ?LiturgySection
     {
         return $this->santoralSection;
@@ -61,5 +60,17 @@ class LiturgyText
         $this->santoralSection = $section;
 
         return $this;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function setDate($date): self
+    {
+        $this->date = $date;
+        return $this;
     }    
+    
 }

@@ -3,9 +3,7 @@
 namespace App\Util;
 
 use App\Util\AbstractAssembler;
-
 use App\Util\CNBBFilter;
-
 // Include the requires classes of Phpword
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
@@ -34,10 +32,10 @@ class CNBBAssembler extends AbstractAssembler
         return $url;
     }
 
-    protected function assemble($data, $format = 'rtf')
+    protected function assemble($data, $format = 'rtf' , $liturgyDate = "")
     {
         $textFilter = new CNBBFilter();
-        $liturgyText = $textFilter->filter($data);
+        $liturgyText = $textFilter->filter($data, $liturgyDate);
         if ($liturgyText->getLoadStatus() === "Not_Found")
         {
             return $liturgyText->getLoadStatus();

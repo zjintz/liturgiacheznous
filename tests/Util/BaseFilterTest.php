@@ -14,12 +14,28 @@ abstract class BaseFilterTest extends TestCase
         return $data;
     }
     
-    protected function assertReading($title, $subtitle, $intro, $text, $reading)
-    {
+    protected function assertReading(
+        $title, $subtitle, $intro, $text, $reference, $reading
+    ) {
         $this->assertEquals($title, $reading->getTitle());
         $this->assertEquals($subtitle, $reading->getSubtitle());
         $this->assertEquals($intro, $reading->getIntroduction());
         $this->assertEquals($text, $reading->getText());
+        $this->assertEquals($reference, $reading->getReference());
+    }
+    protected function assertGospelReading(
+        $title,
+        $subtitle,
+        $intro,
+        $text,
+        $author,
+        $reading
+    ) {
+        $this->assertEquals($title, $reading->getTitle());
+        $this->assertEquals($subtitle, $reading->getSubtitle());
+        $this->assertEquals($intro, $reading->getIntroduction());
+        $this->assertEquals($text, $reading->getText());
+        $this->assertEquals($author, $reading->getAuthor());
     }
 
     protected function assertPsalm($title, $chorus, $text, $reading)

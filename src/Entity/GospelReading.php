@@ -6,12 +6,13 @@ namespace App\Entity;
  * \brief Contains all the parts of a liturgy reading.
  *
  */
-class LiturgyReading implements Reading
+class GospelReading implements Reading
 {
     private $subtitle;
     private $introduction;
     private $title;
     private $text;
+    private $author;
     private $reference;
     
     public function getTitle(): ?string
@@ -62,6 +63,17 @@ class LiturgyReading implements Reading
         return $this;
     }
 
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(string $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
     public function getReference(): ?string
     {
         return $this->reference;
@@ -73,4 +85,5 @@ class LiturgyReading implements Reading
 
         return $this;
     }
+        
 }

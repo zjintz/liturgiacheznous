@@ -11,10 +11,13 @@ class IgrejaSantaInesFilterDomingoTest extends BaseFilterTest
     {
         $iFilter = new IgrejaSantaInesFilter();
         $data = $this->readExample("./tests/Util/examples/ExampleSantaInesDomingo.html");
-        $liturgyText = $iFilter->filter($data);
+        $liturgyText = $iFilter->filter($data , "2019-06-30");
         $temporalSection = $liturgyText->getTemporalSection();
         $santoralSection = $liturgyText->getSantoralSection();
+        $this->assertEquals("30/06/2019 (DOMINGO)", $liturgyText->getDayTitle());
+        $this->assertEquals(new \DateTime("2019-06-30"), $liturgyText->getDate());
         $l1Title = "1a Leitura - ANO C 1Rs 19,16b.19-21";
+        $l1Reference = "1Rs 19,16b.19-21";
         $l1Intro = "Eliseu levantou-se e seguiu Elias.";
         $l1Subtitle= "Leitura do Primeiro Livro dos Reis 19, 16b. 19-21";
         $l1Text =<<<EOD
@@ -22,6 +25,7 @@ Naqueles dias: disse o Senhor a Elias: vai e ungea Eliseu, filho de Safat, de Ab
 EOD;
         
         $l2Title = "2a Leitura - ANO C Gl 5,1.13-18";
+        $l2Reference = "Gl 5,1.13-18";
         $l2Intro = "Fostes chamados para a liberdade.";
         $l2Subtitle= "Leitura da Carta de São Paulo aos Gálatas 5, 1. 13-18";
         $l2Text = <<<EOD
@@ -42,29 +46,32 @@ EOD;
         $gospelTitle = "Evangelho - ANO C Lc 9,51-62";
         $gospelIntro = "Jesus tomou a firme decisão de partir para Jerusalém. 'Eu te seguirei para onde quer que fores'.";
         $gospelSubtitle = "+ Proclamação do Evangelho de Jesus Cristo segundo Lucas 9, 51-62";
+        $gospelAuthor = "Lucas";
         $gospelText = <<<EOD
 Estava chegando o tempo de Jesus ser levado para o céu. Então ele tomou a firme decisão de partir para Jerusaléme enviou mensageiros à sua frente. Estes puseram-se a caminho e entraram num povoado de samaritanos, para preparar hospedagem para Jesus. Mas os samaritanos não o receberam, pois Jesus dava a impressão de que ia a Jerusalém. Vendo isso, os discípulos Tiago e João disseram: 'Senhor, queres que mandemos descer fogo do céu para destruí-los?'Jesus, porém, voltou-se e repreendeu-os. E partiram para outro povoado. Enquanto estavam caminhando, alguém na estrada disse a Jesus: 'Eu te seguirei para onde quer que fores. 'Jesus lhe respondeu: 'As raposas têm tocas e os pássaros têm ninhos; mas o Filho do Homem não tem onde repousar a cabeça. 'Jesus disse a outro: 'Segue-me. ' Este respondeu: 'Deixa-me primeiro ir enterrar meu pai. 'Jesus respondeu: 'Deixa que os mortos enterrem os seus mortos; mas tu, vai anunciar o Reino de Deus. 'Um outro ainda lhe disse: 'Eu te seguirei, Senhor, mas deixa-me primeiro despedir-me dos meus familiares. 'Jesus, porém, respondeu-lhe: 'Quem põe a mão no arado e olha para trás, não está apto para o Reino de Deus. 'Palavra da Salvação. 
 EOD;
         $this->assertEquals("Success", $santoralSection->getLoadStatus());
         $this->assertEquals("Success", $temporalSection->getLoadStatus());
         $this->assertEquals(false, $santoralSection->getSecondReading());
-        $this->assertEquals("30/06/2019 (DOMINGO)", $liturgyText->getDayTitle());
+
         $firstReading = $temporalSection->getFirstReading();
         $this->assertReading(
             $l1Title,
             $l1Subtitle,
             $l1Intro,
             $l1Text,
+            $l1Reference,
             $firstReading
         );
         $salmoReading = $temporalSection->getPsalmReading();
         $this->assertPsalm($salmoTitle, $salmoChorus, $salmoText, $salmoReading);
         $gospelReading = $temporalSection->getGospelReading();
-        $this->assertReading(
+        $this->assertGospelReading(
             $gospelTitle, 
             $gospelSubtitle,
             $gospelIntro, 
             $gospelText,
+            $gospelAuthor,
             $gospelReading
         );
         $secondReading = $temporalSection->getSecondReading();
@@ -73,6 +80,7 @@ EOD;
             $l2Subtitle,
             $l2Intro,
             $l2Text,
+            $l2Reference,
             $secondReading
         );
     }

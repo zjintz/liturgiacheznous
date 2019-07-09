@@ -61,12 +61,12 @@ class LiturgySection
         return $this;
     }
 
-    public function getGospelReading(): ?LiturgyReading
+    public function getGospelReading(): ?GospelReading
     {
         return $this->gospelReading;
     }
 
-    public function setGospelReading(LiturgyReading $gospelReading): self
+    public function setGospelReading(GospelReading $gospelReading): self
     {
         $this->gospelReading = $gospelReading;
 

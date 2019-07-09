@@ -6,12 +6,11 @@ use App\Tests\Util\BaseFilterTest;
 
 class CNBBFilterSantoralTest extends BaseFilterTest
 {
-    
     public function testFilter()
     {
         $iFilter = new CNBBFilter();
         $data = $this->readExample("./tests/Util/examples/ExampleCNBBSantoral.html");
-        $liturgyText = $iFilter->filter($data);
+        $liturgyText = $iFilter->filter($data,"2019-07-22");
         $temporalSection = $liturgyText->getTemporalSection();
         $santoralSection = $liturgyText->getSantoralSection();
         $this->assertEquals("Success", $santoralSection->getLoadStatus());
@@ -19,6 +18,7 @@ class CNBBFilterSantoralTest extends BaseFilterTest
         $this->assertNull($santoralSection->getSecondReading());
         $this->assertNull($temporalSection->getSecondReading());
         $this->assertEquals("Santa Maria Madalena . Memória", $liturgyText->getDayTitle());
+        $this->assertEquals(new \DateTime("2019-07-22"), $liturgyText->getDate());
         $this->assertTemporal($temporalSection);
         $this->assertSantoral($santoralSection);
   
@@ -27,12 +27,14 @@ class CNBBFilterSantoralTest extends BaseFilterTest
     protected function assertTemporal($temporalSection)
     {
         $l1Title = "1ª Leitura - Ct 3,1-4a";
+        $l1Reference = "Ct 3,1-4a";
         $l1Intro = "Encontrei o amor de minha vida.";
         $l1Subtitle= "Leitura do Livro do Cântico dos Cânticos 3,1-4a";
         $salmoTitle = "Salmo - Sl 62(63),2.3-4.5-6.8-9 (R. 2b)";
-        $salmoChorus = "R. A minh'alma tem sede de vós, Senhor!";
+        $salmoChorus = "A minh'alma tem sede de vós, Senhor!";
         $gospelIntro = "Mulher, por que choras? A quem procuras?";
         $gospelSubtitle = "+ Proclamação do Evangelho de Jesus Cristo segundo João 20,1-2.11-18";
+        $gospelAuthor = "João";
         $gospelText = <<<EOD
 No primeiro dia da semana, 
 Maria Madalena foi ao túmulo de Jesus, 
@@ -129,16 +131,20 @@ EOD;
         $gospelTitle = "Evangelho - Jo 20,1-2.11-18";
         $firstReading = $temporalSection->getFirstReading();
         $this->assertReading(
-            $l1Title, $l1Subtitle, $l1Intro, $l1Text, $firstReading
+            $l1Title, $l1Subtitle, $l1Intro, $l1Text,
+            $l1Reference, 
+            $firstReading
+            
         );
         $salmoReading = $temporalSection->getPsalmReading();
         $this->assertPsalm($salmoTitle, $salmoChorus, $salmoText, $salmoReading);
         $gospelReading = $temporalSection->getGospelReading();
-        $this->assertReading(
+        $this->assertGospelReading(
             $gospelTitle, 
             $gospelSubtitle,
             $gospelIntro, 
             $gospelText,
+            $gospelAuthor,
             $gospelReading
         );    
     }
@@ -146,6 +152,7 @@ EOD;
     protected function assertSantoral($section)
     {
         $l1Title = "1ª Leitura - 2Cor 5,14-17";
+        $l1Reference = "2Cor 5,14-17";
         $l1Intro = "Agora, já não conhecemos Cristo segundo a carne.";
         $l1Subtitle= "Leitura da Segunda Carta de São Paulo aos Coríntios 5,14-17";
         $l1Text = <<<EOD
@@ -168,7 +175,9 @@ Palavra do Senhor.
 EOD;
         $firstReading = $section->getFirstReading();
         $this->assertReading(
-            $l1Title, $l1Subtitle, $l1Intro, $l1Text, $firstReading
+            $l1Title, $l1Subtitle, $l1Intro, $l1Text,
+            $l1Reference,
+            $firstReading
         );
     }
 

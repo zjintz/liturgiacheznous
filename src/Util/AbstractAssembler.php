@@ -3,7 +3,7 @@
 namespace App\Util;
 
 // Include the requires classes of Phpword
-use App\Util\DocumentCreator;
+use App\Writer\DocumentCreator;
 
 /**
  * \brief      Base clase for concrete assemblers.
@@ -14,12 +14,9 @@ use App\Util\DocumentCreator;
  */
 abstract class AbstractAssembler
 {
-
     // Force Extending class to define this method
     abstract protected function genSourceRoute($liturgyDate);
-    abstract protected function assemble($data, $format = "rtf");
-
-
+    abstract protected function assemble($data, $format = "rtf", $liturgyDate = "");
     
     /**
      * \brief      Common method to get the raw data from a url.
@@ -55,7 +52,7 @@ abstract class AbstractAssembler
     {
         $sourceRoute = $this->genSourceRoute($liturgyDate);
         $rawContent = $this->getRawContent($sourceRoute);
-        $document= $this->assemble($rawContent, $format);
+        $document= $this->assemble($rawContent, $format, $liturgyDate);
         return $document;
     }
 }
