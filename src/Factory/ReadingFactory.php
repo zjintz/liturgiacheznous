@@ -22,7 +22,7 @@ abstract class ReadingFactory
     {
         $pos = strpos($title, "-");
         if ($pos === false) {
-            return null;
+            return "-";
         }
         $reference = substr($title, ($pos+2));
         $pos = strpos($reference, "ANO IMPAR");

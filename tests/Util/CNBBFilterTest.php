@@ -155,10 +155,14 @@ EOD;
             $l1Title, $l1Subtitle, $l1Intro, $l1Text, $l1Reference, $firstReading
         );
         $salmoTitle = "Salmo - Sl 14, 2-3ab. 3cd-4ab. 5 (R. 1b)";
+        $salmoReference = "Sl 14, 2-3ab. 3cd-4ab. 5 (R. 1b)";
         $salmoReading = $temporalSection->getPsalmReading();
+        $this->assertEquals($salmoReference, $salmoReading->getReference());
         $this->assertPsalm($salmoTitle, $salmoChorus, $salmoText, $salmoReading);
         $gospelTitle = "Evangelho - Mt 7,6.12-14";
+        $gospelReference = "Mt 7,6.12-14";
         $gospelReading = $temporalSection->getGospelReading();
+        $this->assertEquals($gospelReference, $gospelReading->getReference());
         $this->assertGospelReading(
             $gospelTitle, 
             $gospelSubtitle,

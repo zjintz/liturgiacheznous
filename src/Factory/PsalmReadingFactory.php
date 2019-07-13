@@ -22,7 +22,7 @@ class PsalmReadingFactory extends ReadingFactory
         $psalmReading->setTitle($title);
         $psalmReading->setChorus($intro);
         $psalmReading->setText($text);
-        
+        $psalmReading->setReference($this->extractReference($title));        
         return $psalmReading;
     }
 }

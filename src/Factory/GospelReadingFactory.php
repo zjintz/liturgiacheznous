@@ -24,7 +24,7 @@ class GospelReadingFactory extends ReadingFactory
         $gospelReading->setIntroduction($intro);
         $gospelReading->setSubtitle($subtitle);
         $gospelReading->setAuthor($this->extractAuthor($subtitle));
-        
+        $gospelReading->setReference($this->extractReference($title));   
         return $gospelReading;
     }
 
@@ -33,7 +33,7 @@ class GospelReadingFactory extends ReadingFactory
         $saoJoao = "João";
         $saoLucas = "Lucas";
         $saoMateus = "Mateus";
-        $saoMarcos = "Marcos";
+        $saoMarcus = "Marcus";
         
         if ($this->isTheAuthor($subtitle, $saoJoao)) {
             return $saoJoao;
@@ -44,7 +44,7 @@ class GospelReadingFactory extends ReadingFactory
         if ($this->isTheAuthor($subtitle, $saoMateus)) {
             return $saoMateus;
         }
-        return $saoMarcos;
+        return $saoMarcus;
     }
     
     private function isTheAuthor($subtitle, $candidate)

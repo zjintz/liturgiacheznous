@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @brief      A Form used to request the liturgy texts to be generated in PDF/RTF.
+ * @brief      A Form used to request the liturgy texts to be generated in PDF/docx.
  *
  */
 
@@ -35,8 +35,8 @@ class LiturgyTextRequestType extends AbstractType
                       'expanded' => false,
                       'multiple' => false,
                       'choices' => [
-                          'pdf'=>'pdf',
-                          'rtf'=> 'rtf'
+                          'docx (MS Word)'=> 'DOCX',
+                          'PDF'=>'PDF'        
                       ]
                   ]
               )

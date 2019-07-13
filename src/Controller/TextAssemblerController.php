@@ -66,7 +66,7 @@ class TextAssemblerController extends AbstractController
      *     },
      * requirements={
      *         "_locale" : "%app.locales%",
-     *         "text_format": "pdf|rtf",
+     *         "text_format": "DOCX|PDF",
      *         "source": "CNBB|Igreja_Santa_Ines"
      *     }
      *)
