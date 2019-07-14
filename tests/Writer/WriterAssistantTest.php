@@ -32,32 +32,32 @@ class WriterAssistantTest extends TestCase
     public function testSelectTemplate()
     {
         $assistant = new WriterAssistant();
-        $template = $assistant->selectTemplate($this->basicLiturgy,"/tmp");
+        $template = $assistant->selectTemplate($this->basicLiturgy, "/tmp");
         $this->assertEquals(
             '/tmp/templates/liturgy/basic_liturgy.docx',
             $template
         );
-        $template = $assistant->selectTemplate($this->biReadingLiturgy,"/tmp");
+        $template = $assistant->selectTemplate($this->biReadingLiturgy, "/tmp");
         $this->assertEquals(
             '/tmp/templates/liturgy/double_reading_liturgy.docx',
             $template
         );
-        $template = $assistant->selectTemplate($this->fullSantoralLiturgy,"/tmp");
+        $template = $assistant->selectTemplate($this->fullSantoralLiturgy, "/tmp");
         $this->assertEquals(
             '/tmp/templates/liturgy/full_santoral_liturgy.docx',
             $template
         );
-        $template = $assistant->selectTemplate($this->singleSantoralLiturgy,"/tmp");
+        $template = $assistant->selectTemplate($this->singleSantoralLiturgy, "/tmp");
         $this->assertEquals(
             '/tmp/templates/liturgy/single_santoral_liturgy.docx',
             $template
         );
-        $template = $assistant->selectTemplate($this->fullSantoral2lLiturgy,"/tmp");
+        $template = $assistant->selectTemplate($this->fullSantoral2lLiturgy, "/tmp");
         $this->assertEquals(
             '/tmp/templates/liturgy/full_santoral_2l_liturgy.docx',
             $template
         );
-        $template = $assistant->selectTemplate($this->singleSantoral2lLiturgy,"/tmp");
+        $template = $assistant->selectTemplate($this->singleSantoral2lLiturgy, "/tmp");
         $this->assertEquals(
             '/tmp/templates/liturgy/single_santoral_2l_liturgy.docx',
             $template
@@ -127,6 +127,7 @@ EOD;
     protected function getSection()
     {
         $section = new LiturgySection();
+        $section->setLoadStatus("Success");
         $psalmFactory = new PsalmReadingFactory();
         $gospelFactory = new GospelReadingFactory();
         $readingFactory = new LiturgyReadingFactory();
@@ -160,6 +161,10 @@ EOD;
         $this->basicLiturgy->setDayTitle("Text title");
         $this->basicLiturgy->setDate(new \Datetime("1900-01-01"));
         $this->basicLiturgy->setTemporalSection($this->getSection());
+        $emptySection = new LiturgySection();
+        $emptySection->setLoadStatus("Not_Found");
+        $this->basicLiturgy->setSantoralSection($emptySection);
+        
     }
     protected function createFullSantoralLiturgy()
     {
@@ -186,6 +191,9 @@ EOD;
         );
         $temporal->setSecondReading($reading);
         $this->biReadingLiturgy->setTemporalSection($temporal);
+        $emptySection = new LiturgySection();
+        $emptySection->setLoadStatus("Not_Found");
+        $this->basicLiturgy->setSantoralSection($emptySection);
     }
     protected function createSingleSantoralLiturgy()
     {
@@ -194,6 +202,7 @@ EOD;
         $this->singleSantoralLiturgy->setDate(new \Datetime("1900-01-01"));
         $this->singleSantoralLiturgy->setTemporalSection($this->getSection());
         $santoral = new LiturgySection();
+        $santoral->setLoadStatus("Success");
         $readingFactory = new LiturgyReadingFactory();
         $reading = $readingFactory->createReading(
             "titulo-santo1",
@@ -238,6 +247,7 @@ EOD;
         $temporal->setSecondReading($reading);
         $this->singleSantoral2lLiturgy->setTemporalSection($temporal);
         $santoral = new LiturgySection();
+        $santoral->setLoadStatus("Success");
         $readingFactory = new LiturgyReadingFactory();
         $reading = $readingFactory->createReading(
             "titulo-santo1",

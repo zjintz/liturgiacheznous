@@ -17,17 +17,17 @@ class DocumentCreator
     
     protected function writeLines($templateProcessor, $psalmLines, $section)
     {
-        $block = "psalmLineBlock".$section."#";
-        $line = "psalmLine".$section."#";
+        $blockMark = "psalmLineBlock".$section."#";
+        $lineMark = "psalmLine".$section."#";
         $psalmLinesCount =  count($psalmLines);
         $counter = 1;
         foreach ($psalmLines as $line) {
-            $templateProcessor->cloneBlock($block.$counter, 1);
-            $templateProcessor->setValue($line.$counter, $line);
+            $templateProcessor->cloneBlock($blockMark.$counter, 1);
+            $templateProcessor->setValue($lineMark.$counter, $line);
             $counter++;
         }
         for ($counter; $counter <=10; ++$counter) {
-            $templateProcessor->cloneBlock($block.$counter, 0);
+            $templateProcessor->cloneBlock($blockMark.$counter, 0);
         }
         return $templateProcessor;
     }
@@ -42,7 +42,7 @@ class DocumentCreator
         if (!is_null($santoralSection)) {
             if (!is_null($santoralSection->getPsalmReading())) {
                 $psalmLines = $this->assitant->getPsalmLines(
-                    $santoralSection()->getPsalmReading()->getText()
+                    $santoralSection->getPsalmReading()->getText()
                 );
                 $templateProcessor = $this->writeLines(
                     $templateProcessor,
@@ -80,7 +80,9 @@ class DocumentCreator
         $phpWord = \PhpOffice\PhpWord\IOFactory::load($filePath);
         $dompdfPath = $projDir . '/vendor/dompdf/dompdf';
         if (file_exists($dompdfPath)) {
-            define('DOMPDF_ENABLE_AUTOLOAD', false);
+            if (!defined('DOMPDF_ENABLE_AUTOLOAD')){
+                define('DOMPDF_ENABLE_AUTOLOAD', false);
+            }
             Settings::setPdfRenderer(
                 Settings::PDF_RENDERER_DOMPDF,
                 $projDir . '/vendor/dompdf/dompdf'
