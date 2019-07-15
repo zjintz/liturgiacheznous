@@ -23,7 +23,10 @@ class TextAssemblerControllerTest extends WebTestCase
      */
     public function testIndex()
     {
-        $client = static::createClient();
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'testUser',
+            'PHP_AUTH_PW'   => 'testPass',
+        ]);
         $client->request('GET', '/en/assembler/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $today = (new \DateTime())->format('Y-m-d');
@@ -45,7 +48,10 @@ class TextAssemblerControllerTest extends WebTestCase
      */
     public function testGetText()
     {
-        $client = static::createClient();
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'testUser',
+            'PHP_AUTH_PW'   => 'testPass',
+        ]);
         $today = (new \DateTime())->format('Y-m-d');
         $client->request('GET', '/en/assembler/text/pdf/unknown/'.$today.'/');
         $this->assertEquals(404, $client->getResponse()->getStatusCode());

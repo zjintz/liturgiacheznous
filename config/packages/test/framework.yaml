@@ -2,3 +2,10 @@ framework:
     test: true
     session:
         storage_id: session.storage.mock_file
+        name: MOCKSESSION
+
+liip_test_fixtures:
+    cache_db:
+        sqlite: liip_test_fixtures.services_database_backup.sqlite
+        
+liip_functional_test: ~
