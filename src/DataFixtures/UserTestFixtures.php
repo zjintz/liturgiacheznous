@@ -17,10 +17,10 @@ class UserTestFixtures extends Fixture
 {
     private $passwordEncoder;
 
-    /*    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
-        $this->passwordEncoder = $passwordEncoder;
-        }*/
+        $this->encoder = $passwordEncoder;
+    }
     
     public function load(ObjectManager $manager)
     {
@@ -30,7 +30,8 @@ class UserTestFixtures extends Fixture
         $headquarter->setCountry("testCountry");
         $user = new User();
         $user->setName("tester");
-        $user->setPassword('test');
+        $password = $this->encoder->encodePassword($user, 'testpass');
+        $user->setPassword($password);
         $user->setEmail("tester@test.com");
         $manager->persist($headquarter);
         $user->setHeadquarter($headquarter);
