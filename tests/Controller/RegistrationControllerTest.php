@@ -21,8 +21,7 @@ class RegistrationControllerTest extends WebTestCase
     public function testAnonAccess()
     {
         $this->client = static::createClient();
-        $this->client->request('GET', '/en/register/');
-        echo $this->client->getResponse()->getContent();
+        $this->client->request('GET', '/en/register');
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
 
