@@ -1,0 +1,29 @@
+sonata_admin:
+    title: 'Liturgia Cheznous'
+    dashboard:
+        groups:
+            app.admin.group.users:
+                label: app.admin.group.users
+                label_catalogue: App
+                items:
+                    - app.admin.user
+                    - app.admin.headquarter
+
+            app.admin.group.liturgy:
+                label: app.admin.group.liturgy
+                label_catalogue: App
+                items:
+                    - route:        assembler_index
+                      route_params: { _locale: en }
+                      label:        Get Liturgy Text
+
+            app.admin.group.subscriptions: ~
+
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+            

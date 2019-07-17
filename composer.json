@@ -8,6 +8,8 @@
         "dompdf/dompdf": "^0.8.3",
         "phpoffice/phpword": "^0.16.0",
         "sensio/framework-extra-bundle": "^5.3",
+        "sonata-project/admin-bundle": "^3.51",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.9",
         "symfony/asset": "4.3.*",
         "symfony/console": "4.3.*",
         "symfony/dom-crawler": "4.3.*",
