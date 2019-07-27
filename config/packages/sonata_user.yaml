@@ -1,0 +1,6 @@
+# config/packages/sonata_user.yaml
+
+sonata_user:
+    class:
+        user: App\Application\Sonata\UserBundle\Entity\User
+        group: App\Application\Sonata\UserBundle\Entity\Group
