@@ -126,7 +126,7 @@ file that was distributed with this source code.
                     <a href="{{ reset_route }}" >{{ 'forgotten_password'|trans({}, 'SonataUserBundle') }}</a>
                     <br>
                     <hr>
-                    <a href="" class="btn-warning">{{ 'New User? Register here.'|trans({}, 'SonataUserBundle') }}</a>
+                    <a href="{{ path('fos_user_registration_register') }}" class="btn-warning">{{ 'New User? Register here.'|trans({}, 'SonataUserBundle') }}</a>
                     
                 {% endif %}
             {% endblock %}

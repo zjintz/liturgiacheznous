@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Application\Sonata\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\HeadquarterRepository")
@@ -34,7 +35,7 @@ class Headquarter
     private $country;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="headquarter")
+     * @ORM\OneToMany(targetEntity="App\Application\Sonata\UserBundle\Entity\User", mappedBy="headquarter")
      */
     private $users;
 

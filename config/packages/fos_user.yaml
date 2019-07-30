@@ -14,6 +14,7 @@ fos_user:
     from_email:
         address: liturgiachesnous #"%mailer_user%"
         sender_name: admin #"%mailer_user%"
-#    registration:
- #       form:
-  #          type: App\Form\RegistrationType
+
+    registration:
+        form:
+            type: App\Form\RegistrationFormType
