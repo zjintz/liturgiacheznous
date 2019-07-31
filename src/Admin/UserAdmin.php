@@ -11,24 +11,28 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 final class UserAdmin extends AbstractAdmin
 {
+
+    protected $baseRouteName = 'app_'; 
+    protected $baseRoutePattern = 'app_';
+    
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', TextType::class);
-        $formMapper->add('lastName', TextType::class);
+        $formMapper->add('firstname', TextType::class);
+        $formMapper->add('lastname', TextType::class);
         $formMapper->add('email', TextType::class);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('name');
-        $datagridMapper->add('lastName');
+        $datagridMapper->add('firstname');
+        $datagridMapper->add('lastname');
         $datagridMapper->add('email');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('name');
-        $listMapper->addIdentifier('lastName');
+        $listMapper->addIdentifier('firstname');
+        $listMapper->addIdentifier('lastname');
         $listMapper->addIdentifier('email');
     }
 }
