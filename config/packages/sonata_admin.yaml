@@ -13,6 +13,7 @@ sonata_admin:
                 label: app.admin.group.liturgy
                 label_catalogue: App
                 items:
+                    - app.admin.liturgy
                     - route:        assembler_index
                       route_params: { _locale: en }
                       label:        Get Liturgy Text

@@ -43,3 +43,8 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: Headquarter }
 
+    app.admin.liturgy:
+        class: App\Admin\LiturgyAdmin
+        arguments: [~, App\Entity\Liturgy, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Liturgy }
