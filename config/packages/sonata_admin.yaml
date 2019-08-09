@@ -8,20 +8,22 @@ sonata_admin:
                 items:
                     - app.admin.user
                     - app.admin.headquarter
-
+        
             app.admin.group.liturgy:
                 label: app.admin.group.liturgy
                 label_catalogue: App
                 items:
                     - app.admin.liturgy
-                    - route:        assembler_index
-                      route_params: { _locale: en }
-                      label:        Get Liturgy Text
+                    - app.admin.liturgy.text
 
             app.admin.group.subscriptions: ~
 
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
+    security:
+        handler: sonata.admin.security.handler.role
+        role_admin: ROLE_SONATA_ADMIN
+        role_super_admin: ROLE_SUPER_ADMIN
 
 sonata_block:
     blocks:

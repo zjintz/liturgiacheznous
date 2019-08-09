@@ -1,0 +1,12 @@
+{% extends "@SonataAdmin/standard_layout.html.twig" %}
+
+
+{% block title %} {% trans %}assembler.title{% endtrans %} {% endblock %}
+
+{% block sonata_admin_content %}
+
+    {{ render(controller(
+        'App\\Controller\\TextAssemblerController::index',
+        {'_sonata_admin': 'app.admin.liturgy.text' }
+    )) }}
+{% endblock %}

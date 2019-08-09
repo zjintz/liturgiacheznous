@@ -4,10 +4,29 @@ security:
             algorithm: auto
             iterations: 12
     role_hierarchy:
-        ROLE_ADMIN:       [ROLE_USER, ROLE_SONATA_ADMIN]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-        
+        ROLE_APP_ADMIN_READER:
+            - ROLE_SONATA_USER_ADMIN_USER_LIST
+            - ROLE_SONATA_USER_ADMIN_USER_EDIT
+            - ROLE_SONATA_USER_ADMIN_USER_VIEW
+            - ROLE_APP_ADMIN_USER_LIST
+            - ROLE_APP_ADMIN_USER_VIEW
+            - ROLE_APP_ADMIN_HEADQUARTER_LIST
+            - ROLE_APP_ADMIN_HEADQUARTER_VIEW
+            - ROLE_APP_ADMIN_LITURGY_LIST
+            - ROLE_APP_ADMIN_LITURGY_VIEW
+            - ROLE_APP_ADMIN_LITURGY_TEXT_VIEW
+            - ROLE_APP_ADMIN_LITURGY_TEXT_LIST
+            - ROLE_APP_ADMIN_USER_EDIT
+            - ROLE_APP_ADMIN_USER_CREATE
+        ROLE_APP_ADMIN_EDITOR:
 
+        ROLE_APP_ADMIN_ADMIN:
+            - ROLE_APP_ADMIN_USER_DELETE
+            - ROLE_APP_ADMIN_USER_EXPORT
+        
+        ROLE_USER:             [ROLE_USER, ROLE_APP_ADMIN_READER, ROLE_SONATA_ADMIN, ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT]
+        ROLE_ADMIN:             [ROLE_USER, ROLE_APP_ADMIN_EDITOR, ROLE_APP_ADMIN_ADMIN]
+        ROLE_SUPER_ADMIN:       [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
      # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -79,9 +98,6 @@ security:
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
-        - { path: ^/, role: [ROLE_USER, ROLE_ADMIN, ROLE_SONATA_ADMIN] }
-#        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/(en|pt)/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/(en|pt)/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        #- { path: ^/, roles: ROLE_USER }
+        - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+

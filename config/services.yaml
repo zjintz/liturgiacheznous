@@ -36,6 +36,8 @@ services:
         arguments: [~, App\Application\Sonata\UserBundle\Entity\User, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: User }
+        calls:
+            - [ setTranslationDomain, [messages]]
 
     app.admin.headquarter:
         class: App\Admin\HeadquarterAdmin
@@ -48,3 +50,9 @@ services:
         arguments: [~, App\Entity\Liturgy, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Liturgy }
+
+    app.admin.liturgy.text:
+        class: App\Admin\LiturgyTextAdmin
+        arguments: [~, ~, App\Controller\TextAssemblerController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Liturgy.Text }

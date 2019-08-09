@@ -5,8 +5,7 @@ namespace App\Controller;
 use App\Form\LiturgyTextRequestType;
 use App\Util\CNBBAssembler;
 use App\Util\IgrejaSantaInesAssembler;
-
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -19,9 +18,15 @@ use Symfony\Component\Routing\Annotation\Route;
  *             from different sources.
  *
  */
-class TextAssemblerController extends AbstractController
+class TextAssemblerController extends CRUDController
 {
 
+
+    public function listAction()
+    {
+        return $this->render('text_assembler/list.html.twig');
+    }
+    
     /**
      * @Route("/{_locale}/assembler/", name="assembler_index",
      *     requirements={

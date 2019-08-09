@@ -2,6 +2,7 @@
 
 namespace App\Application\Sonata\UserBundle\Entity;
 
+use App\Entity\EmailSubscription;
 use App\Entity\Headquarter;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
@@ -32,6 +33,11 @@ class User extends BaseUser
      * @var int $id
      */
     protected $id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\EmailSubscription", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $emailSubscription;
 
     /**
      * Get id.
@@ -65,5 +71,22 @@ class User extends BaseUser
     {
         $this->setUsername($email);
         return parent::setEmail($email);
+    }
+
+    public function getEmailSubscription(): ?EmailSubscription
+    {
+        return $this->emailSubscription;
+    }
+
+    public function setEmailSubscription(EmailSubscription $emailSubscription): self
+    {
+        $this->emailSubscription = $emailSubscription;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $emailSubscription->getUser()) {
+            $emailSubscription->setUser($this);
+        }
+
+        return $this;
     }
 }
