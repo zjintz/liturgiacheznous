@@ -2,10 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
       <body>
-            <trans-unit id="app.admin.group.users">
-                <source>app.admin.group.users</source>
-                <target>Users</target>
-            </trans-unit>
             <trans-unit id="assembler_title">
                 <source>assembler.title</source>
                 <target>Liturgy Text</target>
@@ -33,6 +29,10 @@
             <trans-unit id="link_return">
                 <source>link.return</source>
                 <target>return</target>
+            </trans-unit>
+            <trans-unit id="Liturgy.Text">
+                <source>Liturgy.Text</source>
+                <target>Liturgy Text</target>
             </trans-unit>
         </body>
     </file>
