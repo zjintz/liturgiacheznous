@@ -53,6 +53,6 @@ services:
 
     app.admin.liturgy.text:
         class: App\Admin\LiturgyTextAdmin
-        arguments: [~, ~, App\Controller\TextAssemblerController]
+        arguments: [~, ~, App\Controller\TextAssemblerCRUDController]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Liturgy.Text }

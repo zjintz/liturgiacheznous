@@ -27,7 +27,8 @@ class TextAssemblerControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'testUser',
             'PHP_AUTH_PW'   => 'testPass',
         ]);
-        $client->request('GET', '/en/assembler/');
+        $client->request('GET', '/assembler/');
+        echo $client->getResponse()->getContent();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $today = (new \DateTime())->format('Y-m-d');
         $crawler = $client->submitForm('Get Text');
@@ -35,7 +36,7 @@ class TextAssemblerControllerTest extends WebTestCase
             $client->getResponse()->isRedirect()
         );
         $this->assertTrue(
-            $client->getResponse()->isRedirect('/en/assembler/text/DOCX/CNBB/'.$today.'/')
+            $client->getResponse()->isRedirect('/assembler/text/DOCX/CNBB/'.$today.'/')
         );
     }
 
@@ -53,11 +54,11 @@ class TextAssemblerControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'testPass',
         ]);
         $today = (new \DateTime())->format('Y-m-d');
-        $client->request('GET', '/en/assembler/text/pdf/unknown/'.$today.'/');
+        $client->request('GET', '/assembler/text/pdf/unknown/'.$today.'/');
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
-        $client->request('GET', '/en/assembler/text/algo/CNBB/'.$today.'/');
+        $client->request('GET', '/assembler/text/algo/CNBB/'.$today.'/');
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
-        $crawler = $client->request('GET', '/en/assembler/text/PDF/Igreja_Santa_Ines/21000-12-10/');
+        $crawler = $client->request('GET', '/assembler/text/PDF/Igreja_Santa_Ines/21000-12-10/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertSelectorTextContains('html div.warning', 'No text found.');
 
@@ -75,7 +76,7 @@ class TextAssemblerControllerTest extends WebTestCase
         $client->clickLink('return');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $crawler = $client->request('GET', '/en/assembler/text/DOCX/CNBB/1900-01-01/');
+        $crawler = $client->request('GET', '/assembler/text/DOCX/CNBB/1900-01-01/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertSelectorTextContains('html div.warning', 'No text found.');
 

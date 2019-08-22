@@ -24,12 +24,12 @@ class SecurityControllerTest extends WebTestCase
     public function testAnonAccess()
     {
         $this->client = static::createClient();
-        $this->client->request('GET', '/en/assembler/');
-        $this->assertRedirect('/en/login/');
+        $this->client->request('GET', '/dashboard');
+        $this->assertRedirect('http://localhost/login');
         $crawler = $this->client->followRedirect();
         $this->assertLoginContent($crawler);
         $this->client->request('GET', '/logout');
-        $this->assertRedirect('http://localhost/en/login/');
+        $this->assertRedirect('http://localhost/login');
         $crawler = $this->client->followRedirect();
         $this->assertLoginContent($crawler);
         $this->client->request('GET', '/noexiste');
@@ -47,32 +47,15 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginLogout()
     {
         $this->client = static::createClient();
-        $classes = array(
-            UserTestFixtures::class
-        );
-        $this->loadFixtures($classes);
-        $crawler = $this->client->request('GET', '/en/login/');
+        $crawler = $this->client->request('GET', '/login');
         $this->assertLoginContent($crawler);
-        $form = $crawler->selectButton('Sign in')->form();
+        $form = $crawler->selectButton('Log in')->form();
         //trying with wrong credentials
-        $form['email'] = 'fakeadmin';
-        $form['password'] = 'fakeadmin';
+        $form['_username'] = 'fakeadmin';
+        $form['_password'] = 'fakeadmin';
         $crawler = $this->client->submit($form);
-        $this->assertRedirect('/en/login/');
-        //Now asserting with the right credentials.
-        $crawler = $this->client->request('GET', '/en/login/');
-        $this->assertLoginContent($crawler);
-        $form = $crawler->selectButton('Sign in')->form();
-        $form['email'] = 'tester@test.com';
-        $form['password'] = 'testpass';
-        $crawler = $this->client->submit($form);
-        //now I can go to /
-        $crawler = $this->client->request('GET', '/en/');
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
-        //everything ok so far. what if I go to login once logged in?
-        //now assert that logout goes to /login
-        $crawler = $this->client->request('GET', '/logout');
-        $this->assertRedirect('http://localhost/en/login/');
+        $this->assertRedirect('http://localhost/login');
+
     }
 
     private function assertRedirect($destiny)
@@ -91,19 +74,19 @@ class SecurityControllerTest extends WebTestCase
         $this->assertEquals(
             1,
             $crawler->filter(
-                'label:contains("Email")'
+                'p:contains("Authentication")'
+            )->count()
+        );
+        $this->assertEquals(
+            4,
+            $crawler->filter(
+                'input'
             )->count()
         );
         $this->assertEquals(
             1,
             $crawler->filter(
-                'label:contains("Password")'
-            )->count()
-        );
-        $this->assertEquals(
-            1,
-            $crawler->filter(
-                'button:contains("Sign in")'
+                'button:contains("Log in")'
             )->count()
         );
     }

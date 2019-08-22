@@ -25,19 +25,20 @@ class RegistrationControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->loadFixtures([]);
-        $crawler =$this->client->request('GET', '/en/register');
+        $crawler =$this->client->request('GET', '/register/');
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $form = $crawler->selectButton('Register')->form();
         // set some values
-        $form['registration_form[name]'] = 'name';
-        $form['registration_form[lastName]'] = 'lm';
-        $form['registration_form[plainPassword]'] = '1111111';
-        $form['registration_form[email]'] = 'test@no.com';
-        $form['registration_form[headquarter][name]'] = 'hqname';
-        $form['registration_form[headquarter][city]'] = 'hqcity';
-        $form['registration_form[headquarter][country]'] = 'CO';
+        $form['fos_user_registration_form[firstName]'] = 'name';
+        $form['fos_user_registration_form[lastName]'] = 'lm';
+        $form['fos_user_registration_form[plainPassword][first]'] = '1111111';
+        $form['fos_user_registration_form[plainPassword][second]'] = '1111111';
+        $form['fos_user_registration_form[email]'] = 'test@no.com';
+        $form['fos_user_registration_form[headquarter][name]'] = 'hqname';
+        $form['fos_user_registration_form[headquarter][city]'] = 'hqcity';
+        $form['fos_user_registration_form[headquarter][country]'] = 'CO';
         $crawler = $this->client->submit($form);
-        $this->assertRedirect("/en/login/");
+        $this->assertRedirect("/register/confirmed");
         $this->client->followRedirect();
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         // submit the form

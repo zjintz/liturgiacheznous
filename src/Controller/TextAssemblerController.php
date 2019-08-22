@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Form\LiturgyTextRequestType;
 use App\Util\CNBBAssembler;
 use App\Util\IgrejaSantaInesAssembler;
-use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *             from different sources.
  *
  */
-class TextAssemblerController extends CRUDController
+class TextAssemblerController extends AbstractController
 {
 
 
@@ -28,13 +28,9 @@ class TextAssemblerController extends CRUDController
     }
     
     /**
-     * @Route("/{_locale}/assembler/", name="assembler_index",
-     *     requirements={
-     *         "_locale"="%app.locales%"
-     *     }
-     * )
+     * @Route("/assembler/", name="assembler_index")
      */
-    public function index($_locale, Request $request)
+    public function index(Request $request)
     {
      
         $form = $this->createForm(LiturgyTextRequestType::class);
@@ -46,7 +42,6 @@ class TextAssemblerController extends CRUDController
             return $this->redirectToRoute(
                 'assembler_text',
                 [
-                    '_locale' => $_locale,
                     'text_format' => $data['text_format'],
                     'source' => $data['source'],
                     'liturgy_date' => $data['liturgy_date']->format('Y-m-d')
@@ -63,21 +58,19 @@ class TextAssemblerController extends CRUDController
     }
 
     /**
-     * @Route("/{_locale}/assembler/text/{text_format}/{source}/{liturgy_date}/",
+     * @Route("/assembler/text/{text_format}/{source}/{liturgy_date}/",
      * name="assembler_text",
      * defaults={
      *         "text_format": "pdf",
      *         "source": "CNBB"
      *     },
      * requirements={
-     *         "_locale" : "%app.locales%",
      *         "text_format": "DOCX|PDF",
      *         "source": "CNBB|Igreja_Santa_Ines"
      *     }
      *)
      */
     public function getText(
-        $_locale,
         $text_format,
         $source,
         $liturgy_date,
