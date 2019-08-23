@@ -1,8 +1,9 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-    <h1>{% trans %}assembler.title{% endtrans %}</h1>
-
-
-
+<h3 class="card-title text-center">{% trans %}assembler.title{% endtrans %}</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
     {{ form_start(form) }}
         {{ form_errors(form) }}
 
@@ -16,4 +17,6 @@
             {{ form_row(form.submit) }}
         </div>
     {{ form_end(form) }}
-
+        </div>
+    </div>
+</div>

@@ -56,7 +56,7 @@ Eu te darei as chaves do Reino dos Céus:
 tudo o que tu ligares na terra será ligado nos céus;
 tudo o que tu desligares na terra 
 será desligado nos céus".
-Palavra da Salvação.
+
 EOD;
         $l1Text = <<<EOD
 Naqueles dias,
@@ -99,7 +99,7 @@ Então Pedro caiu em si e disse:
 "Agora sei, de fato, que o Senhor enviou o seu anjo
 para me libertar do poder de Herodes
 e de tudo o que o povo judeu esperava!"
-Palavra do Senhor.
+
 EOD;
         $salmoText = <<<EOD
 Bendirei o Senhor Deus em todo o tempo, *
@@ -148,7 +148,7 @@ e eu fui libertado da boca do leão.
 O Senhor me libertará de todo mal
 e me salvará para o seu Reino celeste.
 A ele a glória, pelos séculos dos séculos! Amém.
-Palavra do Senhor.
+
 EOD;
         $gospelTitle = "Evangelho - Mt 16,13-19";
         $firstReading = $temporalSection->getFirstReading();

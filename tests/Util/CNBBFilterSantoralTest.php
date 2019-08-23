@@ -79,7 +79,7 @@ meu Deus e vosso Deus".
 Então Maria Madalena foi anunciar aos discípulos:
 "Eu vi o Senhor!", 
 e contou o que Jesus lhe tinha dito. 
-Palavra da Salvação.
+
 EOD;
         $l1Text = <<<EOD
 Eis o que diz a noiva:
@@ -95,7 +95,7 @@ que faziam a ronda pela cidade.
 "Vistes por ventura o amor de minha vida?"
 E logo que passei por eles,
 encontrei o amor de minha vida.
-Palavra do Senhor.
+
 EOD;
         $salmoText = <<<EOD
 Sois vós, ó Senhor, o meu Deus! *
@@ -171,7 +171,7 @@ Portanto, se alguém está em Cristo,
 é uma criatura nova.
 O mundo velho desapareceu.
 Tudo agora é novo.
-Palavra do Senhor.
+
 EOD;
         $firstReading = $section->getFirstReading();
         $this->assertReading(

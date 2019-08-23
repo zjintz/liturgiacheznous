@@ -62,6 +62,7 @@ class CNBBFilter extends AbstractFilter
         $intro = trim($intro);
         $subtitle = $subCrawler->filter('div.cit_direita')->text();
         $text = $this->extractText($subCrawler);
+        $text = str_replace("Palavra do Senhor.", '', $text);
         $factory = new LiturgyReadingFactory();
         return $factory->createReading($title, $text, $intro, $subtitle);
     }
@@ -105,6 +106,7 @@ class CNBBFilter extends AbstractFilter
         $intro = preg_replace('/\s+/', ' ', $intro);
         $subtitle = $subCrawler->filter('div.cit_direita')->text();
         $text = $this->extractText($subCrawler);
+        $text = str_replace("Palavra da Salvação.", '', $text);
         $factory = new GospelReadingFactory();
         return $factory->createReading($title, $text, $intro, $subtitle);
     }

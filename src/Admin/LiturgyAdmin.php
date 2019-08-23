@@ -27,7 +27,6 @@ final class LiturgyAdmin extends AbstractAdmin
     {
         $datagridMapper->add('date');
         $datagridMapper->add('liturgyDay');
-        $datagridMapper->add('description');
         $datagridMapper->add('color');
         $datagridMapper->add('isSolemnity');
         $datagridMapper->add('isSolemnityVFC');
@@ -38,8 +37,6 @@ final class LiturgyAdmin extends AbstractAdmin
         $datagridMapper->add('isMemorialFree');
         $datagridMapper->add('yearType');
         $datagridMapper->add('alleluiaReference');
-        $datagridMapper->add('alleluiaVerse');
-        $datagridMapper->add('summary');
     }
 
     protected function configureListFields(ListMapper $listMapper)

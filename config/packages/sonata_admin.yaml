@@ -5,6 +5,7 @@ sonata_admin:
             app.admin.group.users:
                 label: app.admin.group.users
                 label_catalogue: App
+                icon: '<i class="fa fa-user"></i>'
                 items:
                     - app.admin.user
                     - app.admin.headquarter
@@ -12,6 +13,7 @@ sonata_admin:
             app.admin.group.liturgy:
                 label: app.admin.group.liturgy
                 label_catalogue: App
+                icon: '<i class="fa fa-book"></i>'
                 items:
                     - app.admin.liturgy
                     - app.admin.liturgy.text

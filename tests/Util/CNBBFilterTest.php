@@ -104,7 +104,7 @@ porque é a ti que o darei.
 Tendo desarmado suas tendas,
 Abrão foi morar junto ao Carvalho de Mambré, que está em Hebron,
 e ali construiu um altar ao Senhor.
-Palavra do Senhor.
+
 EOD;
         
         $salmoChorus = "Senhor, quem morará em vosso Monte Santo?";
@@ -143,7 +143,7 @@ e muitos são os que entram por ele!
 Como é estreita a porta
 e apertado o caminho que leva à vida!
 E são poucos os que o encontram!
-Palavra da Salvação.
+
 EOD;
 
         $this->assertEquals(

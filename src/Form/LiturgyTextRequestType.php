@@ -4,7 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Sonata\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -37,15 +37,19 @@ class LiturgyTextRequestType extends AbstractType
                       'choices' => [
                           'docx (MS Word)'=> 'DOCX',
                           'PDF'=>'PDF'        
+                      ],
+                      'attr' => [
+                          'data-sonata-select2' => 'false'
                       ]
                   ]
               )
               ->add(
                   'liturgy_date',
-                  DateType::class,
+                  DatePickerType::class,
                   ['label' => $this->translator->trans('form.label.liturgy_date'),
                    'format' => 'yyy-MM-dd',
-                   'data' => new \DateTime()
+                   'data' => new \DateTime(),
+                   'attr' => ['data-sonata-select2' => 'false']
                   ]
               )
               ->add('source', ChoiceType::class, [
@@ -57,7 +61,8 @@ class LiturgyTextRequestType extends AbstractType
                   'choices' => [
                       'CNBB'=>'CNBB',
                       'Igreja Santa Ines'=> 'Igreja_Santa_Ines'
-                  ]
+                  ],
+                  'attr' => ['data-sonata-select2' => 'false']
               ])
               ->add(
                   'submit',

@@ -47,6 +47,8 @@ class IgrejaSantaInesFilter extends AbstractFilter
                            );
         
         $l1Text = implode("", $l1Text);
+        $l1Text = str_replace("Palavra do Senhor.", '', $l1Text);
+        $l1Text = trim($l1Text);
         $gospelTitle = $crawler->filter('div.'.$name.' button.accordion')->last()->html();
         $gospelTitle = str_replace("<br>", " ", $gospelTitle);
 
@@ -59,6 +61,10 @@ class IgrejaSantaInesFilter extends AbstractFilter
                            }
                            );
         $gospelText = implode("", $gospelText);
+        $gospelText = str_replace(".Palavra da Salvação.", "", $gospelText);
+        $gospelText = str_replace("Palavra da Salvação.", ".", $gospelText);
+        $gospelText = str_replace(". .", ".", $gospelText);
+        $gospelText = trim($gospelText);
         $factory = new LiturgyReadingFactory();
         $firstReading = $factory->createReading(
             $l1Title,
@@ -120,6 +126,8 @@ class IgrejaSantaInesFilter extends AbstractFilter
                            }
                            );
         $l2Text = implode("", $l2Text);
+        $l2Text = str_replace("Palavra do Senhor.", '', $l2Text);
+        $l2Text = trim($l2Text);
         $factory = new LiturgyReadingFactory();
 
         $l2Reading = $factory->createReading(
