@@ -1,3 +1,19 @@
+{% extends "@SonataAdmin/standard_layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block s %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    
+{% endblock %}
+{% block title %} {% trans %}assembler.title{% endtrans %} {% endblock %}
+
+{% block sonata_admin_content %}
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 <h3 class="card-title text-center">{% trans %}assembler.title{% endtrans %}</h3>
@@ -20,3 +36,5 @@
         </div>
     </div>
 </div>
+
+{% endblock %}

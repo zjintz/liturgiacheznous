@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 final class LiturgyAdmin extends AbstractAdmin
 {
+    
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('liturgyDay', TextType::class);
@@ -58,4 +59,6 @@ final class LiturgyAdmin extends AbstractAdmin
         $listMapper->addIdentifier('summary');
 
     }
+
+    
 }

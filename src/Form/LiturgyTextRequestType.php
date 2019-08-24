@@ -47,7 +47,7 @@ class LiturgyTextRequestType extends AbstractType
                   'liturgy_date',
                   DatePickerType::class,
                   ['label' => $this->translator->trans('form.label.liturgy_date'),
-                   'format' => 'yyy-MM-dd',
+                   'format' => 'yyyy-MM-dd',
                    'data' => new \DateTime(),
                    'attr' => ['data-sonata-select2' => 'false']
                   ]

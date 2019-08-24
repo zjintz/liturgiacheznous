@@ -20,12 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TextAssemblerController extends AbstractController
 {
-
-
-    public function listAction()
-    {
-        return $this->render('text_assembler/list.html.twig');
-    }
     
     /**
      * @Route("/assembler/", name="assembler_index")
@@ -44,7 +38,7 @@ class TextAssemblerController extends AbstractController
                 [
                     'text_format' => $data['text_format'],
                     'source' => $data['source'],
-                    'liturgy_date' => $data['liturgy_date']->format('Y-m-d')
+                    'liturgy_date' => $data['liturgy_date']->format('yyyy-MM-dd')
                 ]
             );
         }
