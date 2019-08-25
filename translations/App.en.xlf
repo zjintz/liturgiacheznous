@@ -10,6 +10,10 @@
           <source>app.admin.group.liturgy</source>
           <target>Liturgy</target>
         </trans-unit>
+        <trans-unit id="assemble_action">
+          <source>assemble_action</source>
+          <target>Assemble Text</target>
+        </trans-unit>
       </body>
     </file>
 </xliff>

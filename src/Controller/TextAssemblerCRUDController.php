@@ -46,7 +46,6 @@ class TextAssemblerCRUDController extends CRUDController
                 'form' => $form->createView(),
             ]
         );
-        //        return $this->render('text_assembler/list.html.twig');
     }
 
 }

@@ -17,6 +17,8 @@ sonata_admin:
                 items:
                     - app.admin.liturgy
                     - app.admin.liturgy.text
+                    - route: liturgy_text_assemble
+                      label: assemble_action
 
             app.admin.group.subscriptions: ~
 

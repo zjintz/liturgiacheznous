@@ -22,12 +22,7 @@ class LiturgyTextAdmin extends AbstractAdmin
     {
         $list = parent::configureActionButtons($action, $object);
 
-        $list['assemble'] = [
-            'label' => 'assemble_action',
-            'translation_domain' => 'SonataAdminBundle',
-            'url' => $this->generateUrl('assemble'),
-            'icon' => 'level-up',
-        ];
+        $list['assemble'] ['template'] = ['list_button.html.twig'  ];
 
         return $list;
     }
@@ -38,7 +33,7 @@ class LiturgyTextAdmin extends AbstractAdmin
 
         $actions['assemble'] = [
             'label' => 'assemble_action',
-            'translation_domain' => 'SonataAdminBundle',
+            'translation_domain' => 'App',
             'url' => $this->generateUrl('assemble'),
             'icon' => 'level-up',
         ];
@@ -46,17 +41,5 @@ class LiturgyTextAdmin extends AbstractAdmin
         return $actions;
     }
 
-    public function getActionButtons($action, $object = null)
-    {
-        $list = parent::getActionButtons($action, $object);
 
-        $list['assemble'] = [
-            'label' => 'assemble_action',
-            'translation_domain' => 'SonataAdminBundle',
-            'url' => $this->generateUrl('assemble'),
-            'icon' => 'level-up',
-        ];
-
-        return $list;
-    }
 }
