@@ -1,16 +1,14 @@
 {% extends "@SonataAdmin/standard_layout.html.twig" %}
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js/avoidButtonDisable.js') }}"></script>
 {% endblock %}
-{% block s %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    
-{% endblock %}
+
 {% block title %} {% trans %}assembler.title{% endtrans %} {% endblock %}
 
 {% block sonata_admin_content %}
