@@ -242,6 +242,18 @@
     "sonata-project/exporter": {
         "version": "2.0.1"
     },
+    "sonata-project/translation-bundle": {
+        "version": "2.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.3",
+            "ref": "65f0e544ca19d262268e1f1ce2b4cbbe459a4a97"
+        },
+        "files": [
+            "config/packages/sonata_translation.yaml"
+        ]
+    },
     "sonata-project/user-bundle": {
         "version": "4.4.0"
     },
