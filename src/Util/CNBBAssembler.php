@@ -4,10 +4,7 @@ namespace App\Util;
 
 use App\Util\AbstractAssembler;
 use App\Util\CNBBFilter;
-// Include the requires classes of Phpword
-use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\Settings;
+use App\Repository\LiturgyRepository;
 
 /**
  * \brief      Assembles documents from the CNBBA source.
@@ -17,9 +14,13 @@ use PhpOffice\PhpWord\Settings;
 class CNBBAssembler extends AbstractAssembler
 {
     private $projectDir;
-
-    public function __construct(string $projectDir)
-    {
+    private $liturgyRepository;
+    
+    public function __construct(
+        LiturgyRepository $liturgyRepository,
+        string $projectDir
+    ){
+        $this->liturgyRepository = $liturgyRepository;
         $this->projectDir = $projectDir;
     }
     // Force Extending class to define this method
@@ -40,6 +41,13 @@ class CNBBAssembler extends AbstractAssembler
         {
             return $liturgyText->getLoadStatus();
         }
+        $litDate = new \DateTime($liturgyDate);
+        $liturgy = $this->liturgyRepository->findOneByDate($litDate);
+        $description = $liturgy->getDescription();
+        if(is_null($description)) {
+            $description = $liturgy->getLiturgyDay();
+        }
+        $liturgyText->setDayTitle($description);
         return $this->createDocument($format, $liturgyText, $this->projectDir);
     }
 
