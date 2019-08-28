@@ -1,6 +1,7 @@
 <?php
 namespace App\Tests\Writer;
 
+use App\Entity\GospelAcclamation;
 use App\Writer\DocumentCreator;
 use App\Entity\LiturgyText;
 use App\Entity\LiturgySection;
@@ -74,10 +75,19 @@ class DocumentCreatorTest extends TestCase
         $section->setGospelReading($gospel);
         return $section;
     }
+
+    protected function getAcclamation()
+    {
+        $acclamation = new GospelAcclamation();
+        $acclamation->setVerse("XXXXXXX");
+        $acclamation->setReference("XXXXXXX");
+        return $acclamation;
+    }
     protected function createBasicLiturgy()
     {
         $this->basicLiturgy = new LiturgyText();
         $this->basicLiturgy->setDayTitle("Text title");
+        $this->basicLiturgy->setGospelAcclamation($this->getAcclamation());
         $this->basicLiturgy->setDate(new \Datetime("1900-01-01"));
         $this->basicLiturgy->setTemporalSection($this->getSection());
     }
@@ -85,6 +95,7 @@ class DocumentCreatorTest extends TestCase
     {
         $this->fullSantoralLiturgy = new LiturgyText();
         $this->fullSantoralLiturgy->setDayTitle("Text title");
+        $this->fullSantoralLiturgy->setGospelAcclamation($this->getAcclamation());
         $this->fullSantoralLiturgy->setDate(new \Datetime("1900-01-01"));
         $this->fullSantoralLiturgy->setTemporalSection($this->getSection());
         $this->fullSantoralLiturgy->setSantoralSection($this->getSection());

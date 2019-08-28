@@ -4,6 +4,8 @@ namespace App\Util;
 
 use App\Entity\Book;
 use App\Entity\LiturgyText;
+use App\Entity\Liturgy;
+use App\Entity\GospelAcclamation;
 use App\Repository\LiturgyRepository;
 
 
@@ -34,10 +36,29 @@ class AssemblerAssistant
         }
         $liturgyText->setDayTitle($description);
         $liturgyText = $this->addBookNames($liturgyText);
+        $liturgyText = $this->addGospelAcclamation($liturgyText, $liturgy);
 
         return $liturgyText;
     }
 
+    protected function addGospelAcclamation(
+        LiturgyText $liturgyText,
+        Liturgy $liturgy
+    ) {
+        
+        $gospelAcclamation = new GospelAcclamation();
+        $gospelAcclamation->setVerse("XXXXXXX");
+        $gospelAcclamation->setReference("XXXXXXX");
+        if (!is_null($liturgy->getAlleluiaVerse())) {
+            $gospelAcclamation->setVerse($liturgy->getAlleluiaVerse());
+        }
+        if (!is_null($liturgy->getAlleluiaReference())) {
+            $gospelAcclamation->setReference($liturgy->getAlleluiaReference());
+        }
+        $liturgyText->setGospelAcclamation($gospelAcclamation);
+        return $liturgyText;
+    }
+    
     protected function addBookNames(LiturgyText $liturgyText)
     {
         $temporalSection = $liturgyText->getTemporalSection();

@@ -13,7 +13,7 @@ class LiturgyText
     private $santoralSection;
     private $loadStatus;
     private $date;
-
+    private $gospelAcclamation;
 
     public function getDayTitle(): ?string
     {
@@ -70,6 +70,18 @@ class LiturgyText
     public function setDate($date): self
     {
         $this->date = $date;
+        return $this;
+    }
+
+    public function getGospelAcclamation()
+    {
+        return $this->gospelAcclamation;
+    }
+
+    public function setGospelAcclamation(
+        GospelAcclamation $gospelAcclamation
+    ): self {
+        $this->gospelAcclamation = $gospelAcclamation;
         return $this;
     }    
     

@@ -86,12 +86,15 @@ class WriterAssistant
         ];
         
         $temporalSection = $litText->getTemporalSection();
+        $gospelAcclamation = $litText->getGospelAcclamation();
         $l1Reading = $temporalSection->getFirstReading();
         $psalmReading = $temporalSection->getPsalmReading();
         $gospelReading = $temporalSection->getGospelReading();
         $litArray = [];
         $litArray['dateTitle'] = $litText->getDate()->format("d/m/Y");
         $litArray['liturgyDateTitle'] =  $litText->getDayTitle();
+        $litArray['gospelAcclamationRef'] =  $gospelAcclamation->getReference();
+        $litArray['gospelAcclamationVerse'] =  $gospelAcclamation->getVerse();
         $litArray['l1Reference'] =  $l1Reading->getReference();
         $litArray['l1Introduction'] =  $l1Reading->getIntroduction();
         $litArray['l1Book'] =  $l1Reading->getBookName();

@@ -26,7 +26,9 @@ class AssemblerAssistantTest extends TestCase
     public function testAddDetails()
     {
         $liturgy = new Liturgy();
-        $liturgy->setDescription("renewed title");        
+        $liturgy->setDescription("renewed title");
+        $liturgy->setAlleluiaVerse("Tu és Pedro e sobre esta pedra, eu irei construir minha Igreja, e as portas do inferno não irão derrotá-la. ");
+        $liturgy->setAlleluiaReference("Mt 16,18");        
         $testDate = new \DateTime("2019-08-08");
         $liturgyRepository = $this->mockLiturgyRepository($liturgy);
         $assistant = new AssemblerAssistant($liturgyRepository);
@@ -75,6 +77,14 @@ class AssemblerAssistantTest extends TestCase
             "Êxodo",
             $newLitText->getSantoralSection()->getSecondReading()->getBookName()
         );
+        $this->assertEquals(
+            "Mt 16,18",
+            $newLitText->getGospelAcclamation()->getReference()
+        );
+        $this->assertEquals(
+            "Tu és Pedro e sobre esta pedra, eu irei construir minha Igreja, e as portas do inferno não irão derrotá-la. ",
+            $newLitText->getGospelAcclamation()->getVerse()
+        );
     }
 
     public function testAddDetailsNullDesc()
@@ -121,6 +131,31 @@ class AssemblerAssistantTest extends TestCase
         $this->assertEquals(
             "Levítico",
             $newLitText->getTemporalSection()->getFirstReading()->getBookName()
+        );
+    }
+
+    public function testNoAcclamation()
+    {
+        $liturgy = new Liturgy();
+        $liturgy->setDescription("renewed title");        
+        $testDate = new \DateTime("2019-08-05");
+        $liturgyRepository = $this->mockLiturgyRepository($liturgy);
+        $assistant = new AssemblerAssistant($liturgyRepository);
+
+        //creating the liturgytext
+        $liturgyText = new LiturgyText();
+        $liturgyText->setDate($testDate);
+        //lets do the magic
+        $newLitText = $assistant->addDetails($liturgyText);
+        //now lets assert
+
+        $this->assertEquals(
+            "XXXXXXX",
+            $newLitText->getGospelAcclamation()->getReference()
+        );
+        $this->assertEquals(
+            "XXXXXXX",
+            $newLitText->getGospelAcclamation()->getVerse()
         );
     }
 }

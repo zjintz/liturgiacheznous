@@ -1,6 +1,7 @@
 <?php
 namespace App\Tests\Writer;
 
+use App\Entity\GospelAcclamation;
 use App\Entity\GospelReading;
 use App\Entity\LiturgyText;
 use App\Entity\LiturgySection;
@@ -68,18 +69,18 @@ class WriterAssistantTest extends TestCase
     {
         $assistant = new WriterAssistant();
         $liturgyArray = $assistant->getLiturgyArray($this->basicLiturgy);
-        $this->assertCount(13, $liturgyArray);
+        $this->assertCount(15, $liturgyArray);
         $liturgyArray = $assistant->getLiturgyArray($this->biReadingLiturgy);
-        $this->assertCount(17, $liturgyArray);
+        $this->assertCount(19, $liturgyArray);
 
         $liturgyArray = $assistant->getLiturgyArray($this->fullSantoralLiturgy);
-        $this->assertCount(24, $liturgyArray);
+        $this->assertCount(26, $liturgyArray);
         $liturgyArray = $assistant->getLiturgyArray($this->singleSantoralLiturgy);
-        $this->assertCount(17, $liturgyArray);
+        $this->assertCount(19, $liturgyArray);
         $liturgyArray = $assistant->getLiturgyArray($this->fullSantoral2lLiturgy);
-        $this->assertCount(28, $liturgyArray);
+        $this->assertCount(30, $liturgyArray);
         $liturgyArray = $assistant->getLiturgyArray($this->singleSantoral2lLiturgy);
-        $this->assertCount(21, $liturgyArray);
+        $this->assertCount(23, $liturgyArray);
     }
 
     public function testGetPsalmLines()
@@ -124,6 +125,13 @@ EOD;
         $this->assertEquals($lastLine, $lines[2]);
     }
 
+    protected function getAcclamation()
+    {
+        $acclamation = new GospelAcclamation();
+        $acclamation->setVerse("XXXXXXX");
+        $acclamation->setReference("XXXXXXX");
+        return $acclamation;
+    }
     protected function getSection()
     {
         $section = new LiturgySection();
@@ -159,6 +167,7 @@ EOD;
     {
         $this->basicLiturgy = new LiturgyText();
         $this->basicLiturgy->setDayTitle("Text title");
+        $this->basicLiturgy->setGospelAcclamation($this->getAcclamation());
         $this->basicLiturgy->setDate(new \Datetime("1900-01-01"));
         $this->basicLiturgy->setTemporalSection($this->getSection());
         $emptySection = new LiturgySection();
@@ -170,6 +179,7 @@ EOD;
     {
         $this->fullSantoralLiturgy = new LiturgyText();
         $this->fullSantoralLiturgy->setDayTitle("Text title");
+        $this->fullSantoralLiturgy->setGospelAcclamation($this->getAcclamation());
         $this->fullSantoralLiturgy->setDate(new \Datetime("1900-01-01"));
         $this->fullSantoralLiturgy->setTemporalSection($this->getSection());
         $this->fullSantoralLiturgy->setSantoralSection($this->getSection());
@@ -179,6 +189,7 @@ EOD;
     {
         $this->biReadingLiturgy = new LiturgyText();
         $this->biReadingLiturgy->setDayTitle("Text title");
+        $this->biReadingLiturgy->setGospelAcclamation($this->getAcclamation());
         $this->biReadingLiturgy->setDate(new \Datetime("1900-01-01"));
         $temporal = $this->getSection();
         $readingFactory = new LiturgyReadingFactory();
@@ -199,6 +210,7 @@ EOD;
     {
         $this->singleSantoralLiturgy = new LiturgyText();
         $this->singleSantoralLiturgy->setDayTitle("Text title");
+        $this->singleSantoralLiturgy->setGospelAcclamation($this->getAcclamation());
         $this->singleSantoralLiturgy->setDate(new \Datetime("1900-01-01"));
         $this->singleSantoralLiturgy->setTemporalSection($this->getSection());
         $santoral = new LiturgySection();
@@ -218,6 +230,7 @@ EOD;
     {
         $this->fullSantoral2lLiturgy = new LiturgyText();
         $this->fullSantoral2lLiturgy->setDayTitle("Text title");
+        $this->fullSantoral2lLiturgy->setGospelAcclamation($this->getAcclamation());
         $this->fullSantoral2lLiturgy->setDate(new \Datetime("1900-01-01"));
         $temporal = $this->getSection();
         $readingFactory = new LiturgyReadingFactory();
@@ -235,6 +248,7 @@ EOD;
     {
         $this->singleSantoral2lLiturgy = new LiturgyText();
         $this->singleSantoral2lLiturgy->setDayTitle("Text title");
+        $this->singleSantoral2lLiturgy->setGospelAcclamation($this->getAcclamation());
         $this->singleSantoral2lLiturgy->setDate(new \Datetime("1900-01-01"));
         $temporal = $this->getSection();
         $readingFactory = new LiturgyReadingFactory();
