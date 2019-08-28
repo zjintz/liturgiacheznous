@@ -94,7 +94,7 @@ class WriterAssistant
         $litArray['liturgyDateTitle'] =  $litText->getDayTitle();
         $litArray['l1Reference'] =  $l1Reading->getReference();
         $litArray['l1Introduction'] =  $l1Reading->getIntroduction();
-        $litArray['l1Book'] =  "Genesis";
+        $litArray['l1Book'] =  $l1Reading->getBookName();
         $litArray['l1Text'] =  $l1Reading->getText();
         $litArray['psalmReference'] =  $psalmReading->getReference();
         $litArray['psalmChorus'] =  $psalmReading->getChorus();
@@ -107,7 +107,7 @@ class WriterAssistant
             $l2Reading = $temporalSection->getSecondReading();
             $litArray['l2Reference'] =  $l2Reading->getReference();
             $litArray['l2Introduction'] =  $l2Reading->getIntroduction();
-            $litArray['l2Book'] =  "Genesis";
+            $litArray['l2Book'] =  $l2Reading->getBookName();
             $litArray['l2Text'] =  $l2Reading->getText();
         }
         $santoralSection = $litText->getSantoralSection();
@@ -117,7 +117,7 @@ class WriterAssistant
                 $l1Reading = $santoralSection->getFirstReading();
                 $litArray['l1ReferenceSantoral'] =  $l1Reading->getReference();
                 $litArray['l1IntroductionSantoral'] =  $l1Reading->getIntroduction();
-                $litArray['l1BookSantoral'] =  "Genesis";
+                $litArray['l1BookSantoral'] =  $l1Reading->getBookName();
                 $litArray['l1TextSantoral'] =  $l1Reading->getText();
                 $psalmReading = $santoralSection->getPsalmReading();
                 if (!is_null($psalmReading)) {

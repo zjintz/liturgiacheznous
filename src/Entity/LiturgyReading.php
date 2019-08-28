@@ -13,6 +13,7 @@ class LiturgyReading implements Reading
     private $title;
     private $text;
     private $reference;
+    private $bookName;
     
     public function getTitle(): ?string
     {
@@ -70,6 +71,18 @@ class LiturgyReading implements Reading
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getBookName(): ?string
+    {
+        return $this->bookName;
+    }
+
+    public function setBookName(string $bookName): self
+    {
+        $this->bookName = $bookName;
 
         return $this;
     }
