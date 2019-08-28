@@ -3,6 +3,7 @@
 namespace App\Util;
 
 use App\Util\AbstractAssembler;
+use App\Util\AssemblerAssistant;
 use App\Util\IgrejaSantaInesFilter;
 use App\Repository\LiturgyRepository;
 
@@ -17,10 +18,10 @@ class IgrejaSantaInesAssembler extends AbstractAssembler
     private $projectDir;
 
     public function __construct(
-        LiturgyRepository $liturgyRepository,
-        string $projectDir
+        string $projectDir,
+        AssemblerAssistant $assistant
     ) {
-        $this->liturgyRepository = $liturgyRepository;
+        $this->assistant = $assistant;
         $this->projectDir = $projectDir;
     }
     // Force Extending class to define this method
@@ -34,18 +35,12 @@ class IgrejaSantaInesAssembler extends AbstractAssembler
     protected function assemble($data, $format = "rtf", $liturgyDate = "")
     {
         $textFilter = new IgrejaSantaInesFilter();
-        $litText = $textFilter->filter($data, $liturgyDate);
-        if( $litText->getLoadStatus() === "Not_Found" )
+        $liturgyText = $textFilter->filter($data, $liturgyDate);
+        if( $liturgyText->getLoadStatus() === "Not_Found" )
         {
-            return $litText->getLoadStatus();
+            return $liturgyText->getLoadStatus();
         }
-        $litDate = new \DateTime($liturgyDate);
-        $liturgy = $this->liturgyRepository->findOneByDate($litDate);
-        $description = $liturgy->getDescription();
-        if(is_null($description)) {
-            $description = $liturgy->getLiturgyDay();
-        }
-        $litText->setDayTitle($description);
-        return $this->createDocument($format, $litText, $this->projectDir);
+        $liturgyText= $this->assistant->addDetails($liturgyText);
+        return $this->createDocument($format, $liturgyText, $this->projectDir);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Util;
 
 use App\Util\AbstractAssembler;
+use App\Util\AssemblerAssistant;
 use App\Util\CNBBFilter;
 use App\Repository\LiturgyRepository;
 
@@ -14,13 +15,11 @@ use App\Repository\LiturgyRepository;
 class CNBBAssembler extends AbstractAssembler
 {
     private $projectDir;
-    private $liturgyRepository;
+    private $assistant;
     
-    public function __construct(
-        LiturgyRepository $liturgyRepository,
-        string $projectDir
-    ){
-        $this->liturgyRepository = $liturgyRepository;
+    public function __construct(string $projectDir, AssemblerAssistant $assistant)
+    {
+        $this->assistant = $assistant;
         $this->projectDir = $projectDir;
     }
     // Force Extending class to define this method
@@ -33,7 +32,7 @@ class CNBBAssembler extends AbstractAssembler
         return $url;
     }
 
-    protected function assemble($data, $format = 'rtf' , $liturgyDate = "")
+    protected function assemble($data, $format = 'rtf', $liturgyDate = "")
     {
         $textFilter = new CNBBFilter();
         $liturgyText = $textFilter->filter($data, $liturgyDate);
@@ -41,13 +40,7 @@ class CNBBAssembler extends AbstractAssembler
         {
             return $liturgyText->getLoadStatus();
         }
-        $litDate = new \DateTime($liturgyDate);
-        $liturgy = $this->liturgyRepository->findOneByDate($litDate);
-        $description = $liturgy->getDescription();
-        if(is_null($description)) {
-            $description = $liturgy->getLiturgyDay();
-        }
-        $liturgyText->setDayTitle($description);
+        $liturgyText= $this->assistant->addDetails($liturgyText);
         return $this->createDocument($format, $liturgyText, $this->projectDir);
     }
 
