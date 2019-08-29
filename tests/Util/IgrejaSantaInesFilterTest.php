@@ -27,8 +27,7 @@ class IgrejaSantaInesFilterTest extends BaseFilterTest
 
         $salmoTitle = "Salmo - ANO FIXO Sl 46,2-3.6-7.8-9 (R.6)";
         $salmoChorus = <<<EOD
-Por entre aclamações Deus se elevou, o Senhor subiu ao toque da trombeta. 
-Ou: Aleluia, Aleluia, Aleluia. 
+Por entre aclamações Deus se elevou, o Senhor subiu ao toque da trombeta.
 EOD;
         $reading = $temporalSection->getPsalmReading();
         $this->assertEquals($salmoTitle, $reading->getTitle());

@@ -143,7 +143,6 @@ e muitos são os que entram por ele!
 Como é estreita a porta
 e apertado o caminho que leva à vida!
 E são poucos os que o encontram!
-
 EOD;
 
         $this->assertEquals(

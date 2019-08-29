@@ -69,6 +69,7 @@ class CNBBFilter extends AbstractFilter
 
     protected function trimChorus($chorus)
     {
+        $chorus = str_replace("Ou: Aleluia, Aleluia, Aleluia.", "", $chorus);
         $chorus = implode("\n", $chorus);
         if (substr($chorus, 0, 3) === "R. ") {
             return substr($chorus,3);
@@ -106,9 +107,17 @@ class CNBBFilter extends AbstractFilter
         $intro = preg_replace('/\s+/', ' ', $intro);
         $subtitle = $subCrawler->filter('div.cit_direita')->text();
         $text = $this->extractText($subCrawler);
-        $text = str_replace("Palavra da Salvação.", '', $text);
+        $text = $this->trimGospelText($text);
         $factory = new GospelReadingFactory();
         return $factory->createReading($title, $text, $intro, $subtitle);
+    }
+    protected function trimGospelText($gospelText)
+    {
+        $gospelText = str_replace("Palavra da Salvaçào.", "", $gospelText);
+        $gospelText = str_replace("Palavra da Salvação.", "", $gospelText);
+        $gospelText = str_replace(". .", ".", $gospelText);
+        $gospelText = trim($gospelText);
+        return $gospelText;
     }
 
     protected function getTemporalText($crawler)

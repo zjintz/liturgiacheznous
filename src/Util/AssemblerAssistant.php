@@ -31,7 +31,8 @@ class AssemblerAssistant
             ['date' => $liturgyText->getDate()]
         );
         $description = $liturgy->getDescription();
-        if(is_null($description)) {
+        $description = trim($description);
+        if(is_null($description) or  ($description === "")) {
             $description = $liturgy->getLiturgyDay();
         }
         $liturgyText->setDayTitle($description);

@@ -29,6 +29,17 @@ class IgrejaSantaInesFilter extends AbstractFilter
         return true;
     }
 
+    protected function trimGospelText($gospelText)
+    {
+        $gospelText = str_replace(".Palavra da Salvaçào.", "", $gospelText);
+        $gospelText = str_replace("Palavra da Salvaçào.", ".", $gospelText);
+        $gospelText = str_replace(".Palavra da Salvação.", "", $gospelText);
+        $gospelText = str_replace("Palavra da Salvação.", ".", $gospelText);
+        $gospelText = str_replace(". .", ".", $gospelText);
+        $gospelText = trim($gospelText);
+        return $gospelText;
+    }
+    
     protected function getSection($crawler, $name)
     {
         $section = new LiturgySection();
@@ -61,10 +72,7 @@ class IgrejaSantaInesFilter extends AbstractFilter
                            }
                            );
         $gospelText = implode("", $gospelText);
-        $gospelText = str_replace(".Palavra da Salvação.", "", $gospelText);
-        $gospelText = str_replace("Palavra da Salvação.", ".", $gospelText);
-        $gospelText = str_replace(". .", ".", $gospelText);
-        $gospelText = trim($gospelText);
+        $gospelText = $this->trimGospelText($gospelText);
         $factory = new LiturgyReadingFactory();
         $firstReading = $factory->createReading(
             $l1Title,
@@ -96,7 +104,9 @@ class IgrejaSantaInesFilter extends AbstractFilter
                                return $node->text();
                            }
                            );
+        $chorus = str_replace("Ou: Aleluia, Aleluia, Aleluia.", "", $chorus);
         $chorus = implode("\n", $chorus);
+        $chorus = trim($chorus);
         $salmoCrawler = $crawler->filter('div.'.$name.' div.panel.salmo')->children('span, div.refrao_salmo2');
 
         $text = $salmoCrawler->each( function (Crawler $node, $i) {

@@ -78,8 +78,7 @@ subo para junto do meu Pai e vosso Pai,
 meu Deus e vosso Deus".
 Então Maria Madalena foi anunciar aos discípulos:
 "Eu vi o Senhor!", 
-e contou o que Jesus lhe tinha dito. 
-
+e contou o que Jesus lhe tinha dito.
 EOD;
         $l1Text = <<<EOD
 Eis o que diz a noiva:

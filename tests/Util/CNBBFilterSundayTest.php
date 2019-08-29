@@ -56,7 +56,6 @@ Eu te darei as chaves do Reino dos Céus:
 tudo o que tu ligares na terra será ligado nos céus;
 tudo o que tu desligares na terra 
 será desligado nos céus".
-
 EOD;
         $l1Text = <<<EOD
 Naqueles dias,

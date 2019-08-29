@@ -16,7 +16,7 @@ abstract class AbstractFilter
     abstract protected function getDayTitle($crawler):string;
     abstract protected function getTemporalText($crawler);
     abstract protected function getSantoralText($crawler);
-
+   
     public function filter($data, $liturgyDate)
     {
         $litText = new LiturgyText();
