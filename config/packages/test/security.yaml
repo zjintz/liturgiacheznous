@@ -1,8 +1,5 @@
 # config/packages/test/security.yaml
 security:
-    encoders:
-        App\Application\Sonata\UserBundle\Entity\User: plaintext
-        
     providers:
         in_memory:
             memory:
@@ -15,6 +12,14 @@ security:
         # replace 'main' by the name of your own firewall
         main:
             provider: in_memory
-            pattern: ^/
-            anonymous:    true
+            pattern: .*
+            context:             user
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /login
+                use_forward:    false
+                check_path:     /login_check
+                failure_path:   null
+            logout:             true
+            anonymous:          true
             http_basic: ~

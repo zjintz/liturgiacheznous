@@ -20,37 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TextAssemblerController extends AbstractController
 {
-    
-    /**
-     * @Route("/assembler/", name="assembler_index")
-     */
-    public function index(Request $request)
-    {
-     
-        $form = $this->createForm(LiturgyTextRequestType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // data is an array
-            $data = $form->getData();
-            return $this->redirectToRoute(
-                'assembler_text',
-                [
-                    'text_format' => $data['text_format'],
-                    'source' => $data['source'],
-                    'liturgy_date' => $data['liturgy_date']->format('yyyy-MM-dd')
-                ]
-            );
-        }
-        
-        return $this->render(
-            'text_assembler/index.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
-    }
-
     /**
      * @Route("/assembler/text/{text_format}/{source}/{liturgy_date}/",
      * name="assembler_text",

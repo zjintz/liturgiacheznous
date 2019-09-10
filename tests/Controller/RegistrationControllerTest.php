@@ -27,7 +27,7 @@ class RegistrationControllerTest extends WebTestCase
         $this->loadFixtures([]);
         $crawler =$this->client->request('GET', '/register/');
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $form = $crawler->selectButton('Register')->form();
+        $form = $crawler->selectButton('Registar')->form();
         // set some values
         $form['fos_user_registration_form[firstName]'] = 'name';
         $form['fos_user_registration_form[lastName]'] = 'lm';

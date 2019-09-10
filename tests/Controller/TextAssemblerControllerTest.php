@@ -2,8 +2,13 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
+use App\DataFixtures\UserTestFixtures;
+//use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 /**
  * @brief      Functional tests of the TextAssemblerController class.
@@ -13,6 +18,26 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class TextAssemblerControllerTest extends WebTestCase
 {
+    use FixturesTrait;
+    
+    private $client = null;
+
+    public function setUp()
+    {
+        $this->loadFixtures([UserTestFixtures::class]);
+        $this->client = static::createClient();
+        $this->client->setServerParameters([]);
+
+        //now login:
+        $crawler = $this->client->request('GET', '/');
+        $crawler=$this->client->followRedirect();
+        $form = $crawler->selectButton('Entrar')->form(array(
+            '_username'  => 'user@test.com',
+            '_password'  => 'testPass',
+        ));
+        $this->client->submit($form);
+    }
+    
     /**
      * @brief      Test the index view of the assembler
      *
@@ -23,46 +48,29 @@ class TextAssemblerControllerTest extends WebTestCase
      */
     public function testIndex()
     {
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'testUser',
-            'PHP_AUTH_PW'   => 'testPass',
-        ]);
-        $client->request('GET', '/assembler/');
-        echo $client->getResponse()->getContent();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', '/liturgy_text/assemble');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        //this was used to check the date of the redirection but sometimes the CNBB is offline.
         $today = (new \DateTime())->format('Y-m-d');
-        $crawler = $client->submitForm('Get Text');
+        $crawler = $this->client->submitForm('Obter Texto');
         $this->assertTrue(
-            $client->getResponse()->isRedirect()
+            $this->client->getResponse()->isRedirect()
         );
-        $this->assertTrue(
-            $client->getResponse()->isRedirect('/assembler/text/DOCX/CNBB/'.$today.'/')
-        );
-    }
 
-    /**
-     * @brief      Test getText action.
-     *
-     * @details    First makes sure the route is restricted for pdf, rtf, 
-     *             formats and the sources: CNBB and Igreja_Santa_Ines
-     *
-     */
-    public function testGetText()
-    {
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'testUser',
-            'PHP_AUTH_PW'   => 'testPass',
-        ]);
-        $today = (new \DateTime())->format('Y-m-d');
-        $client->request('GET', '/assembler/text/pdf/unknown/'.$today.'/');
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
-        $client->request('GET', '/assembler/text/algo/CNBB/'.$today.'/');
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
-        $crawler = $client->request('GET', '/assembler/text/PDF/Igreja_Santa_Ines/21000-12-10/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertSelectorTextContains('html div.warning', 'No text found.');
+        // now lets test the getText action.
+        //    First makes sure the route is restricted for pdf, rtf,
+        //         formats and the sources: CNBB and Igreja_Santa_Ines
+                $today = (new \DateTime())->format('Y-m-d');
+        $this->client->request('GET', '/assembler/text/pdf/unknown/'.$today.'/');
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/assembler/text/algo/CNBB/'.$today.'/');
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', '/assembler/text/PDF/Igreja_Santa_Ines/21000-12-10/');
+        $this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertSelectorTextContains('html div.warning', 'Texto não encontrado.');
 
-        $this->assertSelectorTextContains('html div.error_detail', 'Source : Igreja_Santa_Ines');
+        $this->assertSelectorTextContains('html div.error_detail', 'Fonte : Igreja_Santa_Ines');
 
         $this->assertEquals(
             2,
@@ -71,16 +79,16 @@ class TextAssemblerControllerTest extends WebTestCase
         
         $this->assertEquals(
             1,
-            $crawler->filter('html a:contains("return")')->count()
+            $crawler->filter('html a:contains("voltar")')->count()
         );
-        $client->clickLink('return');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->client->clickLink('voltar');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $client->request('GET', '/assembler/text/DOCX/CNBB/1900-01-01/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertSelectorTextContains('html div.warning', 'No text found.');
+        $crawler = $this->client->request('GET', '/assembler/text/DOCX/CNBB/1900-01-01/');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertSelectorTextContains('html div.warning', 'Texto não encontrado.');
 
-        $this->assertSelectorTextContains('html div.error_detail', 'Source : CNBB');
+        $this->assertSelectorTextContains('html div.error_detail', 'Fonte : CNBB');
 
         $this->assertEquals(
             2,
@@ -89,10 +97,9 @@ class TextAssemblerControllerTest extends WebTestCase
         
         $this->assertEquals(
             1,
-            $crawler->filter('html a:contains("return")')->count()
+            $crawler->filter('html a:contains("voltar")')->count()
         );
-        $client->clickLink('return');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
+        $this->client->clickLink('voltar');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }

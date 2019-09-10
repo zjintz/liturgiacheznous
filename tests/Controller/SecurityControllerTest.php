@@ -49,7 +49,7 @@ class SecurityControllerTest extends WebTestCase
         $this->client = static::createClient();
         $crawler = $this->client->request('GET', '/login');
         $this->assertLoginContent($crawler);
-        $form = $crawler->selectButton('Log in')->form();
+        $form = $crawler->selectButton('Entrar')->form();
         //trying with wrong credentials
         $form['_username'] = 'fakeadmin';
         $form['_password'] = 'fakeadmin';
@@ -74,7 +74,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertEquals(
             1,
             $crawler->filter(
-                'p:contains("Authentication")'
+                'p:contains("Autenticação")'
             )->count()
         );
         $this->assertEquals(
@@ -86,7 +86,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertEquals(
             1,
             $crawler->filter(
-                'button:contains("Log in")'
+                'button:contains("Entrar")'
             )->count()
         );
     }
