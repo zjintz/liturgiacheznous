@@ -46,19 +46,42 @@ class AssemblerAssistant
 
     public function fixSantaInesDetails(LiturgyText $liturgyText)
     {
-        $liturgyText = $this->fixSunday($liturgyText);
+        if($this->isSunday($liturgyText->getDate())) {
+            $liturgyText->setSantoralSection($this->createVoidSection());
+            return $liturgyText;
+        }
+        $liturgy = $this->liturgyRepository->findOneBy(
+            ['date' => $liturgyText->getDate()]
+        );
+        if($this->isSpecialDay($liturgy)) {
+            $liturgyText->setTemporalSection($liturgyText->getSantoralSection());
+            $liturgyText->setSantoralSection($this->createVoidSection());
+            return $liturgyText;
+        }
         return $liturgyText;
     }
 
-    protected function fixSunday(LiturgyText $liturgyText)
+    protected function isSpecialDay($liturgy)
     {
-        $day = \date( "w", $liturgyText->getDate()->getTimestamp());
+        $isSpecial = $liturgy->getIsMemorial() ||
+                   $liturgy->getIsSolemnity() || $liturgy->getIsCelebration() ;
+        return $isSpecial;
+    }
+    
+    protected function isSunday(\DateTime $litDate)
+    {
+        $day = \date( "w", $litDate->getTimestamp());
+        if($day === "0") {
+            return true;
+        }
+        return false;
+    }
+
+    protected function createVoidSection()
+    {
         $voidSection = new LiturgySection();
         $voidSection->setLoadStatus("Not_Found");
-        if($day === "0") {
-            $liturgyText->setSantoralSection($voidSection);
-        }
-        return $liturgyText;
+        return $voidSection;
     }
 
     protected function addGospelAcclamation(
