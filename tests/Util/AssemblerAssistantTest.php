@@ -27,7 +27,9 @@ class AssemblerAssistantTest extends TestCase
     {
         $liturgy = new Liturgy();
         $liturgy->setDescription("renewed title");
-        $liturgy->setAlleluiaVerse("Tu és Pedro e sobre esta pedra, eu irei construir minha Igreja, e as portas do inferno não irão derrotá-la. ");
+        $liturgy->setAlleluiaVerse(
+            "Tu és Pedro e sobre esta pedra, eu irei construir minha Igreja, e as portas do inferno não irão derrotá-la. "
+        );
         $liturgy->setAlleluiaReference("Mt 16,18");        
         $testDate = new \DateTime("2019-08-08");
         $liturgyRepository = $this->mockLiturgyRepository($liturgy);
@@ -157,5 +159,67 @@ class AssemblerAssistantTest extends TestCase
             "XXXXXXX",
             $newLitText->getGospelAcclamation()->getVerse()
         );
+    }
+
+    public function testFixSantaInesDetailsSunday()
+    {
+        $liturgy = new Liturgy();
+        $liturgyRepository = $this->mockLiturgyRepository($liturgy);
+        $assistant = new AssemblerAssistant($liturgyRepository);
+        
+        //creating the liturgytext
+        $liturgyText = new LiturgyText();
+        $testDate = new \DateTime("2019-09-08");
+        $liturgyText->setDate($testDate);
+        //temporal section
+        $temporalSection = new LiturgySection();
+        $firstReading = new LiturgyReading();
+        $firstReading->setReference("Lv 23,1.4-11.15-16.27.34b-37");
+        $secondReading = new LiturgyReading();
+        $secondReading->setReference("Dt 4,32-40");
+        $temporalSection->setFirstReading($firstReading);
+        $temporalSection->setSecondReading($secondReading);
+        $liturgyText->setTemporalSection($temporalSection);
+
+        //santoral section
+        $santoralSection = new LiturgySection();
+        $firstReading = new LiturgyReading();
+        $firstReading->setReference("Js 3,7-10a.11.13-17");
+        $secondReading = new LiturgyReading();
+        $secondReading->setReference("Ex 40,16-21.34-38 ");
+        $santoralSection->setFirstReading($firstReading);
+        $santoralSection->setSecondReading($secondReading);
+        $santoralSection->setLoadStatus("Success");
+        $liturgyText->setSantoralSection($santoralSection);
+
+        //lets do the magic
+        $newLitText = $assistant->fixSantaInesDetails($liturgyText);
+        //now lets assert
+        $this->assertNotNull(
+            $newLitText->getTemporalSection()
+        );
+        //Because is Sunday it desn't need to have a santoral section.
+        $this->assertEquals(
+            "Not_Found",
+            $newLitText->getSantoralSection()->getLoadStatus()
+        );
+
+        //Now is Monday, it has to have the santoral section!
+        $testDate = new \DateTime("2019-09-09");
+
+        $liturgyText->setDate($testDate);
+        $liturgyText->setSantoralSection($santoralSection);
+        $newLitText = $assistant->fixSantaInesDetails($liturgyText);
+        $this->assertNotNull(
+            $newLitText->getTemporalSection()
+        );
+        $this->assertNotNull(
+            $newLitText->getSantoralSection()
+        );
+        $this->assertEquals(
+            "Success",
+            $newLitText->getSantoralSection()->getLoadStatus()
+        );
+     
     }
 }

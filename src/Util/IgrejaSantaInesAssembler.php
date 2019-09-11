@@ -41,6 +41,7 @@ class IgrejaSantaInesAssembler extends AbstractAssembler
             return $liturgyText->getLoadStatus();
         }
         $liturgyText= $this->assistant->addDetails($liturgyText);
+        $liturgyText= $this->assistant->fixSantaInesDetails($liturgyText);
         return $this->createDocument($format, $liturgyText, $this->projectDir);
     }
 }

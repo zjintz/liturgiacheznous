@@ -3,14 +3,16 @@
 namespace App\Util;
 
 use App\Entity\Book;
+use App\Entity\LiturgySection;
 use App\Entity\LiturgyText;
+
 use App\Entity\Liturgy;
 use App\Entity\GospelAcclamation;
 use App\Repository\LiturgyRepository;
 
 
 /**
- * \brief      Assembles documents from the CNBBA source.
+ * \brief     Makes somes fixes to the LiturgyText.
  *
  *
  */
@@ -39,6 +41,23 @@ class AssemblerAssistant
         $liturgyText = $this->addBookNames($liturgyText);
         $liturgyText = $this->addGospelAcclamation($liturgyText, $liturgy);
 
+        return $liturgyText;
+    }
+
+    public function fixSantaInesDetails(LiturgyText $liturgyText)
+    {
+        $liturgyText = $this->fixSunday($liturgyText);
+        return $liturgyText;
+    }
+
+    protected function fixSunday(LiturgyText $liturgyText)
+    {
+        $day = \date( "w", $liturgyText->getDate()->getTimestamp());
+        $voidSection = new LiturgySection();
+        $voidSection->setLoadStatus("Not_Found");
+        if($day === "0") {
+            $liturgyText->setSantoralSection($voidSection);
+        }
         return $liturgyText;
     }
 
