@@ -21,28 +21,26 @@
 {% block sonata_wrapper %}
     <div class="login-box">
         {% block login_box_header %}
+        {% endblock %}
+        <div class="login-box-body">
             <div class="login-logo">
-                <a href="{{ path('sonata_user_admin_security_login') }}">
-                    {% if sonata_admin.adminPool.getOption('title_mode') in ['single_image', 'both'] %}
-                        <div>
-                            <img style="width:64px;" src="{{ asset(sonata_admin.adminPool.titlelogo) }}" alt="{{ sonata_admin.adminPool.title }}">
-                        </div>
-                    {% endif %}
+                <a href="{{ path('sonata_admin_dashboard') }}">
+                    
                     {% if sonata_admin.adminPool.getOption('title_mode') in ['single_text', 'both'] %}
                         <span>{{ sonata_admin.adminPool.title }}</span>
                     {% endif %}
                 </a>
             </div>
-        {% endblock %}
-        <div class="login-box-body">
             {% block fos_user_content %}
 
                 {% include "@FOSUser/Registration/register_content.html.twig" %}
             {% endblock fos_user_content %}
 
             <br>
-            <hr>
-            <a href="{{ path('sonata_user_admin_security_login') }}" class="btn-warning">{{ 'Back to Login Page'|trans({}, 'SonataUserBundle') }}</a>
+            <a href="{{ path('sonata_user_admin_security_login') }}">
+                <span class="glyphicon glyphicon-log-in"></span>
+                {{ 'title_user_authentication'|trans({}, 'SonataUserBundle') }}
+            </a>
         </div>
 
     </div>

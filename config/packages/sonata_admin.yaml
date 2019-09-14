@@ -1,4 +1,5 @@
 sonata_admin:
+    search: false
     title: 'Liturgia Cheznous'
     dashboard:
         groups:

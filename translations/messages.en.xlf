@@ -34,6 +34,27 @@
                 <source>Liturgy.Text</source>
                 <target>Liturgy Text</target>
             </trans-unit>
+            <trans-unit id="user_label_first_name">
+                <source>user.label.first_name</source>
+                <target>First Name</target>
+            </trans-unit>
+            <trans-unit id="user_label_last_name">
+                <source>user.label.last_name</source>
+                <target>Last Name</target>
+            </trans-unit>
+            <trans-unit id="hq_label_name">
+                <source>hq.label.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="hq_label_city">
+                <source>hq.label.city</source>
+                <target>City</target>
+            </trans-unit>
+            <trans-unit id="hq_label_country">
+                <source>hq.label.country</source>
+                <target>Country</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

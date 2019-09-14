@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 
 final class LiturgyAdmin extends AbstractAdmin
@@ -58,6 +59,25 @@ final class LiturgyAdmin extends AbstractAdmin
         $listMapper->addIdentifier('alleluiaVerse');
         $listMapper->addIdentifier('summary');
 
+    }
+
+     protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper->add('date');
+        $showMapper->add('liturgyDay');
+        $showMapper->add('description');
+        $showMapper->add('color');
+        $showMapper->add('isSolemnity', 'boolean');
+        $showMapper->add('isSolemnityVFC');
+        $showMapper->add('isCelebration');
+        $showMapper->add('isCelebrationVFC');
+        $showMapper->add('isMemorial');
+        $showMapper->add('isMemorialVFC');
+        $showMapper->add('isMemorialFree');
+        $showMapper->add('yearType');
+        $showMapper->add('alleluiaReference');
+        $showMapper->add('alleluiaVerse');
+        $showMapper->add('summary');
     }
 
     

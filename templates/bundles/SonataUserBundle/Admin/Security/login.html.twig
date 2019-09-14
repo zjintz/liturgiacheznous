@@ -14,7 +14,6 @@ file that was distributed with this source code.
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    
 {% endblock %}
 
 {% block sonata_nav %}
@@ -31,20 +30,16 @@ file that was distributed with this source code.
 {% block sonata_wrapper %}
     <div class="login-box">
         {% block login_box_header %}
+        {% endblock %}
+        <div class="login-box-body">
             <div class="login-logo">
                 <a href="{{ path('sonata_admin_dashboard') }}">
-                    {% if sonata_admin.adminPool.getOption('title_mode') in ['single_image', 'both'] %}
-                        <div>
-                            <img style="width:64px;" src="{{ asset(sonata_admin.adminPool.titlelogo) }}" alt="{{ sonata_admin.adminPool.title }}">
-                        </div>
-                    {% endif %}
+                    
                     {% if sonata_admin.adminPool.getOption('title_mode') in ['single_text', 'both'] %}
                         <span>{{ sonata_admin.adminPool.title }}</span>
                     {% endif %}
                 </a>
             </div>
-        {% endblock %}
-        <div class="login-box-body">
             {% block sonata_user_login_form %}
                 {% block sonata_user_login_error %}
                     {% if error %}
@@ -91,11 +86,11 @@ file that was distributed with this source code.
                             <input class="form-control"
                                    id="username"
                                    name="_username"
-                                   placeholder="{{ 'security.login.username'|trans({}, 'SonataUserBundle') }}"
+                                   placeholder="{{ 'e-mail'|trans({}, 'SonataUserBundle') }}"
                                    required="required"
                                    type="text"
                                    value="{{ last_username }}"/>
-                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div>
 
                         <div class="form-group has-feedback">
@@ -123,10 +118,23 @@ file that was distributed with this source code.
                         </div>
                     </form>
 
-                    <a href="{{ reset_route }}" >{{ 'forgotten_password'|trans({}, 'SonataUserBundle') }}</a>
                     <br>
-                    <hr>
-                    <a href="{{ path('fos_user_registration_register') }}" class="btn-warning">{{ 'New User? Register here.'|trans({}, 'SonataUserBundle') }}</a>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <a href="{{ path('fos_user_registration_register') }}">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                {{ 'sign_up'|trans({}, 'SonataUserBundle') }}
+                            </a>
+                        </div>
+                        <div class="col-xs-7">
+                            <a href="{{ reset_route }}" >
+                                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                {{ 'forgotten_password'|trans({}, 'SonataUserBundle') }}</a>
+                        </div>
+                    </div>
+
+
+                  
                     
                 {% endif %}
             {% endblock %}

@@ -8,3 +8,7 @@
 div.regg-form div label{
     width: 40%;
 }
+
+div.login-box-body{
+    opacity: 0.9;
+}

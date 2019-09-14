@@ -16,7 +16,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LiturgyTextRequestType extends AbstractType
 {
-    private $translator; 
+    private $translator;
+    
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;

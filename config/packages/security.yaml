@@ -19,7 +19,7 @@ security:
             - ROLE_APP_ADMIN_USER_EDIT
             - ROLE_APP_ADMIN_USER_CREATE
         ROLE_APP_ADMIN_EDITOR:
-
+            - ROLE_APP_ADMIN_LITURGY_EDIT
         ROLE_APP_ADMIN_ADMIN:
             - ROLE_APP_ADMIN_USER_DELETE
             - ROLE_APP_ADMIN_USER_EXPORT

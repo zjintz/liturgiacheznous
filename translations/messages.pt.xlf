@@ -30,6 +30,30 @@
                 <source>link.return</source>
                 <target>voltar</target>
             </trans-unit>
+            <trans-unit id="Liturgy.Text">
+                <source>Liturgy.Text</source>
+                <target>Texto da Liturgia</target>
+            </trans-unit>
+            <trans-unit id="user_label_first_name">
+                <source>user.label.first_name</source>
+                <target>Primeiro Nome</target>
+            </trans-unit>
+            <trans-unit id="user_label_last_name">
+                <source>user.label.last_name</source>
+                <target>Sobrenome</target>
+            </trans-unit>
+            <trans-unit id="hq_label_name">
+                <source>hq.label.name</source>
+                <target>Nome</target>
+            </trans-unit>
+            <trans-unit id="hq_label_city">
+                <source>hq.label.city</source>
+                <target>Cidade</target>
+            </trans-unit>
+            <trans-unit id="hq_label_country">
+                <source>hq.label.country</source>
+                <target>País</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
