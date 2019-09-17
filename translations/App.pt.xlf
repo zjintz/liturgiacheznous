@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+      <body>
+        <trans-unit id="app.admin.group.users">
+          <source>app.admin.group.users</source>
+          <target>Usuários</target>
+        </trans-unit>
+        <trans-unit id="app.admin.group.liturgy">
+          <source>app.admin.group.liturgy</source>
+          <target>Liturgia</target>
+        </trans-unit>
+        <trans-unit id="assemble_action">
+          <source>assemble_action</source>
+          <target>Montar Texto</target>
+        </trans-unit>
+      </body>
+    </file>
+</xliff>

@@ -26,13 +26,25 @@
                 <source>form.button.get_text</source>
                 <target>Get Text</target>
             </trans-unit>
+            <trans-unit id="Headquarter">
+              <source>Headquarter</source>
+              <target>Headquarter</target>
+            </trans-unit>
             <trans-unit id="link_return">
                 <source>link.return</source>
                 <target>return</target>
             </trans-unit>
+            <trans-unit id="Liturgy">
+              <source>Liturgy</source>
+              <target>Liturgy</target>
+            </trans-unit>
             <trans-unit id="Liturgy.Text">
                 <source>Liturgy.Text</source>
                 <target>Liturgy Text</target>
+            </trans-unit>
+            <trans-unit id="User">
+              <source>User</source>
+              <target>User</target>
             </trans-unit>
             <trans-unit id="user_label_first_name">
                 <source>user.label.first_name</source>

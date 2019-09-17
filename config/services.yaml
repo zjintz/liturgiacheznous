@@ -31,6 +31,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    app.admin.emailsubscription:
+        class: App\Admin\EmailSubscriptionAdmin
+        arguments: [~, App\Entity\EmailSubscription, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: EmailSubscription }
+        calls:
+            - [ setTranslationDomain, [messages]]
+            
     app.admin.user:
         class: App\Admin\UserAdmin
         arguments: [~, App\Application\Sonata\UserBundle\Entity\User, ~]

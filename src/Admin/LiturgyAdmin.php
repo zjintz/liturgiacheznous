@@ -16,13 +16,36 @@ final class LiturgyAdmin extends AbstractAdmin
     
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('liturgyDay', TextType::class);
-        $formMapper->add('description', TextType::class);
-        $formMapper->add('color', TextType::class);
-        $formMapper->add('yearType', TextType::class);
-        $formMapper->add('alleluiaReference', TextType::class);
-        $formMapper->add('alleluiaVerse', TextType::class);
-        $formMapper->add('summary', TextType::class);
+        $formMapper
+            ->with('General', ['class' => 'col-md-7'])->end()
+            ->with('Special', ['class' => 'col-md-5'])->end()
+            ->with('Text',['class' => 'col-md-12'])->end()
+            ;
+
+        $formMapper
+            ->with('General')
+                ->add('date')
+                ->add('liturgyDay')
+            ->add('description',  TextType::class)
+                ->add('color')
+            ->add('yearType')
+            ->end()
+            ->with('Special')
+                ->add('isSolemnity')
+                ->add('isSolemnityVFC')
+                ->add('isCelebration')
+                ->add('isCelebrationVFC')
+                ->add('isMemorial')
+                ->add('isMemorialVFC')
+                ->add('isMemorialFree')
+            ->end()
+            ->with('Text')
+            ->add('alleluiaReference',  TextType::class)
+            ->add('alleluiaVerse',  TextType::class)
+            ->add('summary',  TextType::class)
+            ->end()
+            ;
+
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -63,21 +86,35 @@ final class LiturgyAdmin extends AbstractAdmin
 
      protected function configureShowFields(ShowMapper $showMapper)
     {
-        $showMapper->add('date');
-        $showMapper->add('liturgyDay');
-        $showMapper->add('description');
-        $showMapper->add('color');
-        $showMapper->add('isSolemnity', 'boolean');
-        $showMapper->add('isSolemnityVFC');
-        $showMapper->add('isCelebration');
-        $showMapper->add('isCelebrationVFC');
-        $showMapper->add('isMemorial');
-        $showMapper->add('isMemorialVFC');
-        $showMapper->add('isMemorialFree');
-        $showMapper->add('yearType');
-        $showMapper->add('alleluiaReference');
-        $showMapper->add('alleluiaVerse');
-        $showMapper->add('summary');
+        $showMapper
+                ->with('General', ['class' => 'col-md-7'])->end()
+                ->with('Special', ['class' => 'col-md-5'])->end()
+                ->with('Text',['class' => 'col-md-12'])->end()
+        ;
+
+        $showMapper
+            ->with('General')
+                ->add('date')
+                ->add('liturgyDay')
+                ->add('description')
+                ->add('color')
+                ->add('yearType')
+            ->end()
+            ->with('Special')
+                ->add('isSolemnity')
+                ->add('isSolemnityVFC')
+                ->add('isCelebration')
+                ->add('isCelebrationVFC')
+                ->add('isMemorial')
+                ->add('isMemorialVFC')
+                ->add('isMemorialFree')
+            ->end()
+            ->with('Text')
+                ->add('alleluiaReference')
+                ->add('alleluiaVerse')
+                ->add('summary')
+            ->end()
+            ;
     }
 
     

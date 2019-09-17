@@ -10,6 +10,7 @@ sonata_admin:
                 items:
                     - app.admin.user
                     - app.admin.headquarter
+                    - app.admin.emailsubscription
         
             app.admin.group.liturgy:
                 label: app.admin.group.liturgy
@@ -21,7 +22,7 @@ sonata_admin:
                     - route: liturgy_text_assemble
                       label: assemble_action
 
-            app.admin.group.subscriptions: ~
+
 
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
