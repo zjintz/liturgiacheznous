@@ -12,7 +12,15 @@
         </trans-unit>
         <trans-unit id="sign_up">
           <source>sign_up</source>
-          <target>Inscrever-se</target>
+          <target>Cadastrar-se</target>
+        </trans-unit>
+        <trans-unit id="e-mail">
+          <source>e-mail</source>
+          <target>e-mail</target>
+        </trans-unit>
+        <trans-unit id="forgotten_password">
+          <source>forgotten_password</source>
+          <target>Esqueci minha senha!</target>
         </trans-unit>
       </body>
     </file>

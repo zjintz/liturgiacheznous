@@ -4,11 +4,36 @@ namespace App\Tests\Form;
 
 use App\Form\HeadquarterType;
 use App\Entity\Headquarter;
+use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
-
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HeadquarterTypeTest extends TypeTestCase
 {
+    private $translator;
+
+    protected function setUp()
+    {
+        // mock any dependencies
+        $this->translator = $this->createMock(TranslatorInterface::class);
+
+        parent::setUp();
+    }
+
+
+    protected function getExtensions()
+    {
+        // create a type instance with the mocked dependencies
+        $type = new HeadquarterType($this->translator);
+
+        return [
+            // register the type instances with the PreloadedExtension
+            new PreloadedExtension([$type], []),
+        ];
+    }
+
+
+    
     public function testSubmitValidData()
     {
         $formData = [

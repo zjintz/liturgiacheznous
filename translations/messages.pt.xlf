@@ -56,15 +56,15 @@
             </trans-unit>
             <trans-unit id="hq_label_name">
                 <source>hq.label.name</source>
-                <target>Nome</target>
+                <target>Nome da sede</target>
             </trans-unit>
             <trans-unit id="hq_label_city">
                 <source>hq.label.city</source>
-                <target>Cidade</target>
+                <target>Cidade da sede</target>
             </trans-unit>
             <trans-unit id="hq_label_country">
                 <source>hq.label.country</source>
-                <target>País</target>
+                <target>País da sede</target>
             </trans-unit>
         </body>
     </file>
