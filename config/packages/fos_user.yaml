@@ -18,3 +18,4 @@ fos_user:
     registration:
         form:
             type: App\Form\RegistrationFormType
+    use_authentication_listener: false

@@ -38,10 +38,21 @@ class RegistrationControllerTest extends WebTestCase
         $form['fos_user_registration_form[headquarter][city]'] = 'hqcity';
         $form['fos_user_registration_form[headquarter][country]'] = 'CO';
         $crawler = $this->client->submit($form);
-        $this->assertRedirect("/register/confirmed");
+        $this->assertRedirect('/login');
         $this->client->followRedirect();
         $this->assertTrue($this->client->getResponse()->isSuccessful());
+        //check that it can't go to the dashboard.
         // submit the form
+        $this->client->request('GET', '/dashboard');
+        $this->assertRedirect('http://localhost/login');
+        $crawler = $this->client->followRedirect();
+        //now test that it can't login
+        $form = $crawler->selectButton('Entrar')->form();
+        //trying with wrong credentials
+        $form['_username'] = 'test@no.com';
+        $form['_password'] = '1111111';
+        $crawler = $this->client->submit($form);
+        $this->assertRedirect('http://localhost/login');
     }
 
     private function assertRedirect($destiny)

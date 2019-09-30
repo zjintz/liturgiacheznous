@@ -3,7 +3,8 @@ sonata_admin:
     title: 'Liturgia Cheznous'
     dashboard:
         groups:
-            app.admin.group.users:
+          app.admin.group.users:
+                keep_open:       true
                 label: app.admin.group.users
                 label_catalogue: App
                 icon: '<i class="fa fa-user"></i>'
@@ -12,7 +13,8 @@ sonata_admin:
                     - app.admin.headquarter
                     - app.admin.emailsubscription
         
-            app.admin.group.liturgy:
+          app.admin.group.liturgy:
+                keep_open:       true
                 label: app.admin.group.liturgy
                 label_catalogue: App
                 icon: '<i class="fa fa-book"></i>'

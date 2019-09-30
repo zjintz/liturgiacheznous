@@ -98,6 +98,7 @@ security:
         - { path: ^/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: '%env(SECURE_SCHEME)%' }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY , requires_channel: '%env(SECURE_SCHEME)%'}
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%env(SECURE_SCHEME)%'}
+        - { path: ^/register/confirmed, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%env(SECURE_SCHEME)%'}
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.

@@ -47,6 +47,14 @@ file that was distributed with this source code.
                             {{ error.messageKey|trans(error.messageData, 'security') }}
                         </div>
                     {% endif %}
+                    
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    
+
                 {% endblock %}
                 <p class="login-box-msg">{{ 'title_user_authentication'|trans({}, 'SonataUserBundle') }}</p>
                 {% if qrCodeUrl is defined %}
