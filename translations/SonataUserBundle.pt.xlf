@@ -22,6 +22,11 @@
           <source>forgotten_password</source>
           <target>Esqueci minha senha!</target>
         </trans-unit>
+        <trans-unit id="form.label_email_subscription">
+          <source>form.label_email_subscription</source>
+          <target>Assinatura de email :</target>
+        </trans-unit>
+
       </body>
     </file>
 </xliff>

@@ -6,6 +6,14 @@
           <source>toggle_navigation</source>
           <target>Mudar de navegação</target>
         </trans-unit>
+        <trans-unit id="link_actions">
+          <source>link_actions</source>
+          <target>Ações</target>
+        </trans-unit>
+        <trans-unit id="stats_view_more">
+          <source>stats_view_more</source>
+          <target>lista</target>
+        </trans-unit>
       </body>
     </file>
 </xliff>
