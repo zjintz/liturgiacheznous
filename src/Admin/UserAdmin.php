@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Form\Type\ModelListType;
+use Sonata\AdminBundle\Form\Type\CollectionType;
 
 final class UserAdmin extends AbstractAdmin
 {
@@ -126,11 +127,11 @@ final class UserAdmin extends AbstractAdmin
                     ->add('locale', LocaleType::class, ['required' => false])
                 ->end()
                 ->with('Subscription')
-            ->add('emailSubscription', EntityType::class,
-                       ['class' => EmailSubscription::class]
-                      //                       ['admin_code' => 'app.admin.emailsubscription']
-                    )
-                ->end()
+            ->add('emailSubscription', AdminType::class,
+                  [],
+                  ['admin_code' => 'app.admin.emailsubscription'
+                        ])
+                    ->end()
             ->end()
             ->tab('Security')
                 ->with('Status')
@@ -158,6 +159,7 @@ final class UserAdmin extends AbstractAdmin
         $datagridMapper->add('firstname');
         $datagridMapper->add('lastname');
         $datagridMapper->add('email');
+        $datagridMapper->add('enabled');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -165,6 +167,7 @@ final class UserAdmin extends AbstractAdmin
         $listMapper->addIdentifier('firstname');
         $listMapper->addIdentifier('lastname');
         $listMapper->addIdentifier('email');
+        $listMapper->addIdentifier('enabled');
     }
 
     /**

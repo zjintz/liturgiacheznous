@@ -33,8 +33,7 @@ class EmailSubscription
     private $daysAhead;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Application\Sonata\UserBundle\Entity\User", inversedBy="emailSubscription", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="App\Application\Sonata\UserBundle\Entity\User", mappedBy="emailSubscription", cascade={"persist", "remove"})
      */
     private $user;
 
@@ -87,6 +86,11 @@ class EmailSubscription
     public function setUser(User $user): self
     {
         $this->user = $user;
+                // set the owning side of the relation if necessary
+        if ($this !== $user->getEmailSubscription()) {
+            $user->setEmailSubscription($this);
+        }
+
 
         return $this;
     }

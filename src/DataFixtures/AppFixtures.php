@@ -3,12 +3,13 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Liturgy;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements FixtureGroupInterface
 {
     private $parmeterBag;
 
@@ -71,5 +72,10 @@ class AppFixtures extends Fixture
         fclose($csv);
 
         $manager->flush();
+    }
+
+    public static function getGroups(): array
+    {
+        return ['app'];
     }
 }

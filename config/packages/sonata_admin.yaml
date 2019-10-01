@@ -23,11 +23,32 @@ sonata_admin:
                     - app.admin.liturgy.text
                     - route: liturgy_text_assemble
                       label: assemble_action
-
-
-
         blocks:
-            - { type: sonata.admin.block.admin_list, position: left }
+            -
+                class:    col-lg-3 col-xs-6          # twitter bootstrap responsive code
+                position: top                        # zone in the dashboard
+                type:     sonata.admin.block.stats   # block id
+                settings:
+                    code:  app.admin.user    # admin code - service id
+                    icon:  fa-user                  # font awesome icon
+                    text:  app.user.stats            # static text or translation message
+                    color: bg-blue                 # colors: bg-green, bg-red and bg-aqua
+                    filters:                         # filter values
+                        edited: { value: 1 }
+
+            -
+                class:    col-lg-3 col-xs-6          # twitter bootstrap responsive code
+                position: top                        # zone in the dashboard
+                type:     sonata.admin.block.stats   # block id
+                settings:
+                    code:  app.admin.liturgy    # admin code - service id
+                    icon:  fa-book                  # font awesome icon
+                    text:  app.liturgy.stats            # static text or translation message
+                    color: bg-green                 # colors: bg-green, bg-red and bg-aqua
+                    filters:                         # filter values
+                        edited: { value: 1 }
+                        
+#            - { type: sonata.admin.block.admin_list, position: left }
     security:
         handler: sonata.admin.security.handler.role
         role_admin: ROLE_SONATA_ADMIN
