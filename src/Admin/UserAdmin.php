@@ -14,7 +14,6 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\UserBundle\Form\Type\SecurityRolesType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\LocaleType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sonata\AdminBundle\Form\Type\AdminType;
@@ -82,7 +81,6 @@ final class UserAdmin extends AbstractAdmin
             ->with('Profile')
                 ->add('firstname')
                 ->add('lastname')
-                ->add('locale')
                 
             ->end()
             ->with('Subscription')
@@ -124,7 +122,6 @@ final class UserAdmin extends AbstractAdmin
                 ->with('Profile')
                     ->add('firstname', null, ['required' => false])
                     ->add('lastname', null, ['required' => false])
-                    ->add('locale', LocaleType::class, ['required' => false])
                 ->end()
                 ->with('Subscription')
             ->add('emailSubscription', AdminType::class,

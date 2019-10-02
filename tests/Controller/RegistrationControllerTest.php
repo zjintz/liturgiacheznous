@@ -4,6 +4,7 @@ namespace App\Tests\Controller;
 
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Application\Sonata\UserBundle\Entity\User;
 
 /**
  * Functional tests of the user registration.
@@ -48,11 +49,11 @@ class RegistrationControllerTest extends WebTestCase
         $crawler = $this->client->followRedirect();
         //now test that it can't login
         $form = $crawler->selectButton('Entrar')->form();
-        //trying with wrong credentials
         $form['_username'] = 'test@no.com';
         $form['_password'] = '1111111';
         $crawler = $this->client->submit($form);
         $this->assertRedirect('http://localhost/login');
+        $this->assertNewUser();
     }
 
     private function assertRedirect($destiny)
@@ -65,4 +66,21 @@ class RegistrationControllerTest extends WebTestCase
         );
     }
 
+    private function assertNewUser()
+    {
+        self::bootKernel();
+
+        // returns the real and unchanged service container
+        $container = self::$kernel->getContainer();
+
+        // gets the special container that allows fetching private services
+        $container = self::$container;
+
+        $user = self::$container->get('doctrine')->getRepository(User::class)->findOneByEmail('test@no.com');
+        $newSubs = $user->getEmailSubscription();
+        $this->assertEquals(false, $newSubs->getIsActive());
+        $this->assertEquals(1, $newSubs->getDaysAhead());
+        $this->assertEquals("1", $newSubs->getPeriodicity());
+        $this->assertEquals(["ROLE_USER"], $user->getRoles());
+    }
 }

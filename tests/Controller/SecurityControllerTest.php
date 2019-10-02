@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\UserTestFixtures;
+use App\DataFixtures\LiturgyTestFixtures;
 use App\DataFixtures\UserNotEnabledTestFixtures;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
@@ -35,6 +36,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertLoginContent($crawler);
         $this->client->request('GET', '/noexiste');
         $this->assertTrue($this->client->getResponse()->isNotFound());
+
     }
 
     /**
@@ -60,11 +62,11 @@ class SecurityControllerTest extends WebTestCase
 
     /**
      * Tests the basic login and logout mechanics.
-     *
+     * This also tests the allowed routes of the basic User.
      */
-    public function testLoginLogout()
+    public function testLoginUser()
     {
-        $this->loadFixtures([UserTestFixtures::class]);
+        $this->loadFixtures([UserTestFixtures::class, LiturgyTestFixtures::class]);
         $this->client = static::createClient();
         $this->client->setServerParameters([]);
 
@@ -78,10 +80,63 @@ class SecurityControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->assertRedirect('http://localhost/');
         $crawler = $this->client->followRedirect();
+        //check that the user with ROLE_USER has no access to certain stuff.
+        $this->checkUserRoutes();
         // now logout
         $crawler = $this->client->request('GET', '/logout');
         $this->assertRedirect('http://localhost/login');
-                
+    }
+
+    /**
+     * Tests allowed routes of the basic ROLE_ADMIN.
+     */
+    public function testLoginAdmin()
+    {
+        $this->loadFixtures([UserTestFixtures::class, LiturgyTestFixtures::class]);
+        $this->client = static::createClient();
+        $this->client->setServerParameters([]);
+
+        //now login:
+        $crawler = $this->client->request('GET', '/');
+        $crawler=$this->client->followRedirect();
+        $form = $crawler->selectButton('Entrar')->form(array(
+            '_username'  => 'admin@test.com',
+            '_password'  => 'testPass',
+        ));
+        $this->client->submit($form);
+        $this->assertRedirect('http://localhost/');
+        $crawler = $this->client->followRedirect();
+        //check that the user with ROLE_USER has no access to certain stuff.
+        $this->checkAdminRoutes();
+        // now logout
+        $crawler = $this->client->request('GET', '/logout');
+        $this->assertRedirect('http://localhost/login');
+    }
+
+    /**
+     * Tests allowed routes of the ROLE_EDITOR.
+     */
+    public function testLoginEditor()
+    {
+        $this->loadFixtures([UserTestFixtures::class, LiturgyTestFixtures::class]);
+        $this->client = static::createClient();
+        $this->client->setServerParameters([]);
+
+        //now login:
+        $crawler = $this->client->request('GET', '/');
+        $crawler=$this->client->followRedirect();
+        $form = $crawler->selectButton('Entrar')->form(array(
+            '_username'  => 'editor@test.com',
+            '_password'  => 'testPass',
+        ));
+        $this->client->submit($form);
+        $this->assertRedirect('http://localhost/');
+        $crawler = $this->client->followRedirect();
+        //check that the user with ROLE_USER has no access to certain stuff.
+        $this->checkEditorRoutes();
+        // now logout
+        $crawler = $this->client->request('GET', '/logout');
+        $this->assertRedirect('http://localhost/login');
     }
 
     /**
@@ -103,8 +158,7 @@ class SecurityControllerTest extends WebTestCase
         ));
         $this->client->submit($form);
         $this->assertRedirect('http://localhost/login');
-        $crawler = $this->client->followRedirect();
-                
+        $crawler = $this->client->followRedirect();                
     }
 
     private function assertRedirect($destiny)
@@ -137,6 +191,80 @@ class SecurityControllerTest extends WebTestCase
             $crawler->filter(
                 'button:contains("Entrar")'
             )->count()
+        );
+    }
+
+    private function checkUserRoutes()
+    {
+        //has no access!
+        $this->check403('/admin_sonata_user_user/list');
+        $this->check403('/admin_sonata_user_user/create');
+        $this->check403('/admin_sonata_user_user/2/show');
+        $this->check403('/admin_sonata_user_user/2/edit');    
+        $this->check403('/admin_sonata_user_user/2/delete');
+        $this->check403('/admin_sonata_user_user/export');
+        $this->check403('/sonata/user/group/list');
+        $this->check403('/sonata/user/group/create');          
+        $this->check403('/sonata/user/group/export');
+        $this->checkSuccess('/app/liturgy/1/show');
+        $this->checkSuccess('/app/liturgy/list');
+        $this->check403('/app/liturgy/create');        
+        $this->check403('/app/liturgy/1/edit');
+        $this->check403('/app/liturgy/1/delete');
+        $this->checkSuccess('/liturgy_text/assemble');
+    }
+
+    private function checkEditorRoutes()
+    {
+        //has no access!
+        $this->check403('/admin_sonata_user_user/list');
+        $this->check403('/admin_sonata_user_user/create');
+        $this->check403('/admin_sonata_user_user/2/show');
+        $this->check403('/admin_sonata_user_user/2/edit');    
+        $this->check403('/admin_sonata_user_user/2/delete');
+        $this->check403('/admin_sonata_user_user/export');
+        $this->check403('/sonata/user/group/list');
+        $this->check403('/sonata/user/group/create');          
+        $this->check403('/sonata/user/group/export');
+        $this->checkSuccess('/app/liturgy/1/show');
+        $this->checkSuccess('/app/liturgy/list');
+        $this->checkSuccess('/app/liturgy/create');        
+        $this->checkSuccess('/app/liturgy/1/edit');
+        $this->checkSuccess('/app/liturgy/1/delete');
+        $this->checkSuccess('/liturgy_text/assemble');
+    }
+
+
+    private function checkAdminRoutes()
+    {
+        //has no access!
+        $this->checkSuccess('/admin_sonata_user_user/list');
+        $this->checkSuccess('/admin_sonata_user_user/create');
+        $this->checkSuccess('/admin_sonata_user_user/1/show');
+        $this->checkSuccess('/admin_sonata_user_user/1/edit');    
+        $this->checkSuccess('/admin_sonata_user_user/1/delete');
+        /*        $this->checkSuccess('/sonata/user/group/list');
+        $this->checkSuccess('/sonata/user/group/create');          
+        $this->checkSuccess('/sonata/user/group/export');*/
+        $this->checkSuccess('/app/liturgy/1/show');
+        $this->checkSuccess('/app/liturgy/list');
+        $this->checkSuccess('/app/liturgy/create');        
+        $this->checkSuccess('/app/liturgy/1/edit');
+        $this->checkSuccess('/app/liturgy/1/delete');
+        $this->checkSuccess('/liturgy_text/assemble');
+    }
+
+    private function checkSuccess($route){
+        $this->client->request('GET', $route);
+        $this->assertResponseIsSuccessful($this->client->getResponse());
+
+    }
+    private function check403($route)
+    {
+        $this->client->request('GET', $route);
+        $this->assertResponseStatusCodeSame(
+            403,
+            $this->client->getResponse()->getStatusCode()
         );
     }
 }

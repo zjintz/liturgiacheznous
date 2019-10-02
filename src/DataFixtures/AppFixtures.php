@@ -8,10 +8,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Liturgy;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-
 class AppFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $parmeterBag;
+    private $parameterBag;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
@@ -26,40 +25,38 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
         $num = 0;
         $line = fgetcsv($csv);
         while (!feof($csv)) {
-
-
             $liturgy[$num] = new Liturgy();
             $liturgy[$num]->setDate(new \DateTime($line[0]));
             $liturgy[$num]->setLiturgyDay($line[2]);
             $liturgy[$num]->setDescription($line[3]);
             $liturgy[$num]->setColor($line[4]);
-            $liturgy[$num]->setIsSolemnity(FALSE);
-            if($line[5]==='X'){
-                $liturgy[$num]->setIsSolemnity(TRUE);
+            $liturgy[$num]->setIsSolemnity(false);
+            if ($line[5]==='X') {
+                $liturgy[$num]->setIsSolemnity(true);
             }
-            $liturgy[$num]->setIsSolemnityVFC(FALSE);
-            if($line[6]==='X'){
-                $liturgy[$num]->setIsSolemnityVFC(TRUE);
+            $liturgy[$num]->setIsSolemnityVFC(false);
+            if ($line[6]==='X') {
+                $liturgy[$num]->setIsSolemnityVFC(true);
             }
-            $liturgy[$num]->setIsCelebration(FALSE);
-            if($line[7]==='X'){
-                $liturgy[$num]->setIsCelebration(TRUE);
+            $liturgy[$num]->setIsCelebration(false);
+            if ($line[7]==='X') {
+                $liturgy[$num]->setIsCelebration(true);
             }
-            $liturgy[$num]->setIsCelebrationVFC(FALSE);
-            if($line[8]==='X'){
-                $liturgy[$num]->setIsCelebrationVFC(TRUE);
+            $liturgy[$num]->setIsCelebrationVFC(false);
+            if ($line[8]==='X') {
+                $liturgy[$num]->setIsCelebrationVFC(true);
             }
-            $liturgy[$num]->setIsMemorial(FALSE);
-            if($line[9]==='X'){
-                $liturgy[$num]->setIsMemorial(TRUE);
+            $liturgy[$num]->setIsMemorial(false);
+            if ($line[9]==='X') {
+                $liturgy[$num]->setIsMemorial(true);
             }
-            $liturgy[$num]->setIsMemorialVFC(FALSE);
-            if($line[10]==='X'){
-                $liturgy[$num]->setIsMemorialVFC(TRUE);
+            $liturgy[$num]->setIsMemorialVFC(false);
+            if ($line[10]==='X') {
+                $liturgy[$num]->setIsMemorialVFC(true);
             }
-            $liturgy[$num]->setIsMemorialFree(FALSE);
-            if($line[11]==='X'){
-                $liturgy[$num]->setIsMemorialFree(TRUE);
+            $liturgy[$num]->setIsMemorialFree(false);
+            if ($line[11]==='X') {
+                $liturgy[$num]->setIsMemorialFree(true);
             }
             $liturgy[$num]->setYearType($line[12]);
             $liturgy[$num]->setAlleluiaReference($line[13]);

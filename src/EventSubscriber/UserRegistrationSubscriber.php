@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\EmailSubscription;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Event\FormEvent;
@@ -9,8 +10,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
-
-
 
 class UserRegistrationSubscriber implements EventSubscriberInterface
 {
@@ -38,9 +37,14 @@ class UserRegistrationSubscriber implements EventSubscriberInterface
 
     public function disableUser(GetResponseUserEvent $event)
     {
+        $subscription = new EmailSubscription();
+        $subscription->setIsActive(false);
+        $subscription->setPeriodicity('1');
+        $subscription->setDaysAhead(1);
         $user = $event->getUser();
         /** @var \AppBundle\Entity\User $user */
         $user->setEnabled(false);
+        $user->setEmailSubscription($subscription);
         // ...
     }
 

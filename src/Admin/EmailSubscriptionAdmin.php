@@ -15,7 +15,8 @@ final class EmailSubscriptionAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('isActive', CheckboxType::class,[
-            'label' => 'email_subscription.label.is_active'
+            'label' => 'email_subscription.label.is_active',
+            'required' => false
         ]);
         $formMapper->add('periodicity', ChoiceType::class, [
             'choices'  => ["Diariamente"=> '1',

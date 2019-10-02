@@ -11,8 +11,6 @@ sonata_admin:
                 icon: '<i class="fa fa-user"></i>'
                 items:
                     - app.admin.user
-               
-        
           app.admin.group.liturgy:
                 keep_open:       true
                 label: app.admin.group.liturgy
