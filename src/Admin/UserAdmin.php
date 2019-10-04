@@ -101,14 +101,14 @@ final class UserAdmin extends AbstractAdmin
                 ->with('Profile', ['class' => 'col-md-4'])->end()
                 ->with('General', ['class' => 'col-md-4'])->end()
                 ->with('Subscription',['class' => 'col-md-4'])->end()
-            ->end()
-            ->tab('Security')
+            ->end();
+
+        if ($this->hasAccess('create')) {
+            $formMapper->tab('Security')
                 ->with('Status', ['class' => 'col-md-6'])->end()
                 ->with('Roles', ['class' => 'col-md-6'])->end()
-            ->end()
-        ;
-
-        $now = new \DateTime();
+                ->end();
+        }
 
         $formMapper
             ->tab('User')
@@ -129,8 +129,9 @@ final class UserAdmin extends AbstractAdmin
                   ['admin_code' => 'app.admin.emailsubscription'
                         ])
                     ->end()
-            ->end()
-            ->tab('Security')
+            ->end();
+        if ($this->hasAccess('create')) {
+            $formMapper->tab('Security')
                 ->with('Status')
                     ->add('enabled', null, ['required' => false])
                 ->end()
@@ -145,8 +146,8 @@ final class UserAdmin extends AbstractAdmin
                         'required' => false,
                     ])
                 ->end()
-            ->end()
-        ;
+            ->end();
+        }
     }
     
     
@@ -163,8 +164,8 @@ final class UserAdmin extends AbstractAdmin
     {
         $listMapper->addIdentifier('firstname');
         $listMapper->addIdentifier('lastname');
-        $listMapper->addIdentifier('email');
-        $listMapper->addIdentifier('enabled');
+        $listMapper->add('email');
+        $listMapper->add('enabled');
     }
 
     /**

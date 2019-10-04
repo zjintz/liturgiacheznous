@@ -127,7 +127,7 @@ final class LiturgyAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('date');
+        $datagridMapper->add('date', 'doctrine_orm_date_range');
         $datagridMapper->add('liturgyDay');
         $datagridMapper->add('color');
         $datagridMapper->add('isSolemnity');

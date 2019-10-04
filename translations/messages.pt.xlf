@@ -2,17 +2,26 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
       <body>
-        <trans-unit id="app.user.stats">
-          <source>app.user.stats</source>
+        <trans-unit id="app.user.stats.total">
+          <source>app.user.stats.total</source>
           <target>Total de usuários registrados</target>
+        </trans-unit>
+        <trans-unit id="app.user.stats.active">
+          <source>app.user.stats.active</source>
+          <target>Usuários Ativos</target>
         </trans-unit>
         <trans-unit id="app.user.stats.inactive">
           <source>app.user.stats.inactive</source>
           <target>Usuários Inativos</target>
         </trans-unit>
-        <trans-unit id="app.liturgy.stats">
-          <source>app.liturgy.stats</source>
+        
+        <trans-unit id="app.liturgy.stats.total">
+          <source>app.liturgy.stats.total</source>
           <target>Total de liturgias registradas</target>
+        </trans-unit>
+        <trans-unit id="app.liturgy.stats.solemnities">
+          <source>app.liturgy.stats.solemnities</source>
+          <target>Total Solemnidades</target>
         </trans-unit>
             <trans-unit id="assembler_title">
                 <source>assembler.title</source>

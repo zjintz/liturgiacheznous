@@ -29,11 +29,11 @@
 
         <trans-unit id="user_registration.success_message">
           <source>user_registration.success_message</source>
-          <target>Usuário criado. </target>
+          <target>Usuário criado com êxito.</target>
         </trans-unit>
         <trans-unit id="user_registration.activation_notice">
           <source>user_registration.activation_notice</source>
-          <target>Hasta que sea activado.</target>
+          <target>Logo que sua conta for ativada, você receberá um e-mail de notificação.</target>
         </trans-unit>
       </body>
     </file>
