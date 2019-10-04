@@ -10,6 +10,8 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Sonata\Form\Type\EqualType;
+use Sonata\Form\Type\BooleanType;
 
 /**
  * Sonata Admin for the Liturgy.
@@ -129,15 +131,10 @@ final class LiturgyAdmin extends AbstractAdmin
         $datagridMapper->add('liturgyDay');
         $datagridMapper->add('color');
         $datagridMapper->add('isSolemnity');
-        $datagridMapper->add('isSolemnityVFC');
-        $datagridMapper->add('isCelebration');
-        $datagridMapper->add('isCelebrationVFC');
-        $datagridMapper->add('isMemorial');
-        $datagridMapper->add('isMemorialVFC');
-        $datagridMapper->add('isMemorialFree');
         $datagridMapper->add('yearType');
         $datagridMapper->add('alleluiaReference');
     }
+
 
     protected function configureListFields(ListMapper $listMapper)
     {
@@ -185,7 +182,7 @@ final class LiturgyAdmin extends AbstractAdmin
             ['label' => 'liturgy.label.year_type']
         );
         $listMapper->add('alleluiaReference', null, ['label' => 'liturgy.label.alleluia_reference']);
-        $listMapper->add('alleluiaVerse', null, ['label' => 'liturgy.label.allelulia_verse']);
+        $listMapper->add('alleluiaVerse', null, ['label' => 'liturgy.label.alleluia_verse']);
         $listMapper->addIdentifier('summary', null, ['label' => 'liturgy.label.summary']);
     }
 

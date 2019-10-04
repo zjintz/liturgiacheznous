@@ -6,6 +6,10 @@
           <source>app.user.stats</source>
           <target>Total de usuários registrados</target>
         </trans-unit>
+        <trans-unit id="app.user.stats.inactive">
+          <source>app.user.stats.inactive</source>
+          <target>Usuários Inativos</target>
+        </trans-unit>
         <trans-unit id="app.liturgy.stats">
           <source>app.liturgy.stats</source>
           <target>Total de liturgias registradas</target>
@@ -20,7 +24,7 @@
             </trans-unit>
             <trans-unit id="email_subscription.label.is_active">
                 <source>email_subscription.label.is_active</source>
-                <target>Assinatura ativa</target>
+                <target>Receber emails</target>
             </trans-unit>
             <trans-unit id="email_subscription.label.periodicity">
                 <source>email_subscription.label.periodicity</source>

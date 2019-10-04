@@ -21,12 +21,12 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
     {
         $rootDir = $this->parameterBag->get('kernel.project_dir');
         $csv = fopen($rootDir.'/data/data-Liturgia.csv', 'r');
-
+        $format = 'm/d/Y';
         $num = 0;
         $line = fgetcsv($csv);
         while (!feof($csv)) {
             $liturgy[$num] = new Liturgy();
-            $liturgy[$num]->setDate(new \DateTime($line[0]));
+            $liturgy[$num]->setDate(\DateTime::createFromFormat($format,$line[0]));
             $liturgy[$num]->setLiturgyDay($line[2]);
             $liturgy[$num]->setDescription($line[3]);
             $liturgy[$num]->setColor($line[4]);

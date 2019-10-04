@@ -48,11 +48,11 @@ file that was distributed with this source code.
                         </div>
                     {% endif %}
                     
-                        {% for message in app.flashes('success') %}
-                            <div class="alert alert-success">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
+                    {% for message in app.flashes('regg-success') %}
+                        <div class="alert alert-success">
+                            {{ message|trans({}, 'SonataUserBundle') }}
+                        </div>
+                    {% endfor %}
                     
 
                 {% endblock %}

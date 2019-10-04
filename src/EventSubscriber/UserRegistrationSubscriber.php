@@ -54,8 +54,12 @@ class UserRegistrationSubscriber implements EventSubscriberInterface
         $response = new RedirectResponse($url);
         
         $this->session->getFlashBag()->add(
-            'success',
-            'You will receive a notification e-mail after an Admin of Liturgiacheznous activates your account.'
+            'regg-success',
+            'user_registration.success_message'
+        );
+        $this->session->getFlashBag()->add(
+            'regg-success',
+            'user_registration.activation_notice'
         );
         $event->setResponse($response);
     }

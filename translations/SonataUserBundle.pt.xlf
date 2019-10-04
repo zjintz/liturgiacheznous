@@ -27,6 +27,14 @@
           <target>Assinatura de email :</target>
         </trans-unit>
 
+        <trans-unit id="user_registration.success_message">
+          <source>user_registration.success_message</source>
+          <target>Usuário criado. </target>
+        </trans-unit>
+        <trans-unit id="user_registration.activation_notice">
+          <source>user_registration.activation_notice</source>
+          <target>Hasta que sea activado.</target>
+        </trans-unit>
       </body>
     </file>
 </xliff>

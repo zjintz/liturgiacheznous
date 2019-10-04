@@ -25,7 +25,22 @@ sonata_admin:
             -
                 class:    col-lg-3 col-xs-6          # twitter bootstrap responsive code
                 position: top                        # zone in the dashboard
-                type:     sonata.admin.block.stats   # block id
+                type:     sonata.admin.block.user.total   # block id
+                roles: ['ROLE_ADMIN']
+                settings:
+                    code:  app.admin.user    # admin code - service id
+                    icon:  fa-user                  # font awesome icon
+                    text:  app.user.stats.inactive  
+                    color: bg-red
+                    filters:                         # filter values
+                        edited: { value: 3 }
+
+          
+            -
+                class:    col-lg-3 col-xs-6          # twitter bootstrap responsive code
+                position: top                        # zone in the dashboard
+                type:     sonata.admin.block.user.inactive   # block id
+                roles: ['ROLE_ADMIN']
                 settings:
                     code:  app.admin.user    # admin code - service id
                     icon:  fa-user                  # font awesome icon
@@ -44,7 +59,7 @@ sonata_admin:
                     text:  app.liturgy.stats            # static text or translation message
                     color: bg-green                 # colors: bg-green, bg-red and bg-aqua
                     filters:                         # filter values
-                        edited: { value: 1 }
+                        isSolemnity: { value: 1 }
                         
 #            - { type: sonata.admin.block.admin_list, position: left }
     security:
