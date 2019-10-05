@@ -16,9 +16,8 @@ class UserChangedNotifier
     }
     // the entity listener methods receive two arguments:
     // the entity instance and the lifecycle event
-    public function postUpdate(User $user, PreUpdateEventArgs $event)
+    public function preUpdate(User $user, PreUpdateEventArgs $event)
     {
-        
         if ($event->hasChangedField('enabled')) {
             if ($event->getNewValue('enabled')) {
                  $message = (new \Swift_Message('Su cuenta fue Activada'))
