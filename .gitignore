@@ -4,6 +4,10 @@ coverage/
 *~
 *#
 
+###> data/ ###
+/data/liturgy_texts/
+###< symfony/phpunit-bridge ###
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -12,6 +16,7 @@ coverage/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
 
 ###> symfony/phpunit-bridge ###
 .phpunit
