@@ -111,10 +111,15 @@ class DailyMailTexts extends Command
         );
         $dateString = $dateAhead->format('Y-m-d');
         $message = (new \Swift_Message('Textos Liturgicos'))
-                 ->setFrom('liturgiacheznous@gmail.com')
+                 ->setFrom('no_reply@liturgiacheznous.org')
                  ->setTo($subscriber->getEmail())
-                 ->addPart(
-                     'Los textos liturgicos.'
+                 ->setBody(
+                     $this->renderView(
+                         // templates/emails/registration.html.twig
+                         'emails/account_enabled.html.twig',
+                         ['name' => $user->getName()]
+                     ),
+                     'text/html'
                  )
                  ->attach(
                      \Swift_Attachment::fromPath(

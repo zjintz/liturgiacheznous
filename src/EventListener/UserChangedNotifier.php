@@ -20,12 +20,18 @@ class UserChangedNotifier
     {
         if ($event->hasChangedField('enabled')) {
             if ($event->getNewValue('enabled')) {
-                 $message = (new \Swift_Message('Su cuenta fue Activada'))
-                          ->setFrom('liturgiacheznous@gmail.com')
+                 $message = (new \Swift_Message('Sua conta foi ativada'))
+                          ->setFrom('no_reply@liturgiacheznous.org')
                           ->setTo($user->getEmail())
-                          ->addPart(
-                              'Su cuenta fue activada con exito, ya puedes entrar a liturgiacheznous.org '
+                          ->setBody(
+                              $this->renderView(
+                                  // templates/emails/registration.html.twig
+                                  'emails/account_enabled.html.twig',
+                                  ['name' => $user->getName()]
+                              ),
+                              'text/html'
                           );
+
                  $this->mailer->send($message);
             }
         }
