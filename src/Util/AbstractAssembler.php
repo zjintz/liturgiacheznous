@@ -16,6 +16,11 @@ abstract class AbstractAssembler
 {
     // Force Extending class to define this method
     abstract protected function genSourceRoute($liturgyDate);
+
+    /** Assembles the text.
+     *
+     * \param $liturgyDate is the string of the date, not an DateTime object.
+     */
     abstract protected function assemble($data, $format = "rtf", $liturgyDate = "");
     
     /**
@@ -44,7 +49,7 @@ abstract class AbstractAssembler
     /**
      * \brief      Common method to get the raw data from a url.
      *
-     * \param      $url The source to get the data from.
+     * \param      $format DOCX or PDF.
      *
      * \return     return The html text got from the source.
      */

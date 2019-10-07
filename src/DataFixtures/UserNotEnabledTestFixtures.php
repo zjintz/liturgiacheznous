@@ -19,7 +19,7 @@ class UserNotEnabledTestFixtures extends Fixture
         $testUser = new User();
         $testUser->setUsername('userne@test.com');
         $testUser->setPlainPassword('testnePass');
-        $testUser->setEnabled(FALSE);
+        $testUser->setEnabled(false);
         $testUser->setEmail('userne@test.com');
         $testUser->setHeadquarter($testHQ);
         $manager->persist($testHQ);
