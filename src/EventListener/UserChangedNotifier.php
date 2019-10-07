@@ -5,7 +5,7 @@ namespace App\EventListener;
 
 use App\Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class UserChangedNotifier
 {
@@ -20,17 +20,11 @@ class UserChangedNotifier
     {
         if ($event->hasChangedField('enabled')) {
             if ($event->getNewValue('enabled')) {
-                 $message = (new \Swift_Message('Sua conta foi ativada'))
+                 $message = (new TemplatedEmail('Sua conta foi ativada'))
                           ->setFrom('no_reply@liturgiacheznous.org')
                           ->setTo($user->getEmail())
-                          ->setBody(
-                              $this->renderView(
-                                  // templates/emails/registration.html.twig
-                                  'emails/account_enabled.html.twig',
-                                  ['name' => $user->getName()]
-                              ),
-                              'text/html'
-                          );
+                          ->htmlTemplate('emails/account_enabled.html.twig')
+                          ->context(['name'=>$user->getFirstname()]);
 
                  $this->mailer->send($message);
             }
