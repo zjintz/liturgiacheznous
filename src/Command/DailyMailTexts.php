@@ -11,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Twig\Environment;
 
 /**
  * Command to send liturgy texts daily.
@@ -26,19 +27,22 @@ class DailyMailTexts extends Command
     private $santaInesAssembler;
     private $parameterBag;
     private $mailer;
+    private $twig;
     
     public function __construct(
         EntityManagerInterface $entityManager,
         IgrejaSantaInesAssembler $santaInesAssembler,
         CNBBAssembler $cnbbAssembler,
         ParameterBagInterface $parameterBag,
-        \Swift_Mailer $mailer
+        \Swift_Mailer $mailer,
+        Environment $twig
     ) {
         $this->entityManager = $entityManager;
         $this->cnbbAssembler = $cnbbAssembler;
         $this->santaInesAssembler = $santaInesAssembler;
         $this->parameterBag= $parameterBag;
         $this->mailer = $mailer;
+        $this->twig = $twig;
         parent::__construct();
     }
         
@@ -114,10 +118,10 @@ class DailyMailTexts extends Command
                  ->setFrom('no_reply@liturgiacheznous.org')
                  ->setTo($subscriber->getEmail())
                  ->setBody(
-                     $this->renderView(
+                     $this->twig->render(
                          // templates/emails/registration.html.twig
-                         'emails/account_enabled.html.twig',
-                         ['name' => $user->getName()]
+                         'emails/daily_mail.html.twig',
+                         ['data' => $dateString]
                      ),
                      'text/html'
                  )
