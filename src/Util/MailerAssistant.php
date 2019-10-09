@@ -33,20 +33,25 @@ class MailerAssistant
      *
      *
      */
-    public function getSubscribedUsers($enabledUsers)
+    public function getSubscribedUsers($enabledUsers, string $period = "daily")
     {
         $subscribedUsers = [];
         foreach($enabledUsers as $user){
             $subsc = $user->getEmailSubscription();
             if (!is_null($subsc)) {
-                if ($subsc->getIsActive()) {
+                $isActive =$subsc->getIsActive();
+                $isThePeriod = $this->checkPeriod(
+                    $subsc->getPeriodicity(),
+                    $period
+                );
+                if ($isActive && $isThePeriod) {
                     $subscribedUsers[] = $user;
                 }
             }
         }
         return $subscribedUsers;
     }
-
+    
     public function listFilesToMake($days, $startDate)
     {
         $filesToSend = [];
@@ -84,6 +89,20 @@ class MailerAssistant
         }
 
         return $filesToSend;
+    }
+
+    private function checkPeriod($subsPeriod, $period)
+    {
+        $isDaily = $subsPeriod === "1" && $period === "daily";
+        if($isDaily)
+            return true;
+        $isWeekly = $subsPeriod === "7" && $period === "weekly";
+        if($isWeekly)
+            return true;
+        $isBiweekly = $subsPeriod === "14" && $period === "biweekly";
+        if($isBiweekly)
+            return true;
+        return false;
     }
 
     

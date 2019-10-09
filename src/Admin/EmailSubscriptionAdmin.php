@@ -21,7 +21,7 @@ final class EmailSubscriptionAdmin extends AbstractAdmin
         $formMapper->add('periodicity', ChoiceType::class, [
             'choices'  => ["Diariamente"=> '1',
                            'Semanal'=> '7',
-                           'Quinzenal'=>'15'] ,
+                           'Quinzenal'=>'14'] ,
             'label' => 'email_subscription.label.periodicity',
             'expanded' => false,
             'multiple' => false,

@@ -10,6 +10,7 @@ use App\Util\MailerAssistant;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Environment;
 
@@ -54,19 +55,28 @@ class MailTexts extends Command
         $this
              ->setDescription('Sends the Liturgy texts..')
              ->setHelp(
-                 'Search in the DB for active users, and acoording to their email subscription send the liturgy text.'
-             );
+                 'Search in the DB for active users, and according to their email subscription send the liturgy text.'
+             )
+            ->addOption(
+                'period',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Period of the subscription? daily, weekly, biweekly.',
+                'daily'
+            );
  
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-         $output->writeln([
-             'Mail Texts',
-             '============',
-             '',
-         ]);
-         $enabledUsers = $this->assistant->getEnabledUsers();
+        $period = $input->getOption("period");
+        $output->writeln([
+            'Mail Texts',
+            '============',
+            "Period: ".$period,
+            '',
+        ]);
+        $enabledUsers = $this->assistant->getEnabledUsers();
          
     // the value returned by someMethod() can be an iterator (https://secure.php.net/iterator)
     // that generates and returns the messages with the 'yield' PHP keyword
@@ -78,14 +88,19 @@ class MailTexts extends Command
              return;
          }
          
-         $subscribedUsers = $this->assistant->getSubscribedUsers($enabledUsers);
+         $subscribedUsers = $this->assistant->getSubscribedUsers(
+             $enabledUsers,
+             $period
+         );
 
          if (empty($subscribedUsers)) {
-             $output->writeln('There are no users with active email subscriptions.');
+             $output->writeln(
+                 'There are no users with active email subscriptions for the given period: '.$period
+             );
              return;
          }
 
-         $this->makeAllTexts($output);
+         $this->makeAllTexts($output, $period);
          $output->writeln('Sending Liturgy texts ...');
          $rootDir = $this->parameterBag->get('kernel.project_dir');
          $textsDir = $rootDir.'/data/liturgy_texts/';
@@ -97,10 +112,15 @@ class MailTexts extends Command
          $output->write('Done.');
     }
 
-    private function makeAllTexts($output)
+    private function makeAllTexts($output, $period)
     {
+        $daysCount = $this->countDays($period);
+        
         $output->writeln('Making Liturgy texts ...');
-        $filesToMake = $this->assistant->listFilesToMake(1, new \DateTime());
+        $filesToMake = $this->assistant->listFilesToMake(
+            $daysCount,
+            new \DateTime()
+        );
         foreach($filesToMake as $toMake)
         {
             $this->makeLiturgyText($toMake, $output);
@@ -136,13 +156,29 @@ class MailTexts extends Command
     
     private function  sendTexts($textsDir, $subscriber)
     {
+        $daysAhead = $subscriber->getEmailSubscription()->getDaysAhead();
+        $daysCount = $this->countDays(
+            $subscriber->getEmailSubscription()->getPeriodicity()
+        );
+        
         $dateAhead = new \DateTime();
         $dateAhead->add(
             new \DateInterval(
-                'P'.$subscriber->getEmailSubscription()->getDaysAhead().'D'
+                'P'.$daysAhead.'D'
             )
         );
+        $lastDateString = false;
+        if ($daysCount > 1) {
+            $lastDate = clone $dateAhead;
+            $lastDate->add(
+                new \DateInterval(
+                    'P'.$daysCount.'D'
+                )
+            );
+            $lastDateString = $lastDate->format('Y-m-d');
+        }
         $dateString = $dateAhead->format('Y-m-d');
+
         $message = (new \Swift_Message('Textos Liturgicos'))
                  ->setFrom('no_reply@liturgiacheznous.org')
                  ->setTo($subscriber->getEmail())
@@ -150,30 +186,70 @@ class MailTexts extends Command
                      $this->twig->render(
                          // templates/emails/registration.html.twig
                          'emails/daily_mail.html.twig',
-                         ['data' => $dateString]
+                         ['start_date' => $dateString,
+                          'last_date'=> $lastDateString,
+                         ]
                      ),
                      'text/html'
-                 )
-                 ->attach(
-                     \Swift_Attachment::fromPath(
-                         $textsDir.'doc-CNBB_'.$dateString.".DOCX"
-                     )
-                 )
-                 ->attach(
-                     \Swift_Attachment::fromPath(
-                         $textsDir.'doc-CNBB_'.$dateString.".PDF"
-                     )
-                 )
-                 ->attach(
-                     \Swift_Attachment::fromPath(
-                         $textsDir.'doc-Igreja_Santa_Ines_'.$dateString.".DOCX"
-                     )
-                 )
-                 ->attach(
-                     \Swift_Attachment::fromPath(
-                         $textsDir.'doc-Igreja_Santa_Ines_'.$dateString.".PDF"
-                     )
                  );
-            $this->mailer->send($message);
+        for ($i =0; $i< $daysCount; $i++) {
+   
+            $dateString = $dateAhead->format('Y-m-d');
+            echo $dateString;
+            $message
+                ->attach(
+                    \Swift_Attachment::fromPath(
+                        $textsDir.'doc-CNBB_'.$dateString.".DOCX"
+                    )
+                )
+                ->attach(
+                    \Swift_Attachment::fromPath(
+                        $textsDir.'doc-CNBB_'.$dateString.".PDF"
+                    )
+                )
+                ->attach(
+                    \Swift_Attachment::fromPath(
+                        $textsDir.'doc-Igreja_Santa_Ines_'.$dateString.".DOCX"
+                    )
+                )
+                ->attach(
+                    \Swift_Attachment::fromPath(
+                        $textsDir.'doc-Igreja_Santa_Ines_'.$dateString.".PDF"
+                    )
+                );
+            $dateAhead->add(
+                new \DateInterval(
+                    'P1D'
+                )
+            );
+
+        }
+        $this->mailer->send($message);
+    }
+
+    private function countDays($period)
+    {
+        if ($period === "daily") {
+            return 1;
+        }
+        if ($period === "weekly") {
+            return 7;
+        }
+            
+        if ($period === "biweekly") {
+            return 14;
+        }
+        if ($period === "1") {
+            return 1;
+        }
+        if ($period === "7") {
+            return 7;
+        }
+            
+        if ($period === "14") {
+            return 14;
+        }
+            
+        return 0;
     }
 }

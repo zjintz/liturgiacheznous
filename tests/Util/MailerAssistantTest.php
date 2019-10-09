@@ -10,7 +10,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MailerAssistantTest extends TestCase
 {
-
     protected function mockEntityManagerVoid()
     {
         $userRepository = $this->createMock(UserRepository::class);
@@ -24,12 +23,18 @@ class MailerAssistantTest extends TestCase
         return $entityManager;
     }
 
-    protected function mockUser($isEnabled, $isSubscribed)
-    {
+    protected function mockUser(
+        bool $isEnabled,
+        bool $isSubscribed,
+        string $period = "1"
+    ) {
         $subscription = $this->createMock(EmailSubscription::class);
         $subscription->expects($this->any())
             ->method('getIsActive')
             ->willReturn($isSubscribed);
+        $subscription->expects($this->any())
+            ->method('getPeriodicity')
+            ->willReturn($period);
         
         $user = $this->createMock(User::class);
         $user->expects($this->any())
@@ -83,6 +88,28 @@ class MailerAssistantTest extends TestCase
                        
         $this->assertTrue(
             $expectedUsers[0]->getEmailSubscription()->getIsActive()
+        );
+    }
+
+    public function testGetSubscribedUsersWeekly()
+    {
+        $assistant = new MailerAssistant($this->mockEntityManager(0,0));
+        $expectedUsers = $assistant->getSubscribedUsers(
+            [$this->mockUser(true, true)],
+            "weekly"
+        );
+        $this->assertEquals([], $expectedUsers);
+
+        $expectedUsers = $assistant->getSubscribedUsers(
+            [$this->mockUser(true, true, "7")],
+            "weekly"
+        );
+        $this->assertTrue(
+            $expectedUsers[0]->getEmailSubscription()->getIsActive()
+        );
+        $this->assertEquals(
+            "7",
+            $expectedUsers[0]->getEmailSubscription()->getPeriodicity()
         );
     }
 

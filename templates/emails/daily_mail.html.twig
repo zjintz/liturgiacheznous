@@ -1,6 +1,10 @@
 <h3>Textos Litúrgicos</h3>
 
-Assinatura diária.
+Assinatura do liturgiacheznous.org.
 
-Textos correspondente à data: {{ data }}
+{% if last_date %}
+    Textos correspondentes à : {{ start_date }} até {{ last_date }}
+{% else  %}
+    Textos correspondentes à data: {{ start_date }}
+{% endif %}
 
