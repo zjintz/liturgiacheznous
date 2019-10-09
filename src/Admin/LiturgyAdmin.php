@@ -127,12 +127,54 @@ final class LiturgyAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('date', 'doctrine_orm_date_range');
-        $datagridMapper->add('liturgyDay');
-        $datagridMapper->add('color');
-        $datagridMapper->add('isSolemnity');
-        $datagridMapper->add('yearType');
-        $datagridMapper->add('alleluiaReference');
+        $datagridMapper->add('date', 'doctrine_orm_date_range', [
+            'operator_type'=>'sonata_type_date_range_picker',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('liturgyDay', null , [
+            'operator_type' => 'sonata_type_equal',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('color' ,  null, [
+            'operator_type' => 'sonata_type_equal',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('isSolemnity', null , [
+            'operator_type' => 'sonata_type_boolean',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('isSolemnityVFC', null , [
+            'operator_type' => 'sonata_type_boolean',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('isCelebration', null , [
+            'operator_type' => 'sonata_type_boolean',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('isCelebrationVFC', null , [
+            'operator_type' => 'sonata_type_boolean',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('isMemorial', null , [
+            'operator_type' => 'sonata_type_boolean',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('isMemorialVFC', null , [
+            'operator_type' => 'sonata_type_boolean',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('isMemorialFree', null , [
+            'operator_type' => 'sonata_type_boolean',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('yearType', null, [
+            'operator_type' => 'sonata_type_equal',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('alleluiaReference', null, [
+            'operator_type' => 'sonata_type_equal',
+            'advanced_filter' => false
+        ]);
     }
 
 

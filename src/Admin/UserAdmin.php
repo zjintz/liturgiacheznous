@@ -112,23 +112,30 @@ final class UserAdmin extends AbstractAdmin
 
         $formMapper
             ->tab('User')
-                ->with('General')
-                    ->add('username')
-                    ->add('email')
-                    ->add('plainPassword', TextType::class, [
+            ->with('General')
+            ->add('email')
+            ->add('plainPassword', TextType::class, [
                         'required' => (!$this->getSubject() || null === $this->getSubject()->getId()),
                     ])
-                ->end()
-                ->with('Profile')
-                    ->add('firstname', null, ['required' => false])
-                    ->add('lastname', null, ['required' => false])
-                ->end()
-                ->with('Subscription')
-            ->add('emailSubscription', AdminType::class,
-                  [],
-                  ['admin_code' => 'app.admin.emailsubscription'
-                        ])
-                    ->end()
+            ->end()
+            ->with('Profile')
+            ->add('firstname', null, ['required' => false])
+            ->add('lastname', null, ['required' => false])
+            ->add(
+                'headquarter',
+                AdminType::class,
+                [],
+                ['admin_code' => 'app.admin.headquarter'
+                ])
+            ->end()
+            ->with('Subscription')
+            ->add(
+                'emailSubscription',
+                AdminType::class,
+                [],
+                ['admin_code' => 'app.admin.emailsubscription'
+                ])
+            ->end()
             ->end();
         if ($this->hasAccess('create')) {
             $formMapper->tab('Security')
@@ -154,10 +161,22 @@ final class UserAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('firstname');
-        $datagridMapper->add('lastname');
-        $datagridMapper->add('email');
-        $datagridMapper->add('enabled');
+        $datagridMapper->add('firstname', null , [
+            'operator_type' => 'sonata_type_equal',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('lastname', null , [
+            'operator_type' => 'sonata_type_equal',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('email', null , [
+            'operator_type' => 'sonata_type_equal',
+            'advanced_filter' => false
+        ]);
+        $datagridMapper->add('enabled' , null , [
+            'operator_type' => 'sonata_type_boolean',
+            'advanced_filter' => false
+        ]);
     }
 
     protected function configureListFields(ListMapper $listMapper)

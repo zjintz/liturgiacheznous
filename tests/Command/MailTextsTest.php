@@ -53,7 +53,7 @@ class MailTextsTest extends WebTestCase
 
         // the output of the command in the console
         $output = $commandTester->getDisplay();
-        $this->assertContains('There are no users with active email subscriptions.', $output);
+        $this->assertContains('There are no users with active email subscriptions for the given period', $output);
     }
 
     public function testExecute()

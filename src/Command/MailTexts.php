@@ -195,7 +195,6 @@ class MailTexts extends Command
         for ($i =0; $i< $daysCount; $i++) {
    
             $dateString = $dateAhead->format('Y-m-d');
-            echo $dateString;
             $message
                 ->attach(
                     \Swift_Attachment::fromPath(

@@ -15,7 +15,7 @@ final class HeadquarterAdmin extends AbstractAdmin
     {
         $formMapper->add('name', TextType::class);
         $formMapper->add('city', TextType::class);
-        $formMapper->add('country', CountryType::class);
+        $formMapper->add('country', TextType::class);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
