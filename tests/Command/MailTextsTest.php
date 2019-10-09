@@ -13,10 +13,10 @@ use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 
 /**
- * Test the command that sends the daily liturgy texts.
+ * Test the command that sends the liturgy texts.
  *
  */
-class DailyMailTextsTest extends WebTestCase
+class MailTextsTest extends WebTestCase
 {
     use FixturesTrait;
     
@@ -26,7 +26,7 @@ class DailyMailTextsTest extends WebTestCase
         $kernel = static::createKernel();
         $application = new Application($kernel);
 
-        $command = $application->find('app:daily-mail-texts');
+        $command = $application->find('app:mail-texts');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command'  => $command->getName(),
@@ -45,7 +45,7 @@ class DailyMailTextsTest extends WebTestCase
         $kernel = static::createKernel();
         $application = new Application($kernel);
 
-        $command = $application->find('app:daily-mail-texts');
+        $command = $application->find('app:mail-texts');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command'  => $command->getName(),
@@ -62,7 +62,7 @@ class DailyMailTextsTest extends WebTestCase
         $kernel = static::createKernel();
         $application = new Application($kernel);
 
-        $command = $application->find('app:daily-mail-texts');
+        $command = $application->find('app:mail-texts');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command'  => $command->getName(),

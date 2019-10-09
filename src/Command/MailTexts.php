@@ -14,14 +14,14 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Twig\Environment;
 
 /**
- * Command to send liturgy texts daily.
+ * Command to send liturgy texts.
  *
  *
  */
-class DailyMailTexts extends Command
+class MailTexts extends Command
 {
     // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'app:daily-mail-texts';
+    protected static $defaultName = 'app:mail-texts';
     private $entityManager;
     private $cnbbAssembler;
     private $santaInesAssembler;
@@ -52,7 +52,7 @@ class DailyMailTexts extends Command
     {
         
         $this
-             ->setDescription('Sends the daily Liturgy texts..')
+             ->setDescription('Sends the Liturgy texts..')
              ->setHelp(
                  'Search in the DB for active users, and acoording to their email subscription send the liturgy text.'
              );
@@ -62,7 +62,7 @@ class DailyMailTexts extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
          $output->writeln([
-             'Daily Mail Texts',
+             'Mail Texts',
              '============',
              '',
          ]);

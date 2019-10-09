@@ -120,7 +120,7 @@ class AssemblerAssistant
         }
         if(!is_null($santoralSection)){
             $firstReading = $santoralSection->getFirstReading();
-            if(!is_null($secondReading)){
+            if(!is_null($firstReading)){
                 $ref = $firstReading->getReference();
                 $firstReading->setBookName($this->searchBookName($ref));
                 $santoralSection->setFirstReading($firstReading);
