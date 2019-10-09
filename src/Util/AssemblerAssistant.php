@@ -5,7 +5,6 @@ namespace App\Util;
 use App\Entity\Book;
 use App\Entity\LiturgySection;
 use App\Entity\LiturgyText;
-
 use App\Entity\Liturgy;
 use App\Entity\GospelAcclamation;
 use App\Repository\LiturgyRepository;

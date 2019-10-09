@@ -49,7 +49,7 @@ class UserVoter extends Voter
 
     private function canView(User $targetUser, User $user)
     {
-        if (in_array('ROLE_ADMIN',$user->getRoles())) {
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return true;
         }
         // if they can edit, they can view
@@ -59,7 +59,7 @@ class UserVoter extends Voter
 
     private function canEdit(User $targetUser, User $user)
     {
-        if (in_array('ROLE_ADMIN',$user->getRoles())) {
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return true;
         }
         return $user === $targetUser;

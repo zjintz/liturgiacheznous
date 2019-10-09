@@ -6,7 +6,7 @@ namespace App\Command;
 use App\Application\Sonata\UserBundle\Entity\User;
 use App\Util\CNBBAssembler;
 use App\Util\IgrejaSantaInesAssembler;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Util\MailerAssistant;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -28,21 +28,22 @@ class DailyMailTexts extends Command
     private $parameterBag;
     private $mailer;
     private $twig;
+    private $assistant;
     
     public function __construct(
-        EntityManagerInterface $entityManager,
         IgrejaSantaInesAssembler $santaInesAssembler,
         CNBBAssembler $cnbbAssembler,
         ParameterBagInterface $parameterBag,
         \Swift_Mailer $mailer,
-        Environment $twig
+        Environment $twig,
+        MailerAssistant $mailerAssistant
     ) {
-        $this->entityManager = $entityManager;
         $this->cnbbAssembler = $cnbbAssembler;
         $this->santaInesAssembler = $santaInesAssembler;
         $this->parameterBag= $parameterBag;
         $this->mailer = $mailer;
         $this->twig = $twig;
+        $this->assistant = $mailerAssistant;
         parent::__construct();
     }
         
@@ -65,10 +66,7 @@ class DailyMailTexts extends Command
              '============',
              '',
          ]);
-         $userRepo = $this->entityManager->getRepository(User::class);
-         $enabledUsers = $userRepo->findBy(
-             ['enabled'=>true]
-         );
+         $enabledUsers = $this->assistant->getEnabledUsers();
          
     // the value returned by someMethod() can be an iterator (https://secure.php.net/iterator)
     // that generates and returns the messages with the 'yield' PHP keyword
@@ -80,21 +78,14 @@ class DailyMailTexts extends Command
              return;
          }
          
-         $subscribedUsers = $this->getSubscribedUsers($enabledUsers);
+         $subscribedUsers = $this->assistant->getSubscribedUsers($enabledUsers);
 
          if (empty($subscribedUsers)) {
              $output->writeln('There are no users with active email subscriptions.');
              return;
          }
 
-         // outputs a message without adding a "\n" at the end of the line
-         $output->writeln('Making Liturgy texts ...');
-         $this->makeLiturgyTexts(1, $output, "CNBB", $this->cnbbAssembler);
-         $this->makeLiturgyTexts(1, $output, "Igreja_Santa_Ines", $this->santaInesAssembler);
-         $this->makeLiturgyTexts(2, $output, 'CNBB', $this->cnbbAssembler);
-         $this->makeLiturgyTexts(2, $output, 'Igreja_Santa_Ines', $this->santaInesAssembler);
-         $this->makeLiturgyTexts(3, $output, 'CNBB', $this->cnbbAssembler);
-         $this->makeLiturgyTexts(3, $output, 'Igreja_Santa_Ines', $this->santaInesAssembler);
+         $this->makeAllTexts($output);
          $output->writeln('Sending Liturgy texts ...');
          $rootDir = $this->parameterBag->get('kernel.project_dir');
          $textsDir = $rootDir.'/data/liturgy_texts/';
@@ -105,6 +96,44 @@ class DailyMailTexts extends Command
          }
          $output->write('Done.');
     }
+
+    private function makeAllTexts($output)
+    {
+        $output->writeln('Making Liturgy texts ...');
+        $filesToMake = $this->assistant->listFilesToMake(1, new \DateTime());
+        foreach($filesToMake as $toMake)
+        {
+            $this->makeLiturgyText($toMake, $output);
+        }
+    }
+
+
+    private function makeLiturgyText($toMake, $output)
+    {
+        $rootDir = $this->parameterBag->get('kernel.project_dir');
+        $dateString = $toMake["date_string"];
+        $filePath = $rootDir.'/data/liturgy_texts/'.$toMake["file_name"];
+        $output->writeln(
+            '        - Making text Document:'.$filePath
+         );
+        if(file_exists($filePath)){
+            $output->writeln(
+                '        >>> '.$toMake["file_name"].' is already there.'
+            );
+            return;
+        }
+        $assembler = $this->getAssembler($toMake["source"]);
+        $docFile = $assembler->getDocument($dateString, $toMake["format"]);
+        rename($docFile, $filePath);
+    }
+
+    private function getAssembler($source)
+    {
+        if($source === "CNBB")
+            return $this->cnbbAssembler;
+        return $this->santaInesAssembler;
+    }
+    
     private function  sendTexts($textsDir, $subscriber)
     {
         $dateAhead = new \DateTime();
@@ -146,45 +175,5 @@ class DailyMailTexts extends Command
                      )
                  );
             $this->mailer->send($message);
-    }
-
-    private function makeLiturgyTexts($daysAhead, $output, $source, $assembler)
-    {
-        $rootDir = $this->parameterBag->get('kernel.project_dir');
-        $dateAhead = new \DateTime();
-        $dateAhead->add(new \DateInterval('P'.$daysAhead.'D'));
-        $dateString = $dateAhead->format('Y-m-d');
-        $output->writeln(
-            '        - '.$daysAhead.' Day ahead, DOCX file from '.$source.', date: '.$dateString
-         );
-         $docFile = $assembler->getDocument($dateString, "DOCX");
-         $destiny = $rootDir.'/data/liturgy_texts/doc-'.$source.'_'.$dateString.".DOCX";
-         rename($docFile, $destiny);
-         $output->writeln(
-             '        Text: '.$destiny
-         );
-         $output->writeln(
-             '        - '.$daysAhead.' Day ahead, PDF file from '.$source.', date: '.$dateString
-         );
-         $docFile = $assembler->getDocument($dateString, "PDF");
-         $destiny = $rootDir.'/data/liturgy_texts/doc-'.$source.'_'.$dateString.".PDF";
-         rename($docFile, $destiny);
-         $output->writeln(
-             '        - Text: '.$destiny
-         );
-    }
-
-    private function getSubscribedUsers($enabledUsers)
-    {
-        $subscribedUsers = [];
-        foreach($enabledUsers as $user){
-            $subsc = $user->getEmailSubscription();
-            if (!is_null($subsc)) {
-                if ($subsc->getIsActive()) {
-                    $subscribedUsers[] = $user;
-                }
-            }
-        }
-        return $subscribedUsers;
     }
 }

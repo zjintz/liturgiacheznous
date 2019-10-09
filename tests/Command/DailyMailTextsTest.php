@@ -54,8 +54,6 @@ class DailyMailTextsTest extends WebTestCase
         // the output of the command in the console
         $output = $commandTester->getDisplay();
         $this->assertContains('There are no users with active email subscriptions.', $output);
-
-        // ...
     }
 
     public function testExecute()
@@ -73,23 +71,10 @@ class DailyMailTextsTest extends WebTestCase
         // the output of the command in the console
         $output = $commandTester->getDisplay();
         $this->assertContains('Making Liturgy texts ...', $output);
-        $this->assertContains('        - 1 Day ahead, DOCX file from CNBB', $output);
-        $this->assertContains('        - 1 Day ahead, PDF file from CNBB', $output);
-        $this->assertContains('        - 1 Day ahead, DOCX file from Igreja_Santa_Ines', $output);
-        $this->assertContains('        - 1 Day ahead, PDF file from Igreja_Santa_Ines', $output);
-        $this->assertContains('        - 2 Day ahead, DOCX file from CNBB', $output);
-        $this->assertContains('        - 2 Day ahead, PDF file from CNBB', $output);
-        $this->assertContains('        - 2 Day ahead, DOCX file from Igreja_Santa_Ines', $output);
-        $this->assertContains('        - 2 Day ahead, PDF file from Igreja_Santa_Ines', $output);
-        $this->assertContains('        - 3 Day ahead, DOCX file from CNBB', $output);
-        $this->assertContains('        - 3 Day ahead, PDF file from CNBB', $output);
-        $this->assertContains('        - 3 Day ahead, DOCX file from Igreja_Santa_Ines', $output);
-        $this->assertContains('        - 3 Day ahead, PDF file from Igreja_Santa_Ines', $output);
-
+        $this->assertContains('        - Making text Document:', $output);
         $this->assertContains('Sending Liturgy texts ...', $output);
         $this->assertContains('        - Sending to editor@test.com (1 day ahead).', $output);
         $this->assertContains('Done.', $output);
-        // ...
     }
 }
 
