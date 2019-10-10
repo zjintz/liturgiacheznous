@@ -22,6 +22,12 @@ sonata_admin:
                     - route: liturgy_text_assemble
                       label: assemble_action
         blocks:
+          
+            -
+                class:    col-lg-9 col-xs-9          # twitter bootstrap responsive code
+                position: top                        # zone in the dashboard
+                type:     app.block.service.email_subscription   # block id # block id
+
             -
                 class:    col-lg-2 col-xs-3          # twitter bootstrap responsive code
                 position: bottom                        # zone in the dashboard

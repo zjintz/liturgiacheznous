@@ -1,6 +1,5 @@
 <?php
 
-// src/Command/CreateUserCommand.php
 namespace App\Command;
 
 use App\Application\Sonata\UserBundle\Entity\User;

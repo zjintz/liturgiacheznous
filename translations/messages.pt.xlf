@@ -51,6 +51,14 @@
               <source>EmailSubscription</source>
               <target>Assinatura do Email</target>
             </trans-unit>
+            <trans-unit id="your_email_subscription">
+              <source>your_email_subscription</source>
+              <target>Sua Assinatura do Email : </target>
+            </trans-unit>
+            <trans-unit id="edit.subscription.here">
+              <source>edit.subscription.here</source>
+              <target>Editar Assinatura do Email </target>
+            </trans-unit>
                                     
             <trans-unit id="email_subscription.label.is_active">
                 <source>email_subscription.label.is_active</source>

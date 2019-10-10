@@ -1,0 +1,25 @@
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title"> {{ 'your_email_subscription'|trans({}, 'messages') }}</h3>
+        </div>
+
+        <div>
+            <div>
+                <span> {{ 'email_subscription.label.is_active'|trans({}, 'messages') }} </span> <span>{{ subscription.isActive }}</span>
+            </div>
+            <div>
+                <span> {{ 'email_subscription.label.periodicity'|trans({}, 'messages') }}</span> <span>{{ subscription.periodicity }}</span>
+            </div>
+            <div>
+                <span>{{ 'email_subscription.label.days_ahead'|trans({}, 'messages') }} </span>
+                <span>{{ subscription.daysAhead }}</span>
+            </div>
+            <div class="box-footer center-text">
+                <a  class="btn btn-default btn-flat" href="{{ path('admin_sonata_user_user_edit', {id: user_id}) }}"> {{  'edit.subscription.here'|trans({}, 'messages')}} </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
