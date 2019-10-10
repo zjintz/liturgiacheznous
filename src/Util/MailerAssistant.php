@@ -6,7 +6,7 @@ use App\Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * \brief     Auxiliar functions to the commands that send mails. 
+ * \brief     Auxiliar functions to the commands that send mails.
  *
  *
  */
@@ -14,7 +14,7 @@ class MailerAssistant
 {
     private $entityManager;
     
-    public function __construct( EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
@@ -22,9 +22,7 @@ class MailerAssistant
     public function getEnabledUsers()
     {
         $userRepo = $this->entityManager->getRepository(User::class);
-        $enabledUsers = $userRepo->findBy(
-             ['enabled'=>true]
-        );
+        $enabledUsers = $userRepo->findBy(['enabled'=>true]);
         return $enabledUsers;
     }
     
@@ -33,10 +31,16 @@ class MailerAssistant
      *
      *
      */
-    public function getSubscribedUsers($enabledUsers, string $period = "daily")
-    {
+    public function getSubscribedUsers(
+        $enabledUsers,
+        string $period = "daily",
+        int $daysAhead = 0
+    ) {
         $subscribedUsers = [];
-        foreach($enabledUsers as $user){
+        $checkDaysAhead = ($daysAhead === 1 ) ||
+                        ($daysAhead === 2 ) ||
+                        ($daysAhead === 3 );
+        foreach ($enabledUsers as $user) {
             $subsc = $user->getEmailSubscription();
             if (!is_null($subsc)) {
                 $isActive =$subsc->getIsActive();
@@ -44,7 +48,12 @@ class MailerAssistant
                     $subsc->getPeriodicity(),
                     $period
                 );
-                if ($isActive && $isThePeriod) {
+                $sameDaysAhead = ($daysAhead === $subsc->getDaysAhead());
+
+                if (!$checkDaysAhead) {
+                    $sameDaysAhead = true;
+                }
+                if ($isActive && $isThePeriod && $sameDaysAhead) {
                     $subscribedUsers[] = $user;
                 }
             }
@@ -94,16 +103,18 @@ class MailerAssistant
     private function checkPeriod($subsPeriod, $period)
     {
         $isDaily = $subsPeriod === "1" && $period === "daily";
-        if($isDaily)
+        if ($isDaily) {
             return true;
+        }
         $isWeekly = $subsPeriod === "7" && $period === "weekly";
-        if($isWeekly)
+        if ($isWeekly) {
             return true;
+        }
         $isBiweekly = $subsPeriod === "14" && $period === "biweekly";
-        if($isBiweekly)
+        if ($isBiweekly) {
             return true;
+        }
+            
         return false;
     }
-
-    
 }

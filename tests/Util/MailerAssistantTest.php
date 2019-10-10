@@ -26,7 +26,8 @@ class MailerAssistantTest extends TestCase
     protected function mockUser(
         bool $isEnabled,
         bool $isSubscribed,
-        string $period = "1"
+        string $period = "1",
+        int $daysAhead = 1
     ) {
         $subscription = $this->createMock(EmailSubscription::class);
         $subscription->expects($this->any())
@@ -35,6 +36,9 @@ class MailerAssistantTest extends TestCase
         $subscription->expects($this->any())
             ->method('getPeriodicity')
             ->willReturn($period);
+        $subscription->expects($this->any())
+            ->method('getDaysAhead')
+            ->willReturn($daysAhead);
         
         $user = $this->createMock(User::class);
         $user->expects($this->any())
@@ -45,6 +49,7 @@ class MailerAssistantTest extends TestCase
             ->willReturn($subscription);
         return $user;
     }
+    
     protected function mockEntityManager($enabledCount)
     {
         $enabledUsers = [];
@@ -79,9 +84,9 @@ class MailerAssistantTest extends TestCase
 
     public function testGetSubscribedUsers()
     {
-        $assistant = new MailerAssistant($this->mockEntityManager(0,2));
+        $assistant = new MailerAssistant($this->mockEntityManager(0, 2));
         $this->assertEquals([], $assistant->getSubscribedUsers([]));
-        $assistant = new MailerAssistant($this->mockEntityManager(0,0));
+        $assistant = new MailerAssistant($this->mockEntityManager(0, 0));
         $expectedUsers = $assistant->getSubscribedUsers(
             [$this->mockUser(true, true)]
         );
@@ -93,7 +98,7 @@ class MailerAssistantTest extends TestCase
 
     public function testGetSubscribedUsersWeekly()
     {
-        $assistant = new MailerAssistant($this->mockEntityManager(0,0));
+        $assistant = new MailerAssistant($this->mockEntityManager(0, 0));
         $expectedUsers = $assistant->getSubscribedUsers(
             [$this->mockUser(true, true)],
             "weekly"
@@ -113,13 +118,48 @@ class MailerAssistantTest extends TestCase
         );
     }
 
+    /**
+     * Tests the GetSubsbriedUsers function with biweekly subscription.
+     *
+     *
+     */
+    public function testGetSubscribedUsersBiWeekly()
+    {
+        $assistant = new MailerAssistant($this->mockEntityManager(0, 0));
+        $expectedUsers = $assistant->getSubscribedUsers(
+            [$this->mockUser(true, true)],
+            "biweekly"
+        );
+        $this->assertEquals([], $expectedUsers);
+
+        $expectedUsers = $assistant->getSubscribedUsers(
+            [$this->mockUser(true, true, "14", 3)],
+            "biweekly",
+            1
+        );
+        $this->assertEmpty($expectedUsers);
+        $expectedUsers = $assistant->getSubscribedUsers(
+            [$this->mockUser(true, true, "14", 3)],
+            "biweekly",
+            3
+        );
+        $this->assertEquals(
+            "14",
+            $expectedUsers[0]->getEmailSubscription()->getPeriodicity()
+        );
+        $this->assertEquals(
+            3,
+            $expectedUsers[0]->getEmailSubscription()->getDaysAhead()
+        );
+    }
+
     public function testListFilesToMake()
     {
         $assistant = new MailerAssistant($this->mockEntityManager(0, 2));
         $dateTest = new \DateTime("2010-01-01");
         $filesToMake = $assistant->listFilesToMake(1, $dateTest);
         $this->assertEquals(12, count($filesToMake));
-                $this->assertEquals(
+        $this->assertEquals(
             ["file_name" => 'doc-CNBB_2010-01-02.DOCX',
              "date_string"=> "2010-01-02",
              "source" => "CNBB",
@@ -216,6 +256,72 @@ class MailerAssistantTest extends TestCase
              "format" => "PDF",
             ],
             $filesToMake[35]
+        );
+    }
+
+    public function testListFilesToMakeBiWeek()
+    {
+        $assistant = new MailerAssistant($this->mockEntityManager(0, 2));
+        $dateTest = new \DateTime("2010-01-01");
+        $filesToMake = $assistant->listFilesToMake(14, $dateTest);
+        $this->assertEquals(64, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_2010-01-02.DOCX',
+             "date_string"=> "2010-01-02",
+             "source" => "CNBB",
+             "format" => "DOCX",
+            ],
+            $filesToMake[0]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_2010-01-02.PDF',
+             "date_string"=> "2010-01-02",
+             "source" => "CNBB",
+             "format" => "PDF",
+            ],
+            $filesToMake[1]
+        );
+        
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-02.DOCX',
+             "date_string"=> "2010-01-02",
+             "source" => "Igreja_Santa_Ines",
+             "format" => "DOCX",
+            ],
+            $filesToMake[2]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-02.PDF',
+             "date_string"=> "2010-01-02",
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[3]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-04.PDF',
+             "date_string"=> "2010-01-04",
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[11]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-10.PDF',
+             "date_string"=> "2010-01-10",
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[35]
+        );
+
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-17.PDF',
+             "date_string"=> "2010-01-17",
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[63]
         );
     }
 }

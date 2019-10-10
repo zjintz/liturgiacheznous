@@ -63,6 +63,13 @@ class MailTexts extends Command
                 InputOption::VALUE_REQUIRED,
                 'Period of the subscription? daily, weekly, biweekly.',
                 'daily'
+            )
+            ->addOption(
+                'days-ahead',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'It will only mail the texts to the subscribers that have configured their subscription \'Days ahead\' to one of thes values : 1 , 2 or 3. Any other value means it will include subscribers ignored this filter.',
+                0
             );
  
     }
@@ -70,6 +77,7 @@ class MailTexts extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $period = $input->getOption("period");
+        $daysAhead = $input->getOption("days-ahead");
         $output->writeln([
             'Mail Texts',
             '============',
@@ -83,35 +91,36 @@ class MailTexts extends Command
          //$output->writeln($this->someMethod());
 
 
-         if (empty($enabledUsers)) {
-             $output->writeln('There are no enabled users in the DB.');
-             return;
-         }
-         
-         $subscribedUsers = $this->assistant->getSubscribedUsers(
-             $enabledUsers,
-             $period
-         );
-
-         if (empty($subscribedUsers)) {
-             $output->writeln(
-                 'There are no users with active email subscriptions for the given period: '.$period
-             );
-             return;
-         }
-
-         $this->makeAllTexts($output, $period);
-         $output->writeln('Sending Liturgy texts ...');
-         $rootDir = $this->parameterBag->get('kernel.project_dir');
-         $textsDir = $rootDir.'/data/liturgy_texts/';
-         foreach ($subscribedUsers as $subscriber) {
-             $output->writeln('        - Sending to '.$subscriber->getEmail().' ('.$subscriber->getEmailSubscription()->getDaysAhead(). ' day ahead).' );
-             $this->sendTexts($textsDir, $subscriber);
+        if (empty($enabledUsers)) {
+            $output->writeln('There are no enabled users in the DB.');
+            return;
+        }
         
-         }
-         $output->write('Done.');
+        $subscribedUsers = $this->assistant->getSubscribedUsers(
+            $enabledUsers,
+            $period,
+            $daysAhead
+        );
+        
+        if (empty($subscribedUsers)) {
+            $output->writeln(
+                'There are no users with active email subscriptions for the given period: '.$period.' and the given \'days ahead\' option.'
+            );
+            return;
+        }
+        
+        $this->makeAllTexts($output, $period);
+        $output->writeln('Sending Liturgy texts ...');
+        $rootDir = $this->parameterBag->get('kernel.project_dir');
+        $textsDir = $rootDir.'/data/liturgy_texts/';
+        foreach ($subscribedUsers as $subscriber) {
+            $output->writeln('        - Sending to '.$subscriber->getEmail().' ('.$subscriber->getEmailSubscription()->getDaysAhead(). ' day ahead).' );
+            $this->sendTexts($textsDir, $subscriber);
+            
+        }
+        $output->write('Done.');
     }
-
+    
     private function makeAllTexts($output, $period)
     {
         $daysCount = $this->countDays($period);
@@ -121,7 +130,7 @@ class MailTexts extends Command
             $daysCount,
             new \DateTime()
         );
-        foreach($filesToMake as $toMake)
+        foreach ($filesToMake as $toMake)
         {
             $this->makeLiturgyText($toMake, $output);
         }
