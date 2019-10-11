@@ -12,6 +12,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sonata\Form\Type\EqualType;
 use Sonata\Form\Type\BooleanType;
+use Sonata\Form\Type\DateRangeType;
+use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
+use Sonata\Form\Type\DateRangePickerType;
+use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 
 /**
  * Sonata Admin for the Liturgy.
@@ -127,9 +131,9 @@ final class LiturgyAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('date', 'doctrine_orm_date_range', [
-            'operator_type'=>'sonata_type_date_range_picker',
-            'advanced_filter' => false
+        $datagridMapper->add('date', DateRangeFilter::class, [
+            'field_type' => DateRangePickerType::class,
+            'advanced_filter' => false,
         ]);
         $datagridMapper->add('liturgyDay', null , [
             'operator_type' => 'sonata_type_equal',
