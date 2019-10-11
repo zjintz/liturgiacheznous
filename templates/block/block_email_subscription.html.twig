@@ -1,24 +1,38 @@
 {% extends sonata_block.templates.block_base %}
 
 {% block block %}
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title"> {{ 'your_email_subscription'|trans({}, 'messages') }}</h3>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4><i class="fa fa-envelope" aria-hidden="true"></i> {{ 'your_email_subscription'|trans({}, 'messages') }}</h4>
         </div>
 
-        <div>
-            <div>
-                <span> {{ 'email_subscription.label.is_active'|trans({}, 'messages') }} </span> <span>{{ subscription.isActive }}</span>
-            </div>
-            <div>
-                <span> {{ 'email_subscription.label.periodicity'|trans({}, 'messages') }}</span> <span>{{ subscription.periodicity }}</span>
-            </div>
-            <div>
-                <span>{{ 'email_subscription.label.days_ahead'|trans({}, 'messages') }} </span>
-                <span>{{ subscription.daysAhead }}</span>
-            </div>
-            <div class="box-footer center-text">
-                <a  class="btn btn-default btn-flat" href="{{ path('admin_sonata_user_user_edit', {id: user_id}) }}"> {{  'edit.subscription.here'|trans({}, 'messages')}} </a>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div>
+                        {{ 'email_subscription.label.is_active'|trans({}, 'messages') }} </span> <span>{% if  subscription.isActive  %} <span class="label label-success"> Sim </span>  {% else %} <span class="label label-danger"> Nao </span>{% endif %}</span>
+                    </div>                    
+                </li>
+                <li class="list-group-item">
+                    <div>
+                        {{ 'email_subscription.label.periodicity'|trans({}, 'messages') }}
+                        <span class="badge"> cada {{ subscription.periodicity }}  </span>
+                        
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div>
+                        <span>{{ 'email_subscription.label.days_ahead'|trans({}, 'messages') }} </span>
+                        <span class="badge">{{ subscription.daysAhead }}</span>
+                    </div>
+                </li>
+
+            </ul>
+
+
+
+            <div class="panel-footer center-text">
+                <a  class="btn btn-default" href="{{ path('admin_sonata_user_user_edit', {id: user_id}) }}"> {{  'edit.subscription.here'|trans({}, 'messages')}} </a>
             </div>
         </div>
     </div>
