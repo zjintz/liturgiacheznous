@@ -24,7 +24,7 @@ sonata_admin:
         blocks:
           
             -
-                class:    col-lg-2 col-xs-4          # twitter bootstrap responsive code
+                class:    col-lg-3 col-xs-10          # twitter bootstrap responsive code
                 position: top                        # zone in the dashboard
                 type:     app.block.service.email_subscription   # block id # block id
 

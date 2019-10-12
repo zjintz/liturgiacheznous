@@ -57,7 +57,7 @@
             </trans-unit>
             <trans-unit id="edit.subscription.here">
               <source>edit.subscription.here</source>
-              <target>Editar Assinatura do Email </target>
+              <target>Editar </target>
             </trans-unit>
                                     
             <trans-unit id="email_subscription.label.is_active">
@@ -104,7 +104,7 @@
             </trans-unit>
             <trans-unit id="user_label_first_name">
                 <source>user.label.first_name</source>
-                <target>Primeiro Nome</target>
+                <target>Nome</target>
             </trans-unit>
             <trans-unit id="user_label_last_name">
                 <source>user.label.last_name</source>

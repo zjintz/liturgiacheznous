@@ -22,6 +22,18 @@
           <source>forgotten_password</source>
           <target>Esqueci minha senha!</target>
         </trans-unit>
+        <trans-unit id="security.login.password">
+                <source>security.login.password</source>
+                <target>Senha</target>
+        </trans-unit>
+        <trans-unit id="form.password">
+          <source>form.password</source>
+          <target>Senha</target>
+        </trans-unit>
+        <trans-unit id="form.label_plain_password">
+          <source>form.label_plain_password</source>
+          <target>Senha</target>
+        </trans-unit>
         <trans-unit id="form.label_email_subscription">
           <source>form.label_email_subscription</source>
           <target>Assinatura de email :</target>
