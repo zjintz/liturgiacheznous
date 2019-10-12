@@ -9,7 +9,6 @@ use App\Entity\Liturgy;
 use App\Entity\GospelAcclamation;
 use App\Repository\LiturgyRepository;
 
-
 /**
  * \brief     Makes somes fixes to the LiturgyText.
  *

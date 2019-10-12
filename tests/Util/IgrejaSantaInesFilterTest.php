@@ -6,6 +6,14 @@ use App\Util\IgrejaSantaInesFilter;
 
 class IgrejaSantaInesFilterTest extends BaseFilterTest
 {
+
+    public function testFilterFalseData()
+    {
+        $iFilter = new IgrejaSantaInesFilter();
+        $liturgyText = $iFilter->filter(false, "");
+        $this->assertEquals("Not_Found", $liturgyText->getLoadStatus());
+    }
+    
     public function testFilterNotFound()
     {
         $iFilter = new IgrejaSantaInesFilter();

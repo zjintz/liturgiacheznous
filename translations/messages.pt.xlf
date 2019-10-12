@@ -51,6 +51,14 @@
               <source>EmailSubscription</source>
               <target>Assinatura do Email</target>
             </trans-unit>
+            <trans-unit id="form.password">
+              <source>form.password</source>
+              <target>Senha</target>
+            </trans-unit>
+            <trans-unit id="form.password.repeat">
+              <source>form.password.repeat</source>
+              <target>Repetir senha</target>
+            </trans-unit>
             <trans-unit id="your_email_subscription">
               <source>your_email_subscription</source>
               <target>Sua Assinatura do Email : </target>

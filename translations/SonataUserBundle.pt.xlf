@@ -2,9 +2,17 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
       <body>
+        <trans-unit id="Access">
+          <source>Access</source>
+          <target>Acesso</target>
+        </trans-unit>
         <trans-unit id="user_registration_title">
           <source>user_registration_title</source>
           <target>Registro de usuário</target>
+        </trans-unit>
+        <trans-unit id="Headquarter">
+          <source>Headquarter</source>
+          <target>Sede</target>
         </trans-unit>
         <trans-unit id="headquarter_title">
           <source>headquarter_title</source>
@@ -23,12 +31,16 @@
           <target>Esqueci minha senha!</target>
         </trans-unit>
         <trans-unit id="security.login.password">
-                <source>security.login.password</source>
-                <target>Senha</target>
+          <source>security.login.password</source>
+          <target>Senha</target>
         </trans-unit>
         <trans-unit id="form.password">
           <source>form.password</source>
           <target>Senha</target>
+        </trans-unit>
+        <trans-unit id="form.password.repeat">
+          <source>form.password.repeat</source>
+          <target>Repetir senha</target>
         </trans-unit>
         <trans-unit id="form.label_plain_password">
           <source>form.label_plain_password</source>

@@ -152,6 +152,12 @@ class MailTexts extends Command
         }
         $assembler = $this->getAssembler($toMake["source"]);
         $docFile = $assembler->getDocument($dateString, $toMake["format"]);
+        if ($docFile == "Not_Found") {
+            $output->writeln(
+                '         --> WARNING : Not found.'
+            );
+            return;
+        }
         rename($docFile, $filePath);
     }
 
@@ -186,44 +192,36 @@ class MailTexts extends Command
             $lastDateString = $lastDate->format('Y-m-d');
         }
         $dateString = $dateAhead->format('Y-m-d');
-
+        $notFoundDocuments = [];
         $message = (new \Swift_Message('Textos Liturgicos'))
                  ->setFrom('no_reply@liturgiacheznous.org')
-                 ->setTo($subscriber->getEmail())
-                 ->setBody(
-                     $this->twig->render(
-                         // templates/emails/registration.html.twig
-                         'emails/daily_mail.html.twig',
-                         ['start_date' => $dateString,
-                          'last_date'=> $lastDateString,
-                         ]
-                     ),
-                     'text/html'
-                 );
+                 ->setTo($subscriber->getEmail());
+
         for ($i =0; $i< $daysCount; $i++) {
    
             $dateString = $dateAhead->format('Y-m-d');
-            $message
-                ->attach(
+            $documentsToAttach = [
+                $textsDir.'doc-CNBB_'.$dateString.".DOCX",
+                $textsDir.'doc-CNBB_'.$dateString.".PDF",
+                $textsDir.'doc-Igreja_Santa_Ines_'.$dateString.".DOCX",
+                $textsDir.'doc-Igreja_Santa_Ines_'.$dateString.".PDF",
+            ];
+            $foundDocuments = [];
+            foreach ($documentsToAttach as $path) {
+                if (file_exists($path)) {
+                    $foundDocuments[] = $path;
+                    continue;
+                }
+                $notFoundDocuments[] = strstr($path, 'doc-');
+            }
+
+            foreach ($foundDocuments as $foundPath) {
+                $message->attach(
                     \Swift_Attachment::fromPath(
-                        $textsDir.'doc-CNBB_'.$dateString.".DOCX"
-                    )
-                )
-                ->attach(
-                    \Swift_Attachment::fromPath(
-                        $textsDir.'doc-CNBB_'.$dateString.".PDF"
-                    )
-                )
-                ->attach(
-                    \Swift_Attachment::fromPath(
-                        $textsDir.'doc-Igreja_Santa_Ines_'.$dateString.".DOCX"
-                    )
-                )
-                ->attach(
-                    \Swift_Attachment::fromPath(
-                        $textsDir.'doc-Igreja_Santa_Ines_'.$dateString.".PDF"
+                        $foundPath
                     )
                 );
+            }
             $dateAhead->add(
                 new \DateInterval(
                     'P1D'
@@ -231,6 +229,17 @@ class MailTexts extends Command
             );
 
         }
+        $message->setBody(
+            $this->twig->render(
+                // templates/emails/registration.html.twig
+                'emails/daily_mail.html.twig',
+                ['start_date' => $dateString,
+                 'last_date'=> $lastDateString,
+                 'not_found_list' => $notFoundDocuments,
+                ]
+            ),
+            'text/html'
+        );
         $this->mailer->send($message);
     }
 

@@ -15,10 +15,13 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\UserBundle\Form\Type\SecurityRolesType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Form\Type\CollectionType;
+
 
 final class UserAdmin extends AbstractAdmin
 {
@@ -99,28 +102,27 @@ final class UserAdmin extends AbstractAdmin
         $formMapper
             ->tab('User')
                 ->with('Profile', ['class' => 'col-md-4'])->end()
-                ->with('General', ['class' => 'col-md-4'])->end()
+                ->with('Headquarter', ['class' => 'col-md-4'])->end()
                 ->with('Subscription',['class' => 'col-md-4'])->end()
             ->end();
-
+        $formMapper->tab('Security')
+            ->with('General', ['class' => 'col-md-4'])->end()
+            ->end();
         if ($this->hasAccess('create')) {
-            $formMapper->tab('Security')
+            $formMapper->tab('Access')
                 ->with('Status', ['class' => 'col-md-6'])->end()
                 ->with('Roles', ['class' => 'col-md-6'])->end()
                 ->end();
         }
 
+        
         $formMapper
             ->tab('User')
-            ->with('General')
-            ->add('email')
-            ->add('plainPassword', TextType::class, [
-                        'required' => (!$this->getSubject() || null === $this->getSubject()->getId()),
-                    ])
-            ->end()
             ->with('Profile')
             ->add('firstname', null, ['required' => false])
             ->add('lastname', null, ['required' => false])
+            ->end()
+            ->with('Headquarter')
             ->add(
                 'headquarter',
                 AdminType::class,
@@ -137,8 +139,22 @@ final class UserAdmin extends AbstractAdmin
                 ])
             ->end()
             ->end();
+        $formMapper
+            ->tab('Security')
+            ->with('General')
+            ->add('email')
+            ->add('plainPassword',  RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'first_options'  => ['label' => 'form.password'],
+                'second_options' => ['label' => 'form.password.repeat'],
+                'required' => (!$this->getSubject() || null === $this->getSubject()->getId()),
+            ])
+            ->end()
+            ->end();
         if ($this->hasAccess('create')) {
-            $formMapper->tab('Security')
+            $formMapper->tab('Access')
                 ->with('Status')
                     ->add('enabled', null, ['required' => false])
                 ->end()

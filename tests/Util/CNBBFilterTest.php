@@ -7,6 +7,13 @@ use App\Entity\LiturgyText;
 
 class CNBBFilterTest extends BaseFilterTest
 {
+
+    public function testFilterFalseData()
+    {
+        $iFilter = new CNBBFilter();
+        $liturgyText = $iFilter->filter(false, "");
+        $this->assertEquals("Not_Found", $liturgyText->getLoadStatus());
+    }
     
     public function testFilterNotFound()
     {

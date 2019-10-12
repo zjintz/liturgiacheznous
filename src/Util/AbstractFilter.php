@@ -20,6 +20,10 @@ abstract class AbstractFilter
     public function filter($data, $liturgyDate)
     {
         $litText = new LiturgyText();
+        if (!$data) {
+            $litText->setLoadStatus("Not_Found");
+            return $litText;
+        }
         $crawler = new Crawler($data);
         if (!$this->isValidDate($crawler)) {
             $litText->setLoadStatus("Not_Found");
