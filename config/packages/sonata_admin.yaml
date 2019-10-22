@@ -2,8 +2,18 @@ sonata_admin:
     show_mosaic_button: false
     search: false
     title: 'Liturgia Cheznous'
+    templates:
+      edit :    'user_admin/edit.html.twig'
     dashboard:
         groups:
+          app.admin.group.dashboard:
+                keep_open:       true
+                label: ~
+                label_catalogue: App
+                icon: '<i class="fa fa-home"></i>'
+                items:
+                    - route: sonata_admin_dashboard
+                      label: app.admin.group.dashboard 
           app.admin.group.users:
                 keep_open:       true
                 label: app.admin.group.users
@@ -11,6 +21,7 @@ sonata_admin:
                 icon: '<i class="fa fa-user"></i>'
                 items:
                     - app.admin.user
+
           app.admin.group.liturgy:
                 keep_open:       true
                 label: app.admin.group.liturgy
@@ -55,7 +66,7 @@ sonata_admin:
                     code:  app.admin.user    # admin code - service id
                     icon:  fa-user                  # font awesome icon
                     text:  app.user.stats.total            # static text or translation message
-                    color: bg-aqua                 # colors: bg-green, bg-red and bg-aqua
+                    color: bg-blue                 # colors: bg-green, bg-red and bg-aqua
 
             -
                 class:    col-lg-2 col-xs-3          # twitter bootstrap responsive code

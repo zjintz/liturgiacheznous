@@ -16,14 +16,23 @@
                 <li class="list-group-item">
                     <div>
                         {{ 'email_subscription.label.periodicity'|trans({}, 'messages') }}
-                        <span class="badge"> cada {{ subscription.periodicity }}  </span>
+                        <span class="badge"> Cada {{ subscription.periodicity }}  </span>
                         
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div>
+                        <span>{{ 'form.label.source'|trans({}, 'messages') }} </span>
+                        {% for source in subscription.source %}
+                            <span class="badge">{{ source }}</span> {% endfor %}
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div>
-                        <span>{{ 'email_subscription.label.days_ahead'|trans({}, 'messages') }} </span>
-                        <span class="badge">{{ subscription.daysAhead }}</span>
+                        <span>{{ 'form.label.text_format'|trans({}, 'messages') }} </span>
+                        {% for format in subscription.format %}
+                            <span class="badge"> {{ format }} </span>{% endfor %}
                     </div>
                 </li>
 

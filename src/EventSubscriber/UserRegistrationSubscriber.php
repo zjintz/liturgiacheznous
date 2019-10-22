@@ -38,9 +38,11 @@ class UserRegistrationSubscriber implements EventSubscriberInterface
     public function disableUser(GetResponseUserEvent $event)
     {
         $subscription = new EmailSubscription();
-        $subscription->setIsActive(false);
+        $subscription->setIsActive(true);
         $subscription->setPeriodicity('1');
         $subscription->setDaysAhead(1);
+        $subscription->setSource(["CNBB", "Igreja_Santa_Ines"]);
+        $subscription->setFormat(["DOCX", "PDF"]);
         $user = $event->getUser();
         /** @var \AppBundle\Entity\User $user */
         $user->setEnabled(false);

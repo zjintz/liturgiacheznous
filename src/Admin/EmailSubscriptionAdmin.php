@@ -19,23 +19,33 @@ final class EmailSubscriptionAdmin extends AbstractAdmin
             'required' => false
         ]);
         $formMapper->add('periodicity', ChoiceType::class, [
-            'choices'  => ["Diariamente"=> '1',
+            'choices'  => ["Diaria"=> '1',
                            'Semanal'=> '7',
                            'Quinzenal'=>'14'] ,
             'label' => 'email_subscription.label.periodicity',
-            'expanded' => false,
+            'expanded' => true,
             'multiple' => false,
             'required' => true,
         ]);
-        $formMapper->add('daysAhead', ChoiceType::class, [
-            'choices'  => ["1"=> 1,
-                           '2'=> 2,
-                           '3'=> 3] ,
-            'label' => 'email_subscription.label.days_ahead',
-            'expanded' => false,
-            'multiple' => false,
+
+        $formMapper->add('source', ChoiceType::class, [
+            'choices'  => ['CNBB'=> 'CNBB',
+                           'Igreja Santa Ines'=>'Igreja_Santa_Ines'] ,
+            'label' => 'form.label.source',
+            'expanded' => true,
+            'multiple' => true,
             'required' => true,
         ]);
+        $formMapper->add('format', ChoiceType::class, [
+            'choices'  => ["DOCX"=> 'DOCX',
+                           'PDF'=> 'PDF',],
+
+            'label' => 'form.label.text_format',
+            'expanded' => true,
+            'multiple' => true,
+            'required' => true,
+        ]);
+
 
     }
 

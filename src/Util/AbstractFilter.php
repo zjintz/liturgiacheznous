@@ -29,11 +29,19 @@ abstract class AbstractFilter
             $litText->setLoadStatus("Not_Found");
             return $litText;
         }
-        $litText->setLoadStatus("Success");
-        $litText->setDate(new \DateTime($liturgyDate));
-        $litText->setDayTitle($this->getDayTitle($crawler));
-        $litText->setTemporalSection($this->getTemporalText($crawler));
-        $litText->setSantoralSection($this->getSantoralText($crawler));
-        return $litText;
+        try{
+            $litText->setDate(new \DateTime($liturgyDate));
+            $litText->setDayTitle($this->getDayTitle($crawler));
+            $litText->setTemporalSection($this->getTemporalText($crawler));
+            $litText->setSantoralSection($this->getSantoralText($crawler));
+            $litText->setLoadStatus("Success");
+            return $litText;
+        }
+        catch(\Exception $e){
+            $litText->setLoadStatus("Not_Found");
+            return $litText;
+        }
+        
+
     }
 }

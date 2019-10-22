@@ -146,7 +146,7 @@ final class UserAdmin extends AbstractAdmin
             ->add('plainPassword',  RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
-                'options' => ['attr' => ['class' => 'password-field']],
+                'options' => ['attr' => ['class' => 'password-field' , "autocomplete" => "off"]],
                 'first_options'  => ['label' => 'form.password'],
                 'second_options' => ['label' => 'form.password.repeat'],
                 'required' => (!$this->getSubject() || null === $this->getSubject()->getId()),

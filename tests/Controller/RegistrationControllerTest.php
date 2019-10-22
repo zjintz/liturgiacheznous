@@ -78,9 +78,11 @@ class RegistrationControllerTest extends WebTestCase
 
         $user = self::$container->get('doctrine')->getRepository(User::class)->findOneByEmail('test@no.com');
         $newSubs = $user->getEmailSubscription();
-        $this->assertEquals(false, $newSubs->getIsActive());
+        $this->assertEquals(true, $newSubs->getIsActive());
         $this->assertEquals(1, $newSubs->getDaysAhead());
         $this->assertEquals("1", $newSubs->getPeriodicity());
+        $this->assertEquals(["DOCX", "PDF"], $newSubs->getFormat());
+        $this->assertEquals(["CNBB", "Igreja_Santa_Ines"], $newSubs->getSource());
         $this->assertEquals(["ROLE_USER"], $user->getRoles());
     }
 }

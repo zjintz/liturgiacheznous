@@ -4,6 +4,7 @@ namespace App\Util;
 
 use App\Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * \brief     Auxiliar functions to the commands that send mails.
@@ -13,10 +14,20 @@ use Doctrine\ORM\EntityManagerInterface;
 class MailerAssistant
 {
     private $entityManager;
+    private $parameterBag;
+    private $cnbbAssembler;
+    private $santaInesAssembler;
     
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ParameterBagInterface $parameterBag,
+        CNBBAssembler $cnbbAssembler,
+        IgrejaSantaInesAssembler $santaInesAssembler
+    ) {
+        $this->parameterBag= $parameterBag;
         $this->entityManager = $entityManager;
+        $this->cnbbAssembler = $cnbbAssembler;
+        $this->santaInesAssembler = $santaInesAssembler;
     }
 
     public function getEnabledUsers()
@@ -116,5 +127,30 @@ class MailerAssistant
         }
             
         return false;
+    }
+
+    
+    public function makeLiturgyText($toMake)
+    {
+        $rootDir = $this->parameterBag->get('kernel.project_dir');
+        $dateString = $toMake["date_string"];
+        $filePath = $rootDir.'/data/liturgy_texts/'.$toMake["file_name"];
+        if(file_exists($filePath)){
+            return '>>> '.$toMake["file_name"].' is already there.';
+        }
+        $assembler = $this->getAssembler($toMake["source"]);
+        $docFile = $assembler->getDocument($dateString, $toMake["format"]);
+        if ($docFile == "Not_Found") {
+            return 'WARNING : Not found.';
+        }
+        rename($docFile, $filePath);
+        return "Done.";
+    }
+
+    private function getAssembler($source)
+    {
+        if($source === "CNBB")
+            return $this->cnbbAssembler;
+        return $this->santaInesAssembler;
     }
 }

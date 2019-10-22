@@ -37,6 +37,16 @@ class EmailSubscription
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $format = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $source = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +101,30 @@ class EmailSubscription
             $user->setEmailSubscription($this);
         }
 
+
+        return $this;
+    }
+
+    public function getFormat(): ?array
+    {
+        return $this->format;
+    }
+
+    public function setFormat(array $format): self
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    public function getSource(): ?array
+    {
+        return $this->source;
+    }
+
+    public function setSource(?array $source): self
+    {
+        $this->source = $source;
 
         return $this;
     }

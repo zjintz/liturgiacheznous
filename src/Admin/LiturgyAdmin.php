@@ -135,10 +135,12 @@ final class LiturgyAdmin extends AbstractAdmin
             'field_type' => DateRangePickerType::class,
             'advanced_filter' => false,
         ]);
+
         $datagridMapper->add('liturgyDay', null , [
             'operator_type' => 'sonata_type_equal',
             'advanced_filter' => false
         ]);
+        
         $datagridMapper->add('color' ,  null, [
             'operator_type' => 'sonata_type_equal',
             'advanced_filter' => false

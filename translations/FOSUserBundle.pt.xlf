@@ -8,7 +8,7 @@
         </trans-unit>
         <trans-unit id="form.password_confirmation">
           <source>form.password_confirmation</source>
-          <target>Verificar Senha</target>
+          <target>Repetir Senha</target>
         </trans-unit>
         
       </body>

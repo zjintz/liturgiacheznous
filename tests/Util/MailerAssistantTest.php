@@ -4,9 +4,12 @@ namespace App\Tests\Util;
 use App\Application\Sonata\UserBundle\Entity\User;
 use App\Entity\EmailSubscription;
 use App\Util\MailerAssistant;
+use App\Util\CNBBAssembler;
+use App\Util\IgrejaSantaInesAssembler;
 use App\Repository\UserRepository;
 use PHPUnit\Framework\TestCase;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MailerAssistantTest extends TestCase
 {
@@ -22,6 +25,7 @@ class MailerAssistantTest extends TestCase
             ->willReturn($userRepository);
         return $entityManager;
     }
+
 
     protected function mockUser(
         bool $isEnabled,
@@ -67,26 +71,40 @@ class MailerAssistantTest extends TestCase
             ->willReturn($userRepository);
         return $entityManager;
     }
+
+    protected function makeMailerAssitant($enabledCount)
+    {
+        $parameterBag = $this->createMock(ParameterBagInterface::class);
+        $cnbb = $this->createMock(CNBBAssembler::class);
+        $santaInes = $this->createMock(IgrejaSantaInesAssembler::class);
+        $assistant = new MailerAssistant(
+            $this->mockEntityManager($enabledCount),
+            $parameterBag,
+            $cnbb,
+            $santaInes
+        );
+        return $assistant;
+    }
     
     public function testGetEnabledUsersVoid()
     {
-        $assistant = new MailerAssistant($this->mockEntityManagerVoid());
+        $assistant =  $this->makeMailerAssitant(0);
         $this->assertEquals([], $assistant->getEnabledUsers());
     }
 
     public function testGetEnabledUsers()
     {
-        $assistant = new MailerAssistant($this->mockEntityManager(0));
+        $assistant = $this->makeMailerAssitant(0);
         $this->assertEquals([], $assistant->getEnabledUsers());
-        $assistant = new MailerAssistant($this->mockEntityManager(2));
+        $assistant = $this->makeMailerAssitant(2);
         $this->assertEquals(2, count($assistant->getEnabledUsers()));
     }
 
     public function testGetSubscribedUsers()
     {
-        $assistant = new MailerAssistant($this->mockEntityManager(0, 2));
+        $assistant = $this->makeMailerAssitant(0);
         $this->assertEquals([], $assistant->getSubscribedUsers([]));
-        $assistant = new MailerAssistant($this->mockEntityManager(0, 0));
+        $assistant = $this->makeMailerAssitant(0);
         $expectedUsers = $assistant->getSubscribedUsers(
             [$this->mockUser(true, true)]
         );
@@ -98,7 +116,7 @@ class MailerAssistantTest extends TestCase
 
     public function testGetSubscribedUsersWeekly()
     {
-        $assistant = new MailerAssistant($this->mockEntityManager(0, 0));
+        $assistant = $this->makeMailerAssitant(0);
         $expectedUsers = $assistant->getSubscribedUsers(
             [$this->mockUser(true, true)],
             "weekly"
@@ -125,7 +143,7 @@ class MailerAssistantTest extends TestCase
      */
     public function testGetSubscribedUsersBiWeekly()
     {
-        $assistant = new MailerAssistant($this->mockEntityManager(0, 0));
+        $assistant = $this->makeMailerAssitant(0);
         $expectedUsers = $assistant->getSubscribedUsers(
             [$this->mockUser(true, true)],
             "biweekly"
@@ -155,7 +173,7 @@ class MailerAssistantTest extends TestCase
 
     public function testListFilesToMake()
     {
-        $assistant = new MailerAssistant($this->mockEntityManager(0, 2));
+        $assistant = $this->makeMailerAssitant(0);
         $dateTest = new \DateTime("2010-01-01");
         $filesToMake = $assistant->listFilesToMake(1, $dateTest);
         $this->assertEquals(12, count($filesToMake));
@@ -204,7 +222,7 @@ class MailerAssistantTest extends TestCase
 
     public function testListFilesToMakeWeek()
     {
-        $assistant = new MailerAssistant($this->mockEntityManager(0, 2));
+        $assistant = $this->makeMailerAssitant(0);
         $dateTest = new \DateTime("2010-01-01");
         $filesToMake = $assistant->listFilesToMake(7, $dateTest);
         $this->assertEquals(36, count($filesToMake));
@@ -261,7 +279,7 @@ class MailerAssistantTest extends TestCase
 
     public function testListFilesToMakeBiWeek()
     {
-        $assistant = new MailerAssistant($this->mockEntityManager(0, 2));
+        $assistant = $this->makeMailerAssitant(0);
         $dateTest = new \DateTime("2010-01-01");
         $filesToMake = $assistant->listFilesToMake(14, $dateTest);
         $this->assertEquals(64, count($filesToMake));
