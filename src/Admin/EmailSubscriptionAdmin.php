@@ -16,16 +16,18 @@ final class EmailSubscriptionAdmin extends AbstractAdmin
     {
         $formMapper->add('isActive', CheckboxType::class,[
             'label' => 'email_subscription.label.is_active',
-            'required' => false
+            'required' => false,
+            'help' => 'email_subscription.help.is_active'
         ]);
         $formMapper->add('periodicity', ChoiceType::class, [
-            'choices'  => ["Diaria"=> '1',
-                           'Semanal'=> '7',
-                           'Quinzenal'=>'14'] ,
+            'choices'  => ["Diaria (receberá os textos de cada dia com 24 horas de antecedência)"=> '1',
+                           'Semanal (receberá os textos da semana todo domingo)'=> '7',
+                           'Quinzenal (receberá os textos das 2 semanas seguintes cada 2 domingos)'=>'14'] ,
             'label' => 'email_subscription.label.periodicity',
             'expanded' => true,
             'multiple' => false,
             'required' => true,
+
         ]);
 
         $formMapper->add('source', ChoiceType::class, [

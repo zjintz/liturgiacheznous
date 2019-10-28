@@ -14,17 +14,14 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class MailerAssistant
 {
     private $entityManager;
-    private $parameterBag;
     private $cnbbAssembler;
     private $santaInesAssembler;
     
     public function __construct(
         EntityManagerInterface $entityManager,
-        ParameterBagInterface $parameterBag,
         CNBBAssembler $cnbbAssembler,
         IgrejaSantaInesAssembler $santaInesAssembler
     ) {
-        $this->parameterBag= $parameterBag;
         $this->entityManager = $entityManager;
         $this->cnbbAssembler = $cnbbAssembler;
         $this->santaInesAssembler = $santaInesAssembler;
@@ -71,7 +68,14 @@ class MailerAssistant
         }
         return $subscribedUsers;
     }
-    
+
+    /**
+     * Lists the files that are going to be send.
+     *
+     * \param $days 
+     * \param $startDate
+     */
+     
     public function listFilesToMake($days, $startDate)
     {
         $filesToSend = [];
@@ -111,6 +115,69 @@ class MailerAssistant
         return $filesToSend;
     }
 
+    public function listDemoFiles($period, $source, $textFormat)
+    {
+        $filesToSend = [];
+        $numberOfDays = $this->countDays($period);
+        $newDate = new \DateTime();
+        $newDate->add(new \DateInterval('P1D'));
+        if ($period != "daily") {
+            $newDate = new \DateTime(date("Y-m-d", strtotime("Monday this week")));
+        }
+        for ($i = 0; $i<$numberOfDays; $i++) {
+            $dateString = $newDate->format('Y-m-d');
+            $filesToSend = $this->addFilesToSend(
+                $filesToSend,
+                $source,
+                $textFormat,
+                $dateString
+            );
+            $newDate->add(new \DateInterval('P1D'));
+        }
+        return $filesToSend;
+    }
+
+    private function addFilesToSend(
+        $filesToSend,
+        $source,
+        $textFormat,
+        $dateString
+    ) {
+        if ($source == "CNBB" || $source == "ALL") {
+            if ($textFormat == "DOCX" || $textFormat == "ALL") {
+                $filesToSend[] = ["file_name" => "doc-CNBB_".$dateString.".DOCX",
+                                  "date_string" => $dateString,
+                                  "source"=>"CNBB",
+                                  "format"=>"DOCX"
+                ];
+            }
+            if ($textFormat == "PDF" || $textFormat == "ALL") {
+                $filesToSend[] = ["file_name" => "doc-CNBB_".$dateString.".PDF",
+                                  "date_string" => $dateString,
+                                  "source"=>"CNBB",
+                                  "format"=>"PDF"
+                ];
+            }
+        }
+        if ($source == "Igreja_Santa_Ines" || $source == "ALL") {
+            if ($textFormat == "DOCX" || $textFormat == "ALL") {
+                $filesToSend[] = ["file_name" =>"doc-Igreja_Santa_Ines_".$dateString.".DOCX",
+                                  "date_string" => $dateString,
+                                  "source"=>"Igreja_Santa_Ines",
+                                  "format"=>"DOCX"
+                ];
+            }
+            if ($textFormat == "PDF" || $textFormat == "ALL") {
+                $filesToSend[] = ["file_name" => "doc-Igreja_Santa_Ines_".$dateString.".PDF",
+                                  "date_string" => $dateString,
+                                  "source"=>"Igreja_Santa_Ines",
+                                  "format"=>"PDF"
+                ];
+            }
+        }
+        return $filesToSend;
+    }
+
     private function checkPeriod($subsPeriod, $period)
     {
         $isDaily = $subsPeriod === "1" && $period === "daily";
@@ -130,11 +197,10 @@ class MailerAssistant
     }
 
     
-    public function makeLiturgyText($toMake)
+    public function makeLiturgyText($toMake, $textsDir)
     {
-        $rootDir = $this->parameterBag->get('kernel.project_dir');
         $dateString = $toMake["date_string"];
-        $filePath = $rootDir.'/data/liturgy_texts/'.$toMake["file_name"];
+        $filePath = $textsDir.$toMake["file_name"];
         if(file_exists($filePath)){
             return '>>> '.$toMake["file_name"].' is already there.';
         }
@@ -152,5 +218,31 @@ class MailerAssistant
         if($source === "CNBB")
             return $this->cnbbAssembler;
         return $this->santaInesAssembler;
+    }
+
+    private function countDays($period)
+    {
+        if ($period === "daily") {
+            return 1;
+        }
+        if ($period === "weekly") {
+            return 7;
+        }
+            
+        if ($period === "biweekly") {
+            return 14;
+        }
+        if ($period === "1") {
+            return 1;
+        }
+        if ($period === "7") {
+            return 7;
+        }
+            
+        if ($period === "14") {
+            return 14;
+        }
+            
+        return 0;
     }
 }

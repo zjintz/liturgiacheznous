@@ -102,8 +102,7 @@ final class UserAdmin extends AbstractAdmin
         $formMapper
             ->tab('User')
                 ->with('Profile', ['class' => 'col-md-4'])->end()
-                ->with('Headquarter', ['class' => 'col-md-4'])->end()
-                ->with('Subscription',['class' => 'col-md-4'])->end()
+                ->with('Subscription',['class' => 'col-md-5'])->end()
             ->end();
         $formMapper->tab('Security')
             ->with('General', ['class' => 'col-md-4'])->end()
@@ -121,8 +120,6 @@ final class UserAdmin extends AbstractAdmin
             ->with('Profile')
             ->add('firstname', null, ['required' => false])
             ->add('lastname', null, ['required' => false])
-            ->end()
-            ->with('Headquarter')
             ->add(
                 'headquarter',
                 AdminType::class,

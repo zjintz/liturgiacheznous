@@ -9,7 +9,6 @@ use App\Util\IgrejaSantaInesAssembler;
 use App\Repository\UserRepository;
 use PHPUnit\Framework\TestCase;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MailerAssistantTest extends TestCase
 {
@@ -74,12 +73,10 @@ class MailerAssistantTest extends TestCase
 
     protected function makeMailerAssitant($enabledCount)
     {
-        $parameterBag = $this->createMock(ParameterBagInterface::class);
         $cnbb = $this->createMock(CNBBAssembler::class);
         $santaInes = $this->createMock(IgrejaSantaInesAssembler::class);
         $assistant = new MailerAssistant(
             $this->mockEntityManager($enabledCount),
-            $parameterBag,
             $cnbb,
             $santaInes
         );
@@ -171,12 +168,8 @@ class MailerAssistantTest extends TestCase
         );
     }
 
-    public function testListFilesToMake()
+    protected function assertFirstDayFiles($filesToMake)
     {
-        $assistant = $this->makeMailerAssitant(0);
-        $dateTest = new \DateTime("2010-01-01");
-        $filesToMake = $assistant->listFilesToMake(1, $dateTest);
-        $this->assertEquals(12, count($filesToMake));
         $this->assertEquals(
             ["file_name" => 'doc-CNBB_2010-01-02.DOCX',
              "date_string"=> "2010-01-02",
@@ -218,6 +211,16 @@ class MailerAssistantTest extends TestCase
             ],
             $filesToMake[11]
         );
+        
+    }
+
+    public function testListFilesToMake()
+    {
+        $assistant = $this->makeMailerAssitant(0);
+        $dateTest = new \DateTime("2010-01-01");
+        $filesToMake = $assistant->listFilesToMake(1, $dateTest);
+        $this->assertEquals(12, count($filesToMake));
+        $this->assertFirstDayFiles($filesToMake);
     }
 
     public function testListFilesToMakeWeek()
@@ -226,47 +229,7 @@ class MailerAssistantTest extends TestCase
         $dateTest = new \DateTime("2010-01-01");
         $filesToMake = $assistant->listFilesToMake(7, $dateTest);
         $this->assertEquals(36, count($filesToMake));
-        $this->assertEquals(
-            ["file_name" => 'doc-CNBB_2010-01-02.DOCX',
-             "date_string"=> "2010-01-02",
-             "source" => "CNBB",
-             "format" => "DOCX",
-            ],
-            $filesToMake[0]
-        );
-        $this->assertEquals(
-            ["file_name" => 'doc-CNBB_2010-01-02.PDF',
-             "date_string"=> "2010-01-02",
-             "source" => "CNBB",
-             "format" => "PDF",
-            ],
-            $filesToMake[1]
-        );
-        
-        $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-02.DOCX',
-             "date_string"=> "2010-01-02",
-             "source" => "Igreja_Santa_Ines",
-             "format" => "DOCX",
-            ],
-            $filesToMake[2]
-        );
-        $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-02.PDF',
-             "date_string"=> "2010-01-02",
-             "source" => "Igreja_Santa_Ines",
-             "format" => "PDF",
-            ],
-            $filesToMake[3]
-        );
-        $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-04.PDF',
-             "date_string"=> "2010-01-04",
-             "source" => "Igreja_Santa_Ines",
-             "format" => "PDF",
-            ],
-            $filesToMake[11]
-        );
+        $this->assertFirstDayFiles($filesToMake);
         $this->assertEquals(
             ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-10.PDF',
              "date_string"=> "2010-01-10",
@@ -283,39 +246,7 @@ class MailerAssistantTest extends TestCase
         $dateTest = new \DateTime("2010-01-01");
         $filesToMake = $assistant->listFilesToMake(14, $dateTest);
         $this->assertEquals(64, count($filesToMake));
-        $this->assertEquals(
-            ["file_name" => 'doc-CNBB_2010-01-02.DOCX',
-             "date_string"=> "2010-01-02",
-             "source" => "CNBB",
-             "format" => "DOCX",
-            ],
-            $filesToMake[0]
-        );
-        $this->assertEquals(
-            ["file_name" => 'doc-CNBB_2010-01-02.PDF',
-             "date_string"=> "2010-01-02",
-             "source" => "CNBB",
-             "format" => "PDF",
-            ],
-            $filesToMake[1]
-        );
-        
-        $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-02.DOCX',
-             "date_string"=> "2010-01-02",
-             "source" => "Igreja_Santa_Ines",
-             "format" => "DOCX",
-            ],
-            $filesToMake[2]
-        );
-        $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-02.PDF',
-             "date_string"=> "2010-01-02",
-             "source" => "Igreja_Santa_Ines",
-             "format" => "PDF",
-            ],
-            $filesToMake[3]
-        );
+        $this->assertFirstDayFiles($filesToMake);
         $this->assertEquals(
             ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-04.PDF',
              "date_string"=> "2010-01-04",
@@ -340,6 +271,341 @@ class MailerAssistantTest extends TestCase
              "format" => "PDF",
             ],
             $filesToMake[63]
+        );
+    }
+
+    private function getTomorrowDateString()
+    {
+        $newDate = new \DateTime();
+        $newDate->add(
+            new \DateInterval(
+                'P1D'
+            )
+        );
+        $dateString = $newDate->format('Y-m-d');
+        return $dateString;
+    }
+        
+    public function testListDemoFilesDailyALLALL()
+    {
+        $assistant = $this->makeMailerAssitant(0);
+        $dateString = $this->getTomorrowDateString();
+        $filesToMake = $assistant->listDemoFiles("daily", "ALL", "ALL");
+        $this->assertEquals(4, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "DOCX",
+            ],
+            $filesToMake[0]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "PDF",
+            ],
+            $filesToMake[1]
+        );
+        
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "DOCX",
+            ],
+            $filesToMake[2]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[3]
+        );
+
+    }
+
+    public function testListDemoFilesDailyPDF()
+    {
+        $assistant = $this->makeMailerAssitant(0);
+        $dateString = $this->getTomorrowDateString();
+        $filesToMake = $assistant->listDemoFiles("daily", "ALL", "PDF");
+        $this->assertEquals(2, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "PDF",
+            ],
+            $filesToMake[0]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[1]
+        );
+        $filesToMake = $assistant->listDemoFiles("daily", "CNBB", "PDF");
+        $this->assertEquals(1, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "PDF",
+            ],
+            $filesToMake[0]
+        );
+        $filesToMake = $assistant->listDemoFiles(
+            "daily",
+            "Igreja_Santa_Ines",
+            "PDF"
+        );
+        $this->assertEquals(1, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[0]
+        );
+    }
+
+    public function testListDemoFilesDailyDOCX()
+    {
+        $assistant = $this->makeMailerAssitant(0);
+        $dateString = $this->getTomorrowDateString();
+        $filesToMake = $assistant->listDemoFiles("daily", "ALL", "DOCX");
+        $this->assertEquals(2, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "DOCX",
+            ],
+            $filesToMake[0]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "DOCX",
+            ],
+            $filesToMake[1]
+        );
+        $filesToMake = $assistant->listDemoFiles("daily", "CNBB", "DOCX");
+        $this->assertEquals(1, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "DOCX",
+            ],
+            $filesToMake[0]
+        );
+        $filesToMake = $assistant->listDemoFiles(
+            "daily",
+            "Igreja_Santa_Ines",
+            "DOCX"
+        );
+        $this->assertEquals(1, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "DOCX",
+            ],
+            $filesToMake[0]
+        );
+    }
+
+    private function getMondayDateString()
+    {
+        $newDate = date("Y-m-d", strtotime("Monday this week"));
+        return $newDate;
+    }
+    
+    public function testListDemoFilesWeeklyALLALL()
+    {
+        $assistant = $this->makeMailerAssitant(0);
+        $dateString = $this->getMondayDateString();
+        $filesToMake = $assistant->listDemoFiles("weekly", "ALL", "ALL");
+        $this->assertEquals(28, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "DOCX",
+            ],
+            $filesToMake[0]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "PDF",
+            ],
+            $filesToMake[1]
+        );
+        
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "DOCX",
+            ],
+            $filesToMake[2]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[3]
+        );
+
+    }
+
+    public function testListDemoFilesWeeklyPDF()
+    {
+        $assistant = $this->makeMailerAssitant(0);
+        $dateString = $this->getMondayDateString();
+        $filesToMake = $assistant->listDemoFiles("weekly", "ALL", "PDF");
+        $this->assertEquals(14, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "PDF",
+            ],
+            $filesToMake[0]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[1]
+        );
+        $filesToMake = $assistant->listDemoFiles("weekly", "CNBB", "PDF");
+        $this->assertEquals(7, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "PDF",
+            ],
+            $filesToMake[0]
+        );
+        $filesToMake = $assistant->listDemoFiles(
+            "weekly",
+            "Igreja_Santa_Ines",
+            "PDF"
+        );
+        $this->assertEquals(7, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[0]
+        );
+    }
+
+    public function testListDemoFilesWeeklyDOCX()
+    {
+        $assistant = $this->makeMailerAssitant(0);
+        $dateString = $this->getMondayDateString();
+        $filesToMake = $assistant->listDemoFiles("weekly", "ALL", "DOCX");
+        $this->assertEquals(14, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "DOCX",
+            ],
+            $filesToMake[0]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "DOCX",
+            ],
+            $filesToMake[1]
+        );
+        $filesToMake = $assistant->listDemoFiles("weekly", "CNBB", "DOCX");
+        $this->assertEquals(7, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "DOCX",
+            ],
+            $filesToMake[0]
+        );
+        $filesToMake = $assistant->listDemoFiles(
+            "weekly",
+            "Igreja_Santa_Ines",
+            "DOCX"
+        );
+        $this->assertEquals(7, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "DOCX",
+            ],
+            $filesToMake[0]
+        );
+    }
+
+    public function testListDemoFilesBiWeeklyALLALL()
+    {
+        $assistant = $this->makeMailerAssitant(0);
+        $dateString = $this->getMondayDateString();
+        $filesToMake = $assistant->listDemoFiles("biweekly", "ALL", "ALL");
+        $this->assertEquals(56, count($filesToMake));
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "DOCX",
+            ],
+            $filesToMake[0]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-CNBB_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "CNBB",
+             "format" => "PDF",
+            ],
+            $filesToMake[1]
+        );
+        
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.DOCX',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "DOCX",
+            ],
+            $filesToMake[2]
+        );
+        $this->assertEquals(
+            ["file_name" => 'doc-Igreja_Santa_Ines_'.$dateString.'.PDF',
+             "date_string"=> $dateString,
+             "source" => "Igreja_Santa_Ines",
+             "format" => "PDF",
+            ],
+            $filesToMake[3]
         );
     }
 }

@@ -67,7 +67,12 @@
               <source>edit.subscription.here</source>
               <target>Editar </target>
             </trans-unit>
-                                    
+
+            <trans-unit id="email_subscription.help.is_active">
+                <source>email_subscription.help.is_active</source>
+                <target>Ativar ou desativar sua Assinatura.</target>
+            </trans-unit>
+
             <trans-unit id="email_subscription.label.is_active">
                 <source>email_subscription.label.is_active</source>
                 <target>Receber emails</target>
