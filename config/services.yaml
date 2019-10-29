@@ -91,3 +91,12 @@ services:
         tags:
             - { name: sonata.block }
 
+    app.block.service.delivery_information:
+        class: App\Block\DeliveryInformationBlock
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@twig'
+            - '@templating.engine.twig'
+        tags:
+            - { name: sonata.block }
+

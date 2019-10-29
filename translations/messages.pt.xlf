@@ -47,6 +47,29 @@
               <source>Date</source>
               <target>Data</target>
             </trans-unit>
+            <trans-unit id="delivery.last_delivery">
+              <source>delivery.last_delivery</source>
+              <target>Ultima:</target>
+            </trans-unit>
+            <trans-unit id="delivery.next_delivery">
+              <source>delivery.next_delivery</source>
+              <target>Próxima:</target>
+            </trans-unit>
+            <trans-unit id="delivery.daily.label">
+              <source>delivery.daily.label</source>
+              <target>Entrega diária</target>
+            </trans-unit>
+
+            <trans-unit id="delivery.weekly.label">
+              <source>delivery.weekly.label</source>
+              <target>Entrega semanal</target>
+            </trans-unit>
+
+            <trans-unit id="delivery.biweekly.label">
+              <source>delivery.biweekly.label</source>
+              <target>Entrega quincenal</target>
+            </trans-unit>
+                                    
             <trans-unit id="EmailSubscription">
               <source>EmailSubscription</source>
               <target>Assinatura do Email</target>
@@ -75,11 +98,11 @@
 
             <trans-unit id="email_subscription.label.is_active">
                 <source>email_subscription.label.is_active</source>
-                <target>Receber emails</target>
+                <target>Receber emails: </target>
             </trans-unit>
             <trans-unit id="email_subscription.label.periodicity">
                 <source>email_subscription.label.periodicity</source>
-                <target>Tipo de envío</target>
+                <target>Tipo de envío: </target>
             </trans-unit>
             <trans-unit id="email_subscription.label.days_ahead">
                 <source>email_subscription.label.days_ahead</source>
@@ -238,6 +261,10 @@
             <trans-unit id="Year Type">
               <source>Year Type</source>
               <target>Tipo de ano</target>
+            </trans-unit>
+            <trans-unit id="texts_delivery_schedule">
+              <source>texts_delivery_schedule</source>
+              <target>Programação entrega de textos</target>
             </trans-unit>
             
         </body>

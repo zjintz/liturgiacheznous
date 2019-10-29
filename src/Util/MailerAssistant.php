@@ -2,6 +2,7 @@
 
 namespace App\Util;
 
+use App\Entity\TextsDelivery;
 use App\Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -220,7 +221,7 @@ class MailerAssistant
         return $this->santaInesAssembler;
     }
 
-    private function countDays($period)
+    public function countDays($period)
     {
         if ($period === "daily") {
             return 1;
@@ -244,5 +245,14 @@ class MailerAssistant
         }
             
         return 0;
+    }
+
+    public function logTextsDeliver($period)
+    {
+        $delivery = new TextsDelivery();
+        $delivery->setSendDate(new \DateTime());
+        $delivery->setType($period);
+        $this->entityManager->persist($delivery);
+        $this->entityManager->flush();
     }
 }

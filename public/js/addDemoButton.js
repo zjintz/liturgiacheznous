@@ -1,12 +1,16 @@
 $(document).ready(function(){
     $("#field_actions_sd737e59e34_emailSubscription").append(
-        '<div id="demo_div"><div class="btn btn-success" id="demo-button">Demonstração</div><span class="help-block sonata-ba-field-help">Você receberá um email demo com os textos litúrgicos de acordo com a configuração.</span></div>'
+        '<div id="demo_div"><div class="btn btn-success" id="demo-button">Demonstração</div><span class="help-block sonata-ba-field-help" id="demo-help">Você receberá um email demo com os textos litúrgicos de acordo com a configuração.</span></div>'
     );
 
     $("#demo-button").on("click", function() {
-        $("#demo-button").prop("disabled");
+        var $btn = $(this);
+        $btn.attr("disabled", true);
+        $btn.addClass('disabled');
         setTimeout(function() {
-            $("#demo-button").prop("disabled", false); // Element(s) are now enabled.
+            $btn.text("Demostração (de novo)")
+            $btn.removeAttr("disabled");
+            $btn.removeClass('disabled');
         }, 7000);
     });
     $("#demo-button").click(function() {
@@ -61,15 +65,7 @@ $(document).ready(function(){
             newRoute = newRoute.replace("PDF", format);
 
             $.getJSON( newRoute, function( data ) {
-                var items = [];
-                $.each( data, function( key, val ) {
-                    items.push( "<li id='" + key + "'>" + val + "</li>" );
-                });
-                
-                $( "<ul/>", {
-                    "class": "response",
-                    html: items.join( "" )
-                }).appendTo( "#demo-div" );
+                $("#demo-help").text("O email de demonstração foi enviado! ");
             });
 /*            alert(newRoute);*/
         }

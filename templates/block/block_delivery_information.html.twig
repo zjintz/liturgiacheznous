@@ -1,0 +1,72 @@
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4><i class="fa fa-calendar" aria-hidden="true"></i> {{ 'texts_delivery_schedule'|trans({}, 'messages') }}</h4>
+        </div>
+
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div>
+                        <h5>
+                            <strong>
+                                {{ 'delivery.daily.label'|trans({}, 'messages') }}
+                            </strong>
+                        </h5>
+                        <span>
+                            {{ 'delivery.last_delivery'|trans({}, 'messages') }}
+                        </span>
+                        <span class="bg-success">
+                            {{ last_daily }}
+                        </span>
+                        <br>
+                        <span>
+                            {{ 'delivery.next_delivery'|trans({}, 'messages') }}
+                        </span>
+                            <span class="bg-info"> {{ next_daily }}
+                        </span>
+                        <br>
+                    </div>                    
+                </li>
+                <li class="list-group-item">
+                    <div>
+                        <h5>
+                            <strong>
+                                {{ 'delivery.weekly.label'|trans({}, 'messages') }}
+                            </strong>
+                        </h5>
+                        <span> {{ 'delivery.last_delivery'|trans({}, 'messages') }}
+                        </span>
+                        <span class="bg-success">{{ last_weekly }} </span><br>
+                        <span> {{ 'delivery.next_delivery'|trans({}, 'messages') }}
+                        </span>
+                        <span class="bg-info">
+                            {{ next_weekly }}
+                        </span><br>
+                    </div>                    
+                </li>
+                <li class="list-group-item">
+                    <div>
+                        <h5>
+                            <strong>
+                                {{ 'delivery.biweekly.label'|trans({}, 'messages') }}
+                            </strong>
+                        </h5>
+                        <span>
+                            {{ 'delivery.last_delivery'|trans({}, 'messages') }}
+                        </span>
+                        <span class="bg-success">
+                            {{ last_biweekly }}
+                        </span><br>
+                        <span> {{ 'delivery.next_delivery'|trans({}, 'messages') }}
+                        </span>
+                        <span class="bg-info">{{ next_biweekly }} </span>
+                    </div>                    
+                </li>
+
+            </ul>
+        </div>
+    </div>
+{% endblock %}

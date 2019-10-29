@@ -25,7 +25,7 @@ class LiturgyMailer
     ) {
         $rootDir = $parameterBag->get('kernel.project_dir');
         $this->textsDir = $rootDir.'/data/liturgy_texts/';
-        $this->assistant = $mailerAssistant;
+        $this->mailerAssistant = $mailerAssistant;
         $this->twig = $twig;
         $this->mailer = $mailer;
     }
@@ -39,12 +39,13 @@ class LiturgyMailer
      */
     public function deliverMailSubscriptions($period, $daysAhead, $output)
     {
-        $enabledUsers = $this->assistant->getEnabledUsers();
+        $this->mailerAssistant->logTextsDeliver($period);
+        $enabledUsers = $this->mailerAssistant->getEnabledUsers();
          
         if (empty($enabledUsers)) {
             return 'There are no enabled users in the DB.';
         }
-        $subscribedUsers = $this->assistant->getSubscribedUsers(
+        $subscribedUsers = $this->mailerAssistant->getSubscribedUsers(
             $enabledUsers,
             $period,
             $daysAhead
@@ -75,14 +76,14 @@ class LiturgyMailer
      */
     public function deliverDemo($period, $source, $textFormat, $email)
     {
-        $filesToMake = $this->assistant->listDemoFiles(
+        $filesToMake = $this->mailerAssistant->listDemoFiles(
             $period,
             $source,
             $textFormat
         );
         foreach ($filesToMake as $toMake)
         {
-            $message = $this->assistant->makeLiturgyText($toMake, $this->textsDir);
+            $message = $this->mailerAssistant->makeLiturgyText($toMake, $this->textsDir);
         }
         $this->sendDemo($email, $filesToMake);
         return 'Done.';
@@ -135,7 +136,7 @@ class LiturgyMailer
     private function sendTexts($subscriber)
     {
         $daysAhead = $subscriber->getEmailSubscription()->getDaysAhead();
-        $daysCount = $this->mailerAssistent->countDays(
+        $daysCount = $this->mailerAssistant->countDays(
             $subscriber->getEmailSubscription()->getPeriodicity()
         );
         
@@ -222,8 +223,8 @@ class LiturgyMailer
 
     private function makeAllTexts($output, $period)
     {
-        $daysCount = $this->mailerAssistent->countDays($period);
-        $filesToMake = $this->assistant->listFilesToMake(
+        $daysCount = $this->mailerAssistant->countDays($period);
+        $filesToMake = $this->mailerAssistant->listFilesToMake(
             $daysCount,
             new \DateTime()
         );
@@ -232,7 +233,7 @@ class LiturgyMailer
             $output->writeln(
             '        - Making text Document:'.$toMake["file_name"]
             );
-            $message = $this->assistant->makeLiturgyText($toMake, $this->textsDir);
+            $message = $this->mailerAssistant->makeLiturgyText($toMake, $this->textsDir);
             $output->writeln(
                 '        >'.$message
             );
