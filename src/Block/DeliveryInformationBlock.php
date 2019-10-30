@@ -71,7 +71,7 @@ class DeliveryInformationBlock extends AbstractAdminBlockService
             'SELECT p
             FROM App\Entity\TextsDelivery p
             WHERE p.type = :type
-            ORDER BY p.sendDate ASC'
+            ORDER BY p.sendDate DESC'
         )->setParameter('type', $type);
         // returns an array of Product objects
         $result = $query->getResult();
