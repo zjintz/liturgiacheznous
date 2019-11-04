@@ -25,7 +25,7 @@ class CNBBAssembler extends AbstractAssembler
     // Force Extending class to define this method
     protected function genSourceRoute($liturgyDate)
     {
-        $cnbb = "http://liturgiadiaria.cnbb.org.br/app/user/user/UserView.php";
+        $cnbb = "https://liturgiadiaria.cnbb.org.br/app/user/user/UserView.php";
         $pieces = explode("-", $liturgyDate);
         $addThis = "?ano=".$pieces[0]."&mes=".$pieces[1]."&dia=".$pieces[2];
         $url = $cnbb.$addThis;
