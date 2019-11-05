@@ -50,7 +50,7 @@ class MailTexts extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'It will only mail the texts to the subscribers that have configured their subscription \'Days ahead\' to one of thes values : 1 , 2 or 3. Any other value means it will include subscribers ignored this filter.',
-                1
+                0
             );
  
     }
