@@ -135,7 +135,8 @@ class LiturgyMailer
     
     private function sendTexts($subscriber)
     {
-        $daysAhead = $subscriber->getEmailSubscription()->getDaysAhead();
+        //        $daysAhead = $subscriber->getEmailSubscription()->getDaysAhead();
+        $daysAhead = 0;
         $daysCount = $this->mailerAssistant->countDays(
             $subscriber->getEmailSubscription()->getPeriodicity()
         );
