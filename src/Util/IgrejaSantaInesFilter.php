@@ -64,8 +64,12 @@ class IgrejaSantaInesFilter extends AbstractFilter
         $gospelTitle = str_replace("<br>", " ", $gospelTitle);
 
         $gospelSubtitle = $crawler->filter('div.'.$name.' div.panel div.cit_direita')->last()->text();
-        $gospelIntro = trim($crawler->filter('div.'.$name.' div.panel')->last()->filter('div.cit_direita_italico')->first()->text());
-        
+
+        $introFilter = $crawler->filter('div.'.$name.' div.panel')->last()->filter('div.cit_direita_italico')->first();
+        $gospelIntro = "";
+        if ($introFilter->count()) {
+            $gospelIntro = trim($introFilter->text());
+        }
         $gospelCrawler = $crawler->filter('div.'.$name.' div.panel')->last();
         $gospelText = $gospelCrawler->filter('span')->each( function (Crawler $node, $i) {
                                return $node->text();

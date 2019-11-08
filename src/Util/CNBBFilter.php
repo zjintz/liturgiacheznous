@@ -102,9 +102,13 @@ class CNBBFilter extends AbstractFilter
     {
         $subCrawler = $crawler->filter("div#".$divId)->first();
         $title = trim($subCrawler->filter('h3.title-leitura')->text());
-        $intro = $subCrawler->filter('div.cit_direita_italico')->text();
-        $intro = trim($intro);
-        $intro = preg_replace('/\s+/', ' ', $intro);
+        $introFilter = $subCrawler->filter('div.cit_direita_italico');
+        $intro = "";
+        if ($introFilter->count()) {
+            $intro = $introFilter->text();
+            $intro = trim($intro);
+            $intro = preg_replace('/\s+/', ' ', $intro);
+        }
         $subtitle = $subCrawler->filter('div.cit_direita')->text();
         $text = $this->extractText($subCrawler);
         $text = $this->trimGospelText($text);
