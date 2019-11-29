@@ -21,3 +21,10 @@ monolog:
             handler: deprecation
             max_level: info
             channels: ["php"]
+
+        mailer:
+            level:    info
+            type:     stream
+            path:     '%kernel.logs_dir%/mailer.%kernel.environment%.log'
+            channels: [mailer]
+        

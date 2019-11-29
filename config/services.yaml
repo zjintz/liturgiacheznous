@@ -48,6 +48,13 @@ services:
         
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Util\MailLoggerUtil:
+        arguments: ["@logger"]
+        tags:
+            - { name: monolog.logger, channel: mailer }
+            - { name: "swiftmailer.default.plugin" }
+    
     app.admin.emailsubscription:
         class: App\Admin\EmailSubscriptionAdmin
         arguments: [~, App\Entity\EmailSubscription, ~]
