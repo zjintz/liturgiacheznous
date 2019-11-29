@@ -82,7 +82,7 @@ class MailerAssistant
         $filesToSend = [];
         // remember that ther are days ahead: 1 , 2 and 3, therefore this
         //        for ends in days+2.
-        for ($i=0; $i <= ($days+2); $i++) {
+        for ($i=0; $i <= ($days+1); $i++) {
             $newDate = clone $startDate;
             $newDate->add(
                 new \DateInterval(

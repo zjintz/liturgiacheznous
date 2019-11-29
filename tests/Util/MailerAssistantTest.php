@@ -171,16 +171,16 @@ class MailerAssistantTest extends TestCase
     protected function assertFirstDayFiles($filesToMake)
     {
         $this->assertEquals(
-            ["file_name" => 'doc-CNBB_2010-01-02.DOCX',
-             "date_string"=> "2010-01-02",
+            ["file_name" => 'doc-CNBB_2010-01-01.DOCX',
+             "date_string"=> "2010-01-01",
              "source" => "CNBB",
              "format" => "DOCX",
             ],
             $filesToMake[0]
         );
         $this->assertEquals(
-            ["file_name" => 'doc-CNBB_2010-01-02.PDF',
-             "date_string"=> "2010-01-02",
+            ["file_name" => 'doc-CNBB_2010-01-01.PDF',
+             "date_string"=> "2010-01-01",
              "source" => "CNBB",
              "format" => "PDF",
             ],
@@ -188,24 +188,24 @@ class MailerAssistantTest extends TestCase
         );
         
         $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-02.DOCX',
-             "date_string"=> "2010-01-02",
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-01.DOCX',
+             "date_string"=> "2010-01-01",
              "source" => "Igreja_Santa_Ines",
              "format" => "DOCX",
             ],
             $filesToMake[2]
         );
         $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-02.PDF',
-             "date_string"=> "2010-01-02",
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-01.PDF',
+             "date_string"=> "2010-01-01",
              "source" => "Igreja_Santa_Ines",
              "format" => "PDF",
             ],
             $filesToMake[3]
         );
         $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-04.PDF',
-             "date_string"=> "2010-01-04",
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-03.PDF',
+             "date_string"=> "2010-01-03",
              "source" => "Igreja_Santa_Ines",
              "format" => "PDF",
             ],
@@ -231,8 +231,8 @@ class MailerAssistantTest extends TestCase
         $this->assertEquals(36, count($filesToMake));
         $this->assertFirstDayFiles($filesToMake);
         $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-10.PDF',
-             "date_string"=> "2010-01-10",
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-09.PDF',
+             "date_string"=> "2010-01-09",
              "source" => "Igreja_Santa_Ines",
              "format" => "PDF",
             ],
@@ -248,16 +248,16 @@ class MailerAssistantTest extends TestCase
         $this->assertEquals(64, count($filesToMake));
         $this->assertFirstDayFiles($filesToMake);
         $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-04.PDF',
-             "date_string"=> "2010-01-04",
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-03.PDF',
+             "date_string"=> "2010-01-03",
              "source" => "Igreja_Santa_Ines",
              "format" => "PDF",
             ],
             $filesToMake[11]
         );
         $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-10.PDF',
-             "date_string"=> "2010-01-10",
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-09.PDF',
+             "date_string"=> "2010-01-09",
              "source" => "Igreja_Santa_Ines",
              "format" => "PDF",
             ],
@@ -265,8 +265,8 @@ class MailerAssistantTest extends TestCase
         );
 
         $this->assertEquals(
-            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-17.PDF',
-             "date_string"=> "2010-01-17",
+            ["file_name" => 'doc-Igreja_Santa_Ines_2010-01-16.PDF',
+             "date_string"=> "2010-01-16",
              "source" => "Igreja_Santa_Ines",
              "format" => "PDF",
             ],
