@@ -1,0 +1,29 @@
+{% extends "@SonataAdmin/standard_layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/avoidButtonDisable.js') }}"></script>
+{% endblock %}
+
+{% block title %} {% trans %}mail.logs.title{% endtrans %} {% endblock %}
+
+{% block sonata_admin_content %}
+
+<h3 class="card-title text-center">{% trans %}mail.logs.title{% endtrans %}</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 pre-scrollable" style="max-height: 70vh">
+            {% for log in logs %}
+                <div class="well well-sm">
+                    {{ log }}
+                </div>
+            {% endfor  %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

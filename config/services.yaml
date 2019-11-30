@@ -89,6 +89,12 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: Liturgy.Text }
 
+    app.admin.logs.mail:
+        class: App\Admin\MailLogsAdmin
+        arguments: [~, ~, App\Controller\MailLogsCRUDController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: mailer_logs, group: app.admin.group.logs}
+
     app.block.service.email_subscription:
         class: App\Block\EmailSubscriptionBlock
         arguments:

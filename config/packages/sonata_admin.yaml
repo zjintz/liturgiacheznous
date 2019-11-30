@@ -29,9 +29,19 @@ sonata_admin:
                 icon: '<i class="fa fa-book"></i>'
                 items:
                     - app.admin.liturgy
-                    - app.admin.liturgy.text
                     - route: liturgy_text_assemble
                       label: assemble_action
+
+          app.admin.group.logs:
+                keep_open:       true
+                label: app.admin.group.logs
+                label_catalogue: App
+                icon: '<i class="fa fa-history"></i>'
+                items:
+                    - app.admin.logs.mail
+                    - route: admin_sonata_logs_mail_list
+                      label: mailer_logs
+                roles: [ROLE_ADMIN]
         blocks:
           
             -

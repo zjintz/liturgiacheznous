@@ -10,9 +10,17 @@
           <source>app.admin.group.liturgy</source>
           <target>Liturgia</target>
         </trans-unit>
+        <trans-unit id="app.admin.group.logs">
+          <source>app.admin.group.logs</source>
+          <target>Logs</target>
+        </trans-unit>
         <trans-unit id="assemble_action">
           <source>assemble_action</source>
           <target>Montar Texto</target>
+        </trans-unit>
+        <trans-unit id="mailer_logs">
+          <source>mailer_logs</source>
+          <target>Mailer Logs</target>
         </trans-unit>
       </body>
     </file>

@@ -258,6 +258,10 @@
               <source>liturgy.title.text</source>
               <target>Texto</target>
             </trans-unit>
+            <trans-unit id="mails.logs.title">
+              <source>mail.logs.title</source>
+              <target>Mailer Logs</target>
+            </trans-unit>
             <trans-unit id="Year Type">
               <source>Year Type</source>
               <target>Tipo de ano</target>
