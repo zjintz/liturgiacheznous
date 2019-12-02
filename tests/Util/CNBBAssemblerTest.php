@@ -13,6 +13,6 @@ class CNBBAssemblerTest extends TestCase
         $assistant = $this->createMock(AssemblerAssistant::class);
         $assembler = new CNBBAssembler("", $assistant);
         $liturgyText = $assembler->getDocument("1900-01-01", 'pdf');
-        $this->assertEquals("Not_Found", $liturgyText);
+        $this->assertEquals("Error: Invalid_Date", $liturgyText);
     }
 }

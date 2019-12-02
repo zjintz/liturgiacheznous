@@ -12,6 +12,6 @@ class IgrejaSantaInesAssemblerTest extends TestCase
         $assistant = $this->createMock(AssemblerAssistant::class);
         $assembler = new IgrejaSantaInesAssembler("", $assistant);
         $liturgyText = $assembler->getDocument("180000-01-01", 'pdf');
-        $this->assertEquals("Not_Found", $liturgyText);
+        $this->assertEquals("Error: Invalid_Date", $liturgyText);
     }
 }

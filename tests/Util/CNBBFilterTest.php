@@ -12,7 +12,7 @@ class CNBBFilterTest extends BaseFilterTest
     {
         $iFilter = new CNBBFilter();
         $liturgyText = $iFilter->filter(false, "");
-        $this->assertEquals("Not_Found", $liturgyText->getLoadStatus());
+        $this->assertEquals("Error: No_Data_Found", $liturgyText->getLoadStatus());
     }
     
     public function testFilterNotFound()
@@ -20,7 +20,7 @@ class CNBBFilterTest extends BaseFilterTest
         $iFilter = new CNBBFilter();
         $data = $this->readExample("./tests/Util/examples/ExampleCNBB_NOT_FOUND.html");
         $liturgyText = $iFilter->filter($data, "");
-        $this->assertEquals("Not_Found", $liturgyText->getLoadStatus());
+        $this->assertEquals("Error: Invalid_Date", $liturgyText->getLoadStatus());
     }
 
     public function testFilter2Chorus()

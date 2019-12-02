@@ -21,6 +21,21 @@ class CNBBFilterSundayTest extends BaseFilterTest
         $this->assertTemporal($temporalSection);
   
     }
+
+    /**
+     * Additional test because this case is failing.
+     */
+    public function testFilterDec01()
+    {
+        $iFilter = new CNBBFilter();
+        $data = $this->readExample("./tests/Util/examples/ExampleCNBB-2019-12-01.html");
+        $liturgyText = $iFilter->filter($data, "2019-12-01");
+        $temporalSection = $liturgyText->getTemporalSection();
+        $santoralSection = $liturgyText->getSantoralSection();
+        $this->assertEquals("Success", $liturgyText->getLoadStatus());
+        $this->assertEquals("Not_Found", $santoralSection->getLoadStatus());
+        $this->assertEquals("Success", $temporalSection->getLoadStatus());
+    }
     
     protected function assertTemporal($temporalSection)
     {

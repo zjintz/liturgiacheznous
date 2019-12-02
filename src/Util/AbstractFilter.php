@@ -21,12 +21,12 @@ abstract class AbstractFilter
     {
         $litText = new LiturgyText();
         if (!$data) {
-            $litText->setLoadStatus("Not_Found");
+            $litText->setLoadStatus("Error: No_Data_Found");
             return $litText;
         }
         $crawler = new Crawler($data);
         if (!$this->isValidDate($crawler)) {
-            $litText->setLoadStatus("Not_Found");
+            $litText->setLoadStatus("Error: Invalid_Date");
             return $litText;
         }
         try{

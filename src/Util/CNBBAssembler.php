@@ -40,6 +40,10 @@ class CNBBAssembler extends AbstractAssembler
         {
             return "Not_Found";
         }
+        if (($liturgyText->getLoadStatus()) === "Error: Invalid_Date")
+        {
+            return $liturgyText->getLoadStatus();
+        }
         $liturgyText= $this->assistant->addDetails($liturgyText);
         return $this->createDocument($format, $liturgyText, $this->projectDir);
     }

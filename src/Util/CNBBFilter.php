@@ -58,8 +58,12 @@ class CNBBFilter extends AbstractFilter
     {
         $subCrawler = $crawler->filter("div#".$divId)->first();
         $title = trim($subCrawler->filter('h3.title-leitura')->text());
-        $intro = $subCrawler->filter('div.cit_direita_italico')->text();
-        $intro = trim($intro);
+        $intro = "";
+        if ($subCrawler->filter('div.cit_direita_italico')->count())
+        {
+            $intro = $subCrawler->filter('div.cit_direita_italico')->text();
+            $intro = trim($intro);
+        }
         $subtitle = $subCrawler->filter('div.cit_direita')->text();
         $text = $this->extractText($subCrawler);
         $text = str_replace("Palavra do Senhor.", '', $text);
@@ -155,6 +159,7 @@ class CNBBFilter extends AbstractFilter
                 $readings[] = $this->getReading($crawler, $divId);
             }
             $litSection->setFirstReading($readings[0]);
+            return $litSection;
         }
         return $litSection;
     }
