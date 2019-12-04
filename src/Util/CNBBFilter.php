@@ -47,7 +47,9 @@ class CNBBFilter extends AbstractFilter
     {
         $text = $subCrawler->filter('div>span, span.tab_num, span.tab_num2, span.tabulacao')->each(
             function (Crawler $node, $i) {
-                return $node->text();
+                if(!($node->attr('class') === 'refrao_salmo')) {
+                    return trim($node->text());   
+                }
             }
         );
         $text = implode("\n", $text);
@@ -95,8 +97,8 @@ class CNBBFilter extends AbstractFilter
         );
         $chorus = $this->trimChorus($chorus);
         $text = $this->extractText($subCrawler);
-        $text = str_replace("\nR.\n", "\n\n", $text);
-        $text = str_replace("R. \nR.", "R.", $text);
+        $text = str_replace("R.\nR.", "R.\n", $text);
+        $text = str_replace("R. \nR.", "R.\n", $text);
         $factory = new PsalmReadingFactory();
         return $factory->createReading($title, $text, $chorus);
     }

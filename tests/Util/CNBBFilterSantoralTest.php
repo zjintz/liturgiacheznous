@@ -36,48 +36,48 @@ class CNBBFilterSantoralTest extends BaseFilterTest
         $gospelSubtitle = "+ Proclamação do Evangelho de Jesus Cristo segundo João 20,1-2.11-18";
         $gospelAuthor = "João";
         $gospelText = <<<EOD
-No primeiro dia da semana, 
-Maria Madalena foi ao túmulo de Jesus, 
-bem de madrugada, quando ainda estava escuro, 
-e viu que a pedra tinha sido retirada do túmulo. 
-Então ela saiu correndo 
-e foi encontrar Simão Pedro e o outro discípulo, 
+No primeiro dia da semana,
+Maria Madalena foi ao túmulo de Jesus,
+bem de madrugada, quando ainda estava escuro,
+e viu que a pedra tinha sido retirada do túmulo.
+Então ela saiu correndo
+e foi encontrar Simão Pedro e o outro discípulo,
 aquele que Jesus amava,
-e lhes disse: 
-"Tiraram o Senhor do túmulo, 
-e não sabemos onde o colocaram". 
-Maria estava do lado de fora do túmulo, chorando. 
+e lhes disse:
+"Tiraram o Senhor do túmulo,
+e não sabemos onde o colocaram".
+Maria estava do lado de fora do túmulo, chorando.
 Enquanto chorava,
 inclinou-se e olhou para dentro do túmulo.
-Viu, então, dois anjos vestidos de branco, 
+Viu, então, dois anjos vestidos de branco,
 sentados onde tinha sido posto o corpo de Jesus,
-um à cabeceira e outro aos pés. 
-Os anjos perguntaram: 
-"Mulher, por que choras?" 
-Ela respondeu: 
+um à cabeceira e outro aos pés.
+Os anjos perguntaram:
+"Mulher, por que choras?"
+Ela respondeu:
 "Levaram o meu Senhor e não sei onde o colocaram".
-Tendo dito isto, 
+Tendo dito isto,
 Maria voltou-se para trás e viu Jesus, de pé.
-Mas não sabia que era Jesus. 
-Jesus perguntou-lhe: 
-"Mulher, por que choras? 
-A quem procuras?" 
-Pensando que era o jardineiro, Maria disse: 
-"Senhor, se foste tu que o levaste 
-dize-me onde o colocaste, e eu o irei buscar". 
-Então Jesus disse: 
-"Maria!" 
-Ela voltou-se e exclamou, em hebraico: 
-"Rabunni" 
- (que quer dizer: Mestre). 
-Jesus disse: 
-"Não me segures. 
-Ainda não subi para junto do Pai. 
+Mas não sabia que era Jesus.
+Jesus perguntou-lhe:
+"Mulher, por que choras?
+A quem procuras?"
+Pensando que era o jardineiro, Maria disse:
+"Senhor, se foste tu que o levaste
+dize-me onde o colocaste, e eu o irei buscar".
+Então Jesus disse:
+"Maria!"
+Ela voltou-se e exclamou, em hebraico:
+"Rabunni"
+(que quer dizer: Mestre).
+Jesus disse:
+"Não me segures.
+Ainda não subi para junto do Pai.
 Mas vai dizer aos meus irmãos:
-subo para junto do meu Pai e vosso Pai, 
+subo para junto do meu Pai e vosso Pai,
 meu Deus e vosso Deus".
 Então Maria Madalena foi anunciar aos discípulos:
-"Eu vi o Senhor!", 
+"Eu vi o Senhor!",
 e contou o que Jesus lhe tinha dito.
 EOD;
         $l1Text = <<<EOD
@@ -102,13 +102,11 @@ Desde a aurora ansioso vos busco!
 A minh'alma tem sede de vós, +
 minha carne também vos deseja, *
 como terra sedenta e sem água!R.
-                                        
 
 Venho, assim, contemplar-vos no templo, *
 para ver vossa glória e poder.
 Vosso amor vale mais do que a vida: *
 e por isso meus lábios vos louvam.R.
-                                            
 
 Quero, pois vos louvar pela vida, *
 e elevar para vós minhas mãos!
@@ -116,14 +114,12 @@ A minh'alma será saciada, *
 como em grande banquete de festa;
 cantará a alegria em meus lábios, *
 ao cantar para vós meu louvor!R.
-                                                
 
 Para mim fostes sempre um socorro; *
 de vossas asas à sombra eu exulto!
 Minha alma se agarra em vós; *
 com poder vossa mão me sustenta.R.
-                                                    
-R.
+
 EOD;
 
         

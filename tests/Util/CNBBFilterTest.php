@@ -73,7 +73,7 @@ que cuidavam da criação de Abrão, e os pastores de Ló.
 Naquele tempo, os cananeus e os fereseus ainda
 habitavam naquela terra.
 Abrão disse a Ló:
-'Não deve haver discórdia entre nós 
+'Não deve haver discórdia entre nós
 e entre os nossos pastores,
 pois somos irmãos.
 Estás vendo toda esta terra diante de ti?
@@ -119,16 +119,17 @@ EOD;
 É aquele que caminha sem pecado*
 e pratica a justiça fielmente;
 que pensa a verdade no seu íntimo *
-e não solta em calúnias sua língua.R. 
+e não solta em calúnias sua língua.R.
 
 Que em nada prejudica o seu irmão,*
 nem cobre de insultos seu vizinho;
 que não dá valor algum ao homem ímpio,*
-mas honra os que respeitam o Senhor.R. 
+mas honra os que respeitam o Senhor.R.
 
 não empresta o seu dinheiro com usura,
 nem se deixa subornar contra o inocente.*
 Jamais vacilará quem vive assim!R.
+
 EOD;
 
         $gospelIntro = "Tudo quanto quereis que os outros vos façam, fazei também a eles.";
@@ -144,7 +145,7 @@ Tudo quanto quereis que os outros vos façam,
 fazei também a eles.
 Nisto consiste a Lei e os Profetas.
 Entrai pela porta estreita,
-porque larga é a porta 
+porque larga é a porta
 e espaçoso é o caminho que leva à perdição,
 e muitos são os que entram por ele!
 Como é estreita a porta

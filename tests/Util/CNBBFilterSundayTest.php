@@ -35,6 +35,35 @@ class CNBBFilterSundayTest extends BaseFilterTest
         $this->assertEquals("Success", $liturgyText->getLoadStatus());
         $this->assertEquals("Not_Found", $santoralSection->getLoadStatus());
         $this->assertEquals("Success", $temporalSection->getLoadStatus());
+        $salmoTitle = "Salmo - Sl 121, 1-2.4-5.6-7.8-9 (R. Cf. 1)";
+        $salmoChorus = "Que alegria, quando me disseram:'Vamos à casa do Senhor!";
+        $salmoText = <<<EOD
+
+Que alegria, quando ouvi que me disseram: *
+'Vamos à casa do Senhor!'
+E agora nossos pés já se detêm, *
+Jerusalém, em tuas portas.
+R.
+para lá sobem as tribos de Israel, *
+as tribos do Senhor.
+Para louvar, segundo a lei de Israel, *
+o nome do Senhor.*
+A sede da justiça lá está *
+e o trono de Davi.
+R.
+Rogai que viva em paz Jerusalém, *
+e em segurança os que te amam!
+Que a paz habite dentro de teus muros, *
+tranqüilidade em teus palácios!
+R.
+Por amor a meus irmãos e meus amigos, *
+peço: 'A paz esteja em ti!'
+Pelo amor que tenho à casa do Senhor, *
+eu te desejo todo bem!
+R.
+EOD;
+        $salmoReading = $temporalSection->getPsalmReading();
+        $this->assertPsalm($salmoTitle, $salmoChorus, $salmoText, $salmoReading);
     }
     
     protected function assertTemporal($temporalSection)
@@ -69,7 +98,7 @@ e sobre esta pedra construirei a minha Igreja,
 e o poder do inferno nunca poderá vencê-la.
 Eu te darei as chaves do Reino dos Céus:
 tudo o que tu ligares na terra será ligado nos céus;
-tudo o que tu desligares na terra 
+tudo o que tu desligares na terra
 será desligado nos céus".
 EOD;
         $l1Text = <<<EOD
@@ -107,7 +136,7 @@ o que estava acontecendo por meio do anjo,
 pois pensava que aquilo era uma visão.
 Depois de passarem pela primeira e segunda guarda,
 chegaram ao portão de ferro que dava para a cidade.
-O portão abriu-se sozinho. Eles saíram, 
+O portão abriu-se sozinho. Eles saíram,
 caminharam por uma rua e logo depois o anjo o deixou.
 Então Pedro caiu em si e disse:
 "Agora sei, de fato, que o Senhor enviou o seu anjo
@@ -120,22 +149,22 @@ Bendirei o Senhor Deus em todo o tempo, *
 seu louvor estará sempre em minha boca.
 Minha alma se gloria no Senhor; *
 que ouçam os humildes e se alegrem! R.
- R.
+
 Comigo engrandecei ao Senhor Deus, *
 exaltemos todos juntos o seu nome!
 Todas as vezes que o busquei, ele me ouviu, *
 e de todos os temores me livrou. R.
- R.
+
 Contemplai a sua face e alegrai-vos, *
 e vosso rosto não se cubra de vergonha!
 Este infeliz gritou a Deus, e foi ouvido, *
 e o Senhor o libertou de toda angústia. R.
- R.
+
 O anjo do Senhor vem acampar *
 ao redor dos que o temem, e os salva.
 Provai e vede quão suave é o Senhor! *
 Feliz o homem que tem nele o seu refúgio! R.
- R.
+
 EOD;
 
         $l2Title = "2ª Leitura - 2Tm 4,6-8.17-18";
