@@ -30,32 +30,39 @@ class AssemblerAssistant
         $liturgy = $this->liturgyRepository->findOneBy(
             ['date' => $liturgyText->getDate()]
         );
+        $liturgyText = $this->addBookNames($liturgyText);
+        if (is_null($liturgy)) {
+            $liturgyText = $this->addGospelAcclamation($liturgyText, $liturgy);
+            return $liturgyText;
+        }
         $description = $liturgy->getDescription();
         $description = trim($description);
-        if(is_null($description) or  ($description === "")) {
+        if (is_null($description) or  ($description === "")) {
             $description = $liturgy->getLiturgyDay();
         }
         $liturgyText->setDayTitle($description);
-        $liturgyText = $this->addBookNames($liturgyText);
         $liturgyText = $this->addGospelAcclamation($liturgyText, $liturgy);
-
         return $liturgyText;
     }
 
     public function fixSantaInesDetails(LiturgyText $liturgyText)
     {
-        if($this->isSunday($liturgyText->getDate())) {
+        if ($this->isSunday($liturgyText->getDate())) {
             $liturgyText->setSantoralSection($this->createVoidSection());
             return $liturgyText;
         }
         $liturgy = $this->liturgyRepository->findOneBy(
             ['date' => $liturgyText->getDate()]
         );
-        if($this->isSpecialDay($liturgy)) {
+        if (is_null($liturgy)) {
+            return $liturgyText;
+        }
+        if ($this->isSpecialDay($liturgy)) {
             $liturgyText->setTemporalSection($liturgyText->getSantoralSection());
             $liturgyText->setSantoralSection($this->createVoidSection());
             return $liturgyText;
         }
+        
         return $liturgyText;
     }
 
@@ -84,17 +91,19 @@ class AssemblerAssistant
 
     protected function addGospelAcclamation(
         LiturgyText $liturgyText,
-        Liturgy $liturgy
+        ?Liturgy $liturgy
     ) {
         
         $gospelAcclamation = new GospelAcclamation();
         $gospelAcclamation->setVerse("XXXXXXX");
         $gospelAcclamation->setReference("XXXXXXX");
-        if (!is_null($liturgy->getAlleluiaVerse())) {
-            $gospelAcclamation->setVerse($liturgy->getAlleluiaVerse());
-        }
-        if (!is_null($liturgy->getAlleluiaReference())) {
-            $gospelAcclamation->setReference($liturgy->getAlleluiaReference());
+        if (!is_null($liturgy)) {
+            if (!is_null($liturgy->getAlleluiaVerse())) {
+                $gospelAcclamation->setVerse($liturgy->getAlleluiaVerse());
+            }
+            if (!is_null($liturgy->getAlleluiaReference())) {
+                $gospelAcclamation->setReference($liturgy->getAlleluiaReference());
+            }
         }
         $liturgyText->setGospelAcclamation($gospelAcclamation);
         return $liturgyText;

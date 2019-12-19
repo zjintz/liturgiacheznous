@@ -45,7 +45,7 @@ class TextAssemblerController extends AbstractController
             $textAssembler = $cnbbAssembler;
         }
         $docFile = $textAssembler->getDocument($liturgy_date, $text_format);
-        if ($docFile === "Not_Found") {
+        if ($docFile === "Not_Found" || $docFile === "Error: Invalid_Date" ) {
             return $this->render(
                 'text_assembler/not_found.html.twig',
                 [
