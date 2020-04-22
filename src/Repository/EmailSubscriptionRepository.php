@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\EmailSubscription;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method EmailSubscription|null find($id, $lockMode = null, $lockVersion = null)

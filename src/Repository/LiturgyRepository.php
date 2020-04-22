@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Liturgy;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Liturgy|null find($id, $lockMode = null, $lockVersion = null)

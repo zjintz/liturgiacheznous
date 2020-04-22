@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Headquarter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Headquarter|null find($id, $lockMode = null, $lockVersion = null)
