@@ -15,7 +15,7 @@ class DocumentCreatorTest extends TestCase
     protected $basicLiturgy;
     protected $fullSantoralLiturgy;
     
-    protected function setup()
+    protected function setup() : void
     {
         $this->createBasicLiturgy();
         $this->createFullSantoralLiturgy();

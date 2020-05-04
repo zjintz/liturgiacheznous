@@ -43,7 +43,6 @@ sonata_admin:
                       label: mailer_logs
                 roles: [ROLE_ADMIN]
         blocks:
-          
             -
                 class:    col-lg-3 col-xs-10          
                 position: top                        
@@ -71,7 +70,6 @@ sonata_admin:
                     filters:                         # filter values
                         enabled: { value: 2 }
 
-          
             -
                 class:    col-lg-4 col-xs-6          # twitter bootstrap responsive code
                 position: top                        # zone in the dashboard
@@ -117,7 +115,7 @@ sonata_admin:
                     filters:                         # filter values
                         isSolemnity: { value: 1 }
                         
-#            - { type: sonata.admin.block.admin_list, position: left }
+            #- { type: sonata.admin.block.admin_list, position: left }
     security:
         handler: sonata.admin.security.handler.role
         role_admin: ROLE_SONATA_ADMIN

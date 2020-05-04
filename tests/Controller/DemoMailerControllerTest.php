@@ -22,7 +22,7 @@ class DemoMailerControllerTest extends WebTestCase
     
     private $client = null;
 
-    public function setUp()
+    public function setUp() : void
     {
 
     }

@@ -146,31 +146,24 @@ final class LiturgyAdmin extends AbstractAdmin
             'advanced_filter' => false
         ]);
         $datagridMapper->add('isSolemnity', null , [
-            'operator_type' => 'sonata_type_boolean',
             'advanced_filter' => false
         ]);
         $datagridMapper->add('isSolemnityVFC', null , [
-            'operator_type' => 'sonata_type_boolean',
             'advanced_filter' => false
         ]);
         $datagridMapper->add('isCelebration', null , [
-            'operator_type' => 'sonata_type_boolean',
             'advanced_filter' => false
         ]);
         $datagridMapper->add('isCelebrationVFC', null , [
-            'operator_type' => 'sonata_type_boolean',
             'advanced_filter' => false
         ]);
         $datagridMapper->add('isMemorial', null , [
-            'operator_type' => 'sonata_type_boolean',
             'advanced_filter' => false
         ]);
         $datagridMapper->add('isMemorialVFC', null , [
-            'operator_type' => 'sonata_type_boolean',
             'advanced_filter' => false
         ]);
         $datagridMapper->add('isMemorialFree', null , [
-            'operator_type' => 'sonata_type_boolean',
             'advanced_filter' => false
         ]);
         $datagridMapper->add('yearType', null, [

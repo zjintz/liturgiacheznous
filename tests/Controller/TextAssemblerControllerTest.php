@@ -22,7 +22,7 @@ class TextAssemblerControllerTest extends WebTestCase
     
     private $client = null;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->loadFixtures([UserTestFixtures::class]);
         $this->client = static::createClient();

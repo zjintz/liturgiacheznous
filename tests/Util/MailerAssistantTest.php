@@ -7,8 +7,8 @@ use App\Util\MailerAssistant;
 use App\Util\CNBBAssembler;
 use App\Util\IgrejaSantaInesAssembler;
 use App\Repository\UserRepository;
-use PHPUnit\Framework\TestCase;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\TestCase;
 
 class MailerAssistantTest extends TestCase
 {

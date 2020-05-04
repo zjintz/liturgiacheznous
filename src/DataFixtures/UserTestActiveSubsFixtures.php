@@ -47,4 +47,5 @@ class UserTestActiveSubsFixtures extends Fixture
         $manager->persist($activeSubs);
         return $activeSubs;
     }
+    
 }

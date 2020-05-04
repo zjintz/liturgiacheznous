@@ -20,7 +20,7 @@ class WriterAssistantTest extends TestCase
     protected $fullSantoral2lLiturgy;
     protected $singleSantoral2lLiturgy;
     
-    protected function setup()
+    protected function setup() : void
     {
         $this->createBasicLiturgy();
         $this->createBiReadingLiturgy();

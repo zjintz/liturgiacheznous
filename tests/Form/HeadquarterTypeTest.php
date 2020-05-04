@@ -12,7 +12,7 @@ class HeadquarterTypeTest extends TypeTestCase
 {
     private $translator;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         // mock any dependencies
         $this->translator = $this->createMock(TranslatorInterface::class);

@@ -187,7 +187,6 @@ final class UserAdmin extends AbstractAdmin
             'advanced_filter' => false
         ]);
         $datagridMapper->add('enabled' , null , [
-            'operator_type' => 'sonata_type_boolean',
             'advanced_filter' => false
         ]);
     }

@@ -58,7 +58,6 @@ class UserRegistrationSubscriber implements EventSubscriberInterface
         $subscription->setSource(["CNBB", "Igreja_Santa_Ines"]);
         $subscription->setFormat(["DOCX", "PDF"]);
         $user = $event->getUser();
-        /** @var \AppBundle\Entity\User $user */
         $user->setEnabled(false);
         $user->setEmailSubscription($subscription);
         // ...
