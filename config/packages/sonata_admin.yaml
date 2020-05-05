@@ -7,7 +7,7 @@ sonata_admin:
     dashboard:
         groups:
           app.admin.group.dashboard:
-                keep_open:       true
+                on_top:       true
                 label: ~
                 label_catalogue: App
                 icon: '<i class="fa fa-home"></i>'
@@ -15,7 +15,7 @@ sonata_admin:
                     - route: sonata_admin_dashboard
                       label: app.admin.group.dashboard 
           app.admin.group.users:
-                keep_open:       true
+                on_top:       true
                 label: app.admin.group.users
                 label_catalogue: App
                 icon: '<i class="fa fa-user"></i>'
@@ -33,12 +33,11 @@ sonata_admin:
                       label: assemble_action
 
           app.admin.group.logs:
-                keep_open:       true
+                on_top:       true
                 label: app.admin.group.logs
                 label_catalogue: App
                 icon: '<i class="fa fa-history"></i>'
                 items:
-                    - app.admin.logs.mail
                     - route: admin_sonata_logs_mail_list
                       label: mailer_logs
                 roles: [ROLE_ADMIN]
