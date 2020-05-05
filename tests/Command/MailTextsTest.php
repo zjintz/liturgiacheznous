@@ -22,7 +22,7 @@ class MailTextsTest extends WebTestCase
     
     public function testExecuteNoUsers()
     {
-        $this->loadFixtures([]);
+        $this->loadFixtures();
         $kernel = static::createKernel();
         $application = new Application($kernel);
 
@@ -34,7 +34,7 @@ class MailTextsTest extends WebTestCase
 
         // the output of the command in the console
         $output = $commandTester->getDisplay();
-        $this->assertContains('There are no enabled users in the DB.', $output);
+        $this->assertStringContainsString('There are no enabled users in the DB.', $output);
 
         // ...
     }
@@ -53,7 +53,7 @@ class MailTextsTest extends WebTestCase
 
         // the output of the command in the console
         $output = $commandTester->getDisplay();
-        $this->assertContains('There are no users with active email subscriptions for the given period', $output);
+        $this->assertStringContainsString('There are no users with active email subscriptions for the given period', $output);
     }
 
     public function testExecute()
@@ -70,11 +70,11 @@ class MailTextsTest extends WebTestCase
 
         // the output of the command in the console
         $output = $commandTester->getDisplay();
-        $this->assertContains('Making Liturgy texts ...', $output);
-        $this->assertContains('        - Making text Document:', $output);
-        $this->assertContains('Sending Liturgy texts ...', $output);
-        $this->assertContains('        - Sending to editor@test.com (1 day ahead).', $output);
-        $this->assertContains('Done.', $output);
+        $this->assertStringContainsString('Making Liturgy texts ...', $output);
+        $this->assertStringContainsString('        - Making text Document:', $output);
+        $this->assertStringContainsString('Sending Liturgy texts ...', $output);
+        $this->assertStringContainsString('        - Sending to editor@test.com (1 day ahead).', $output);
+        $this->assertStringContainsString('Done.', $output);
     }
 }
 

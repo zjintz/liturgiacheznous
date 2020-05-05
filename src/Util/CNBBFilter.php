@@ -168,7 +168,7 @@ class CNBBFilter extends AbstractFilter
 
     protected function getDayTitle($crawler) : string
     {
-        $dayTitle = trim($crawler->filter('div.bs-callout h2 ')->first()->text());
+        $dayTitle = $crawler->filter('div.bs-callout h2 ')->first()->text("Day Title not found", true) ;
         $dayTitle = preg_replace('/\s+/', ' ', $dayTitle);
         return $dayTitle;
     }
