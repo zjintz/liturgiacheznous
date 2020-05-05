@@ -1,4 +1,4 @@
-<?php
+<<?php
 
 namespace App\Writer;
 
@@ -32,7 +32,10 @@ class WriterAssistant
     }
     protected function hasSecondReading($section)
     {
-        return !is_null($section->getSecondReading());
+        if(!is_null($section)){
+            return !is_null($section->getSecondReading());
+        }
+        return null;
     }
     
     protected function isBasicLiturgy($litText)
