@@ -40,7 +40,7 @@ class TextAssemblerCRUDController extends CRUDController
             );
         }
         
-        return $this->render(
+        return $this->renderWithExtraParams(
             'text_assembler/index.html.twig',
             [
                 'form' => $form->createView(),

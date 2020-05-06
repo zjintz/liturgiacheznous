@@ -71,5 +71,6 @@ class MailTexts extends Command
             $output
         );
         $output->writeln($result);
+        return 1;
     }
 }

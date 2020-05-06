@@ -20,11 +20,9 @@ class CNBBFilter extends AbstractFilter
         $checkFoundCrawler = $crawler->filter(
             'div.blog-post div#corpo_leituras'
         );
-        if ($checkFoundCrawler->count())
-        {
-            if (trim($checkFoundCrawler->first()->text())
-                === "Leitura não disponível.")
-            {
+        if ($checkFoundCrawler->count()) {
+            if ($checkFoundCrawler->first()->text("", true)
+                === "Leitura não disponível.") {
                 return false;
             }
         }
@@ -48,7 +46,7 @@ class CNBBFilter extends AbstractFilter
         $text = $subCrawler->filter('div>span, span.tab_num, span.tab_num2, span.tabulacao')->each(
             function (Crawler $node, $i) {
                 if(!($node->attr('class') === 'refrao_salmo')) {
-                    return trim($node->text());   
+                    return $node->text("void text", true);   
                 }
             }
         );
@@ -59,14 +57,14 @@ class CNBBFilter extends AbstractFilter
     protected function getReading($crawler, $divId)
     {
         $subCrawler = $crawler->filter("div#".$divId)->first();
-        $title = trim($subCrawler->filter('h3.title-leitura')->text());
+        $title = $subCrawler->filter('h3.title-leitura')->text("Title not found", true);
         $intro = "";
         if ($subCrawler->filter('div.cit_direita_italico')->count())
         {
-            $intro = $subCrawler->filter('div.cit_direita_italico')->text();
+            $intro = $subCrawler->filter('div.cit_direita_italico')->text("intro not found", true);
             $intro = trim($intro);
         }
-        $subtitle = $subCrawler->filter('div.cit_direita')->text();
+        $subtitle = $subCrawler->filter('div.cit_direita')->text("Subtitle not found", true);
         $text = $this->extractText($subCrawler);
         $text = str_replace("Palavra do Senhor.", '', $text);
         $factory = new LiturgyReadingFactory();
@@ -87,12 +85,12 @@ class CNBBFilter extends AbstractFilter
     protected function getPsalm($crawler, $divId)
     {
         $subCrawler = $crawler->filter("div#".$divId)->first();
-        $title = trim($subCrawler->filter('h3.title-leitura')->text());
+        $title = $subCrawler->filter('h3.title-leitura')->text("No Psalm Title found.", true);
         $chorus = $subCrawler->filter(
             'div.refrao_salmo,span.refrao_salmo'
         )->each(
             function (Crawler $node, $i) {
-                return $node->text();
+                return $node->text("", true);
             }
         );
         $chorus = $this->trimChorus($chorus);
@@ -107,15 +105,14 @@ class CNBBFilter extends AbstractFilter
     protected function getGospel($crawler, $divId)
     {
         $subCrawler = $crawler->filter("div#".$divId)->first();
-        $title = trim($subCrawler->filter('h3.title-leitura')->text());
+        $title = $subCrawler->filter('h3.title-leitura')->text("No Gospel Title found", true);
         $introFilter = $subCrawler->filter('div.cit_direita_italico');
         $intro = "";
         if ($introFilter->count()) {
-            $intro = $introFilter->text();
-            $intro = trim($intro);
+            $intro = $introFilter->text("Intro not found", true);
             $intro = preg_replace('/\s+/', ' ', $intro);
         }
-        $subtitle = $subCrawler->filter('div.cit_direita')->text();
+        $subtitle = $subCrawler->filter('div.cit_direita')->text("No Gospel Subtitle found", true);
         $text = $this->extractText($subCrawler);
         $text = $this->trimGospelText($text);
         $factory = new GospelReadingFactory();

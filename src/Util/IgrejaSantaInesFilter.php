@@ -22,7 +22,7 @@ class IgrejaSantaInesFilter extends AbstractFilter
             'section.post-content div.czr-wp-the-content'
         );
         if ($checkFoundCrawler->count()) {
-            if (trim($checkFoundCrawler->first()->text()) === "DIA INDEFINIDO") {
+            if ($checkFoundCrawler->first()->text("", true) === "DIA INDEFINIDO") {
                 return false;
             }
         }
@@ -49,11 +49,11 @@ class IgrejaSantaInesFilter extends AbstractFilter
                  ->first()->html();
         $l1Title = str_replace("<br>", " ", $l1Title);
         $l1Subtitle = $crawler->filter('div.'.$name.' div.panel div.cit_direita')
-                    ->first()->text();
-        $l1Intro = trim($crawler->filter('div.'.$name.' div.panel div.cit_direita_italico')->first()->text());
+                              ->first()->text("No L1 subtitle found", true);
+        $l1Intro = $crawler->filter('div.'.$name.' div.panel div.cit_direita_italico')->first()->text("No intro found", true);
         $l1Crawler = $crawler->filter('div.'.$name.' div.panel')->first();
         $l1Text = $l1Crawler->filter('span')->each( function (Crawler $node, $i) {
-                               return $node->text();
+            return $node->text("No l1 text found", false);
                            }
                            );
         
@@ -63,16 +63,16 @@ class IgrejaSantaInesFilter extends AbstractFilter
         $gospelTitle = $crawler->filter('div.'.$name.' button.accordion')->last()->html();
         $gospelTitle = str_replace("<br>", " ", $gospelTitle);
 
-        $gospelSubtitle = $crawler->filter('div.'.$name.' div.panel div.cit_direita')->last()->text();
+        $gospelSubtitle = $crawler->filter('div.'.$name.' div.panel div.cit_direita')->last()->text("No Gospel Subtitle found", true);
 
         $introFilter = $crawler->filter('div.'.$name.' div.panel')->last()->filter('div.cit_direita_italico')->first();
         $gospelIntro = "";
         if ($introFilter->count()) {
-            $gospelIntro = trim($introFilter->text());
+            $gospelIntro = $introFilter->text("No Gospel Intro found", true);
         }
         $gospelCrawler = $crawler->filter('div.'.$name.' div.panel')->last();
         $gospelText = $gospelCrawler->filter('span')->each( function (Crawler $node, $i) {
-                               return $node->text();
+            return $node->text("", false);
                            }
                            );
         $gospelText = implode("", $gospelText);
@@ -105,7 +105,7 @@ class IgrejaSantaInesFilter extends AbstractFilter
         $title = str_replace("<br>", " ", $title);
         $chorusCrawler = $crawler->filter('div.'.$name.' div.refrao_salmo span');
         $chorus = $chorusCrawler->each( function (Crawler $node, $i) {
-                               return $node->text();
+            return $node->text("", true);
                            }
                            );
         $chorus = str_replace("Ou: Aleluia, Aleluia, Aleluia.", "", $chorus);
@@ -114,7 +114,7 @@ class IgrejaSantaInesFilter extends AbstractFilter
         $salmoCrawler = $crawler->filter('div.'.$name.' div.panel.salmo')->children('span, div.refrao_salmo2');
 
         $text = $salmoCrawler->each( function (Crawler $node, $i) {
-                               return $node->text();
+            return $node->text("", false);
                            }
                            );
         $text = implode("", $text);
@@ -132,13 +132,13 @@ class IgrejaSantaInesFilter extends AbstractFilter
 
         $l2Title = $crawler->filter('div.'.$name.' button.accordion')->eq(2)->html();
         $l2Title = str_replace("<br>", " ", $l2Title);
-        $l2Subtitle = $crawler->filter('div.'.$name.' div.panel div.cit_direita')->eq(1)->text();
-        $l2Intro = trim($crawler->filter('div.'.$name.' div.panel div.cit_direita_italico')->eq(1)->text());
+        $l2Subtitle = $crawler->filter('div.'.$name.' div.panel div.cit_direita')->eq(1)->text("No l2 subtitle found.", true);
+        $l2Intro = trim($crawler->filter('div.'.$name.' div.panel div.cit_direita_italico')->eq(1)->text("No l2 intro found", true));
         $l2Crawler = $crawler->filter('div.'.$name.' div.panel')->eq(2);
         $l2Text = $l2Crawler->filter('span')->each( function (Crawler $node, $i) {
-                               return $node->text();
-                           }
-                           );
+            return $node->text("", false);
+        }
+        );
         $l2Text = implode("", $l2Text);
         $l2Text = str_replace("Palavra do Senhor.", '', $l2Text);
         $l2Text = trim($l2Text);
@@ -164,8 +164,7 @@ class IgrejaSantaInesFilter extends AbstractFilter
     protected function getSantoralText($crawler)
     {
         $litSection = new LiturgySection();
-        if($crawler->filter('div.santoral')->count())
-        {
+        if($crawler->filter('div.santoral')->count()) {
             $litText  = $this->getSection($crawler, "santoral");
             return $litText;
         }
@@ -175,7 +174,7 @@ class IgrejaSantaInesFilter extends AbstractFilter
     
     protected function getDayTitle($crawler) : string
     {
-        $dayTitle = $crawler->filter('div.nav-dia center ')->first()->text();
+        $dayTitle = $crawler->filter('div.nav-dia center ')->first()->text("No Day Title found", true);
         $dayTitle = str_replace(">>", "", $dayTitle);
         $dayTitle = str_replace("<<", "", $dayTitle);
         $dayTitle = trim($dayTitle);

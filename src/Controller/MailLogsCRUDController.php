@@ -32,7 +32,7 @@ class MailLogsCRUDController extends CRUDController
         $logs = file_get_contents($logsDir."/mailer.".$environment.".log");
         $logs = explode("\n", $logs);
         $logs = array_reverse($logs);
-        return $this->render(
+        return $this->renderWithExtraParams(
             'logs/mail_logs.html.twig',
             [
                 'logs' => $logs,
