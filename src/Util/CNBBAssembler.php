@@ -36,12 +36,10 @@ class CNBBAssembler extends AbstractAssembler
     {
         $textFilter = new CNBBFilter();
         $liturgyText = $textFilter->filter($data, $liturgyDate);
-        if (($liturgyText->getLoadStatus()) === "Not_Found")
-        {
+        if (($liturgyText->getLoadStatus()) === "Error: No_Data_Found") {
             return "Not_Found";
         }
-        if (($liturgyText->getLoadStatus()) === "Error: Invalid_Date")
-        {
+        if (($liturgyText->getLoadStatus()) === "Error: Invalid_Date") {
             return $liturgyText->getLoadStatus();
         }
         $liturgyText= $this->assistant->addDetails($liturgyText);
